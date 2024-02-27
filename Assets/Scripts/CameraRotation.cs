@@ -14,17 +14,30 @@ public class RotateCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
 
         // Continue rotating object left
-        if (!isRotating() && Input.GetKeyDown(KeyCode.Q))
+        if (!isRotating() && Input.GetKeyDown(KeyCode.A) && shiftHeld)
         {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.up, 90, turnTime));
+            StartCoroutine(RotateAroundCameraAxis(90, turnTime, Vector3.up));
         }
 
         // Continue rotating object right
-        if (!isRotating() && Input.GetKeyDown(KeyCode.E))
+        if (!isRotating() && Input.GetKeyDown(KeyCode.D) && shiftHeld)
         {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.up * -1, 90, turnTime));
+            StartCoroutine(RotateAroundCameraAxis(-90, turnTime, Vector3.up));
+        }
+
+        // Continue rotating object up
+        if (!isRotating() && Input.GetKeyDown(KeyCode.W) && shiftHeld)
+        {
+            StartCoroutine(RotateAroundCameraAxis(90, turnTime, Vector3.right));
+        }
+
+        // Continue rotating object down
+        if (!isRotating() && Input.GetKeyDown(KeyCode.S) && shiftHeld)
+        {
+            StartCoroutine(RotateAroundCameraAxis(-90, turnTime, Vector3.right));
         }
     }
 
@@ -33,28 +46,28 @@ public class RotateCamera : MonoBehaviour
         return rotating;
     }
 
-    // https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
-    IEnumerator Rotate(Transform thisTransform, Transform otherTransform, Vector3 rotateAxis, float degrees, float totalTime)
+    // Modified code from: https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
+    IEnumerator RotateAroundCameraAxis(float degrees, float totalTime, Vector3 localAxis)
     {
         rotating = true;
 
-        var startRotation = thisTransform.rotation;
-        var startPosition = thisTransform.position;
-        transform.RotateAround(otherTransform.position, rotateAxis, degrees);
-        var endRotation = thisTransform.rotation;
-        var endPosition = thisTransform.position;
-        thisTransform.rotation = startRotation;
-        thisTransform.position = startPosition;
+        Vector3 worldAxis = transform.TransformDirection(localAxis); // Transform the local axis to a world axis based on the camera's orientation
+        Quaternion startRotation = transform.rotation;
+        Quaternion endRotation = Quaternion.AngleAxis(degrees, worldAxis) * startRotation;
 
-        var rate = degrees / totalTime;
-        for (float i = 0; i < degrees; i += Time.deltaTime * rate)
+        float rate = degrees / totalTime;
+        float angleRotated = 0;
+        while (angleRotated < Mathf.Abs(degrees))
         {
-            thisTransform.RotateAround(otherTransform.position, rotateAxis, Time.deltaTime * rate);
+            float angleToRotate = Time.deltaTime * rate;
+            transform.RotateAround(otherObject.transform.position, worldAxis, angleToRotate);
+            angleRotated += Mathf.Abs(angleToRotate);
             yield return null;
         }
 
-        thisTransform.rotation = endRotation;
-        thisTransform.position = endPosition;
+        // Ensure the rotation is exactly as intended despite frame rate variations
+        transform.rotation = endRotation;
+
         rotating = false;
     }
 }
