@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float jumpForce = 3.5f;
+    public int jumpsLeft = 2;
+    public int maxJumps = 2;
+    private Rigidbody rb;
+    
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+            jumpsLeft--;
+        }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            jumpsLeft = maxJumps;
+        }
+    }
+
 }

@@ -18,19 +18,19 @@ public class SwitchGravity : MonoBehaviour
 
         Vector3 gravityDirection = Vector3.zero;
 
-        if (Input.GetKeyDown(KeyCode.W) && shiftHeld)
+        if (Input.GetKeyDown(KeyCode.W) && ctrlHeld)
         {
             gravityDirection = new Vector3(0, 1, 0);
         }
-        if (Input.GetKeyDown(KeyCode.S) && shiftHeld)
+        if (Input.GetKeyDown(KeyCode.S) && ctrlHeld)
         {
             gravityDirection = new Vector3(0, -1, 0);
         }
-        if (Input.GetKeyDown(KeyCode.D) && shiftHeld)
+        if (Input.GetKeyDown(KeyCode.D) && ctrlHeld)
         {
             gravityDirection = new Vector3(1, 0, 0);
         }
-        if (Input.GetKeyDown(KeyCode.A) && shiftHeld)
+        if (Input.GetKeyDown(KeyCode.A) && ctrlHeld)
         {
             gravityDirection = new Vector3(-1, 0, 0);
         }
