@@ -14,21 +14,23 @@ public class SwitchGravity : MonoBehaviour
 
     void Update()
     {
+        bool ctrlHeld = Input.GetKey(KeyCode.LeftControl);
+
         Vector3 gravityDirection = Vector3.zero;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.W) && shiftHeld)
         {
             gravityDirection = new Vector3(0, 1, 0);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S) && shiftHeld)
         {
             gravityDirection = new Vector3(0, -1, 0);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.D) && shiftHeld)
         {
             gravityDirection = new Vector3(1, 0, 0);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A) && shiftHeld)
         {
             gravityDirection = new Vector3(-1, 0, 0);
         }
