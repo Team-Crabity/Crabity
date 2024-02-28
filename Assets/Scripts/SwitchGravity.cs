@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class SwitchGravity : MonoBehaviour
 {
+    public float jumpForce = 3.5f;
+    public int jumpsLeft = 2;
+    public int maxJumps = 2;
     private Rigidbody rb;
-    public Transform cameraTransform; 
+    public Transform cameraTransform;
 
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
+        // rb = gameObject.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+
     }
 
     void Update()
@@ -40,6 +45,21 @@ public class SwitchGravity : MonoBehaviour
         {
             Vector3 transformedGravityDirection = cameraTransform.rotation * gravityDirection * 9.81f;
             Physics.gravity = transformedGravityDirection;
+        }
+
+        // Jump code
+        if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
+        {
+            Vector3 jumpDirection = -Physics.gravity.normalized;
+            rb.AddForce(jumpDirection * jumpForce, ForceMode.VelocityChange);
+            jumpsLeft--;
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            jumpsLeft = maxJumps;
         }
     }
 }

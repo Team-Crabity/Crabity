@@ -18,6 +18,7 @@ public class Jump : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
         {
+            Vector3 jumpDirection = -Physics.gravity;
             rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
             jumpsLeft--;
         }
