@@ -18,9 +18,9 @@ public class Movement : MonoBehaviour
     {
         // Debug.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f), Color.red); // Visualize the raycast
         float horizontalInput = Input.GetAxis("Horizontal");
-
+        float verticalInput = Input.GetAxis("Vertical");
+        
         // Calculate movement direction relative to the camera's orientation
-
         // Gets the right vector of the camera
         Vector3 cameraRight = Camera.main.transform.right; 
         cameraRight.y = 0; // Prevents the player from moving up or down

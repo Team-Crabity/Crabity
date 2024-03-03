@@ -4,57 +4,85 @@ using UnityEngine;
 
 public class SwitchGravity : MonoBehaviour
 {
+    [Header("Gravity")]
+    public float gravityScale = 1.0f;
+    public float gravity = 9.81f;
+
+    [Header("Jumps")]
     public float jumpForce = 3.5f;
     public int jumpsLeft = 2;
     public int maxJumps = 2;
-    private Rigidbody rb;
+
+    [Header("Camera")]
     public Transform cameraTransform;
+
+    private Rigidbody rb;
+    private Vector3 gravityDirection = Vector3.zero;
 
     void Start()
     {
-        // rb = gameObject.GetComponent<Rigidbody>();
         rb = GetComponent<Rigidbody>();
-
+        UpdateGravity(Vector3.down);
     }
 
     void Update()
     {
-        bool ctrlHeld = Input.GetKey(KeyCode.LeftControl);
+        bool cHeld = Input.GetKey(KeyCode.C);
+        if (cHeld)
+        {
+            ChangeGravityDirection();
+        }
 
-        Vector3 gravityDirection = Vector3.zero;
+        if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
+        {
+            Jump();
+        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.W) && ctrlHeld)
+    void FixedUpdate()
+    {
+        if (gravityDirection != Vector3.zero)
+        {
+            UpdateGravity(gravityDirection);
+            gravityDirection = Vector3.zero;
+        }
+    }
+
+    private void ChangeGravityDirection()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
         {
             gravityDirection = new Vector3(0, 1, 0);
         }
-        if (Input.GetKeyDown(KeyCode.S) && ctrlHeld)
+        if (Input.GetKeyDown(KeyCode.S))
         {
             gravityDirection = new Vector3(0, -1, 0);
         }
-        if (Input.GetKeyDown(KeyCode.D) && ctrlHeld)
+        if (Input.GetKeyDown(KeyCode.D))
         {
             gravityDirection = new Vector3(1, 0, 0);
         }
-        if (Input.GetKeyDown(KeyCode.A) && ctrlHeld)
+        if (Input.GetKeyDown(KeyCode.A))
         {
             gravityDirection = new Vector3(-1, 0, 0);
         }
+    }
 
-        // Apply the camera's rotation to the gravity direction
-        if (gravityDirection != Vector3.zero)
-        {
-            Vector3 transformedGravityDirection = cameraTransform.rotation * gravityDirection * 9.81f;
-            Physics.gravity = transformedGravityDirection;
-        }
+    private void UpdateGravity(Vector3 direction)
+    {
+        Vector3 newGravity = cameraTransform.rotation * direction * gravity * gravityScale;
+        Physics.gravity = newGravity;
+    }
 
-        // Jump code
-        if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
+    private void Jump()
+    {
         {
             Vector3 jumpDirection = -Physics.gravity.normalized;
             rb.AddForce(jumpDirection * jumpForce, ForceMode.VelocityChange);
             jumpsLeft--;
         }
     }
+    
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
