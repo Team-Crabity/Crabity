@@ -7,10 +7,14 @@ public class Movement : MonoBehaviour
     [Header("Movement")]
     public float speed;
     public float groundDrag;
-
     // public Transform orientation;
 
-    private void Update()
+    private Rigidbody rb;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+    private void FixedUpdate()
     {
         // Debug.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f), Color.red); // Visualize the raycast
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -22,7 +26,10 @@ public class Movement : MonoBehaviour
         cameraRight.y = 0; // Prevents the player from moving up or down
         Vector3 movementDirection = cameraRight.normalized * horizontalInput;
 
-        transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+        float effectiveSpeed = speed * (1 - groundDrag * Time.deltaTime);
+        // changed to use rb.MovePosition to reduce jittering
+        rb.MovePosition(transform.position + movementDirection * effectiveSpeed * Time.deltaTime);
+
     }
 
     // private void SpeedControl()
