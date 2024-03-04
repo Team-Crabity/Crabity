@@ -1,4 +1,4 @@
-const cacheName = "Team 17-CMPM 171 Final Project-0.0.14";
+const cacheName = "Team 17-CMPM 171 Final Project-0.0.15";
 const contentToCache = [
     "Build/WebGL.loader.js",
     "Build/WebGL.framework.js",
