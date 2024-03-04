@@ -6,7 +6,7 @@ public class RobotFreeAnim : MonoBehaviour
 {
 
 	Vector3 rot = Vector3.zero;
-	float rotSpeed = 40f;
+	// float rotSpeed = 40f;
 	Animator anim;
 
 	// Use this for initialization
