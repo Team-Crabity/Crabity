@@ -1,5 +1,5 @@
-# CMPM-171-Final-Project
+# Crabity
  CMPM 171 Project - All Mechanics
 
-**PROJECT: Crabity**
+**Deployment:*
 https://jentsen.github.io/CMPM-171-Final-Project/
