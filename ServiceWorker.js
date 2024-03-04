@@ -1,4 +1,4 @@
-const cacheName = "Team 17-Crabity-0.0.18";
+const cacheName = "Team 17-Crabity-0.0.20";
 const contentToCache = [
     "Build/WebGL.loader.js",
     "Build/WebGL.framework.js.unityweb",
