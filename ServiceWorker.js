@@ -1,9 +1,9 @@
-const cacheName = "Team 17-CMPM 171 Final Project-0.0.16";
+const cacheName = "Team 17-Crabity-0.0.18";
 const contentToCache = [
     "Build/WebGL.loader.js",
-    "Build/WebGL.framework.js",
-    "Build/WebGL.data",
-    "Build/WebGL.wasm",
+    "Build/WebGL.framework.js.unityweb",
+    "Build/WebGL.data.unityweb",
+    "Build/WebGL.wasm.unityweb",
     "TemplateData/style.css"
 
 ];
