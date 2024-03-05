@@ -824,7 +824,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3509fc974301de54398f2c22a909775f, type: 3}
   m_Name: 
@@ -1423,6 +1423,7 @@ GameObject:
   - component: {fileID: 1261968617}
   - component: {fileID: 1261968614}
   - component: {fileID: 1261968615}
+  - component: {fileID: 1261968618}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1453,16 +1454,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261968610}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: add57f364ba3c9a4589812715fee80a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gravityScale: 3
   gravity: 9.81
-  jumpForce: 8
-  jumpsLeft: 2
-  maxJumps: 2
   cameraTransform: {fileID: 519420032}
 --- !u!114 &1261968615
 MonoBehaviour:
@@ -1505,6 +1503,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &1261968618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261968610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d276c15c3d532541ab65c808d582be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 8
+  jumpsLeft: 2
+  maxJumps: 2
 --- !u!4 &1287409079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5237204956914112601, guid: d2440c77a6b046742b161087f2fc7925, type: 3}

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
-    public float jumpForce = 3.5f;
+    [Header("Jumps")]
+    public float jumpForce = 8f;
     public int jumpsLeft = 2;
     public int maxJumps = 2;
+
     private Rigidbody rb;
     
     void Start()
@@ -18,9 +20,7 @@ public class Jump : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
         {
-            Vector3 jumpDirection = -Physics.gravity;
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-            jumpsLeft--;
+            PerformJump();
         }
     }
 
@@ -32,4 +32,12 @@ public class Jump : MonoBehaviour
         }
     }
 
+    private void PerformJump()
+    {
+        {
+            Vector3 jumpDirection = -Physics.gravity.normalized;
+            rb.AddForce(jumpDirection * jumpForce, ForceMode.VelocityChange);
+            jumpsLeft--;
+        }
+    }
 }

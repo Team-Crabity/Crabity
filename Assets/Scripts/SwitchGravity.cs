@@ -8,11 +8,6 @@ public class SwitchGravity : MonoBehaviour
     public float gravityScale = 3.0f;
     public float gravity = 9.81f;
 
-    [Header("Jumps")]
-    public float jumpForce = 8f;
-    public int jumpsLeft = 2;
-    public int maxJumps = 2;
-
     [Header("Camera")]
     public Transform cameraTransform;
 
@@ -31,11 +26,6 @@ public class SwitchGravity : MonoBehaviour
         if (cHeld)
         {
             ChangeGravityDirection();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && (jumpsLeft > 0))
-        {
-            Jump();
         }
     }
 
@@ -72,22 +62,5 @@ public class SwitchGravity : MonoBehaviour
     {
         Vector3 newGravity = cameraTransform.rotation * direction * gravity * gravityScale;
         Physics.gravity = newGravity;
-    }
-
-    private void Jump()
-    {
-        {
-            Vector3 jumpDirection = -Physics.gravity.normalized;
-            rb.AddForce(jumpDirection * jumpForce, ForceMode.VelocityChange);
-            jumpsLeft--;
-        }
-    }
-    
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            jumpsLeft = maxJumps;
-        }
     }
 }
