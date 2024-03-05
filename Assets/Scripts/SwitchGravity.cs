@@ -9,7 +9,7 @@ public class SwitchGravity : MonoBehaviour
     public float gravity = 9.81f;
 
     [Header("Jumps")]
-    public float jumpForce = 7f;
+    public float jumpForce = 8f;
     public int jumpsLeft = 2;
     public int maxJumps = 2;
 
