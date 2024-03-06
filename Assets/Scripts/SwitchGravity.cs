@@ -13,6 +13,7 @@ public class SwitchGravity : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 gravityDirection = Vector3.zero;
+    private bool gravityCooldown;
 
     void Start()
     {
@@ -40,21 +41,22 @@ public class SwitchGravity : MonoBehaviour
 
     private void ChangeGravityDirection()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        Dictionary<KeyCode, Vector3> keyToDirection = new Dictionary<KeyCode, Vector3>
         {
-            gravityDirection = new Vector3(0, 1, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
+            { KeyCode.W, Vector3.up },
+            { KeyCode.S, Vector3.down },
+            { KeyCode.D, Vector3.right },
+            { KeyCode.A, Vector3.left }
+        };
+
+        foreach (var keyDirectionPair in keyToDirection)
         {
-            gravityDirection = new Vector3(0, -1, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            gravityDirection = new Vector3(1, 0, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            gravityDirection = new Vector3(-1, 0, 0);
+            if (Input.GetKeyDown(keyDirectionPair.Key) && gravityCooldown)
+            {
+                gravityDirection = keyDirectionPair.Value;
+                gravityCooldown = false;
+                break;
+            }
         }
     }
 
@@ -62,5 +64,13 @@ public class SwitchGravity : MonoBehaviour
     {
         Vector3 newGravity = cameraTransform.rotation * direction * gravity * gravityScale;
         Physics.gravity = newGravity;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            gravityCooldown = true;
+        }
     }
 }
