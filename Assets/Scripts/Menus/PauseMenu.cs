@@ -10,21 +10,28 @@ public class PauseMenu : MonoBehaviour
     public Button resumeButton;
     public Button mainMenuButton;
     public Button restartButton;
-    public Button ExitButton;
+    public Button exitButton;
 
     public bool isPaused = false;
+
+    private Movement movementScript;
+    private Jump jumpScript;
+
 
 
     void Start()
     {
         DontDestroyOnLoad(nonDestroyablePauseMenu);
-        //hides pause menu
         TogglePauseMenu(false);
 
         resumeButton.onClick.AddListener(ResumeGame);
         mainMenuButton.onClick.AddListener(ReturnToMainMenu);
         restartButton.onClick.AddListener(RestartGame);
-        ExitButton.onClick.AddListener(ExitGame);
+        exitButton.onClick.AddListener(ExitGame);
+
+        // Find the Movement and Jump scripts on the player object
+        movementScript = FindObjectOfType<Movement>();
+        jumpScript = FindObjectOfType<Jump>();
     }
 
     void Update()
@@ -60,6 +67,16 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(pause);
         Time.timeScale = pause ? 0 : 1;
         isPaused = pause;
+
+        if (movementScript != null)
+        {
+            movementScript.enabled = !pause;
+        }
+
+        if (jumpScript != null)
+        {
+            jumpScript.enabled = !pause;
+        }
     }
 
     void PauseGame()
