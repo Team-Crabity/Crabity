@@ -17,13 +17,10 @@ public class PauseMenu : MonoBehaviour
     private Movement movementScript;
     private Jump jumpScript;
 
-
-
     void Start()
     {
         DontDestroyOnLoad(nonDestroyablePauseMenu);
         TogglePauseMenu(false);
-
         resumeButton.onClick.AddListener(ResumeGame);
         mainMenuButton.onClick.AddListener(ReturnToMainMenu);
         restartButton.onClick.AddListener(RestartGame);
@@ -60,6 +57,7 @@ public class PauseMenu : MonoBehaviour
         {
             ExitGame();
         }
+
     }
 
     void TogglePauseMenu(bool pause)
@@ -97,7 +95,7 @@ public class PauseMenu : MonoBehaviour
     void RestartGame()
     {
         TogglePauseMenu(false);
-        SceneManager.LoadScene("Puzzle 1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     void ExitGame()
     {
