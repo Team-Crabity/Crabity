@@ -89,7 +89,7 @@ public class PauseMenu : MonoBehaviour
 
     void ReturnToMainMenu()
     {
-        //SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(0);
     }
 
     void RestartGame()
