@@ -54,15 +54,13 @@ public class ChangeScene : MonoBehaviour
         {
             var step = 3.5f * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, Posi.transform.position, step);
-            
-        }
-        if (transform.position == Posi.transform.position) 
-        {
-            moving = false;
-            QualitySettings.SetQualityLevel(6);
-            MoveToScene(ID);
+            if (transform.position == Posi.transform.position) 
+            {
+                moving = false;
+                QualitySettings.SetQualityLevel(3);
+                MoveToScene(ID);
+            }
         }
     }
-
 }
 
