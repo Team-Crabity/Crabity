@@ -57,7 +57,6 @@ public class ChangeScene : MonoBehaviour
             if (transform.position == Posi.transform.position) 
             {
                 moving = false;
-                QualitySettings.SetQualityLevel(3);
                 MoveToScene(ID);
             }
         }
