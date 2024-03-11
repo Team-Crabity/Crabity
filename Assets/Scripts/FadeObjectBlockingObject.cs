@@ -8,51 +8,54 @@ public class FadeObjectBlockingObject : MonoBehaviour
     [SerializeField]
     private LayerMask LayerMask;
     [SerializeField]
-    private Transform Player;
+    private Transform Target;
     [SerializeField]
     private Camera Camera;
     [SerializeField]
+    [Range(0, 1f)]
     private float FadedAlpha = 0.33f;
     [SerializeField]
-    private FadeMode FadingMode;
-
+    private bool RetainShadows = true;
     [SerializeField]
-    private float ChecksPerSecond = 10;
-    [SerializeField]
-    private int FadeFPS = 30;
+    private Vector3 TargetPositionOffset = Vector3.up;
     [SerializeField]
     private float FadeSpeed = 1;
 
     [Header("Read Only Data")]
     [SerializeField]
     private List<FadingObject> ObjectsBlockingView = new List<FadingObject>();
-    private List<int> IndexesToClear = new List<int>();
     private Dictionary<FadingObject, Coroutine> RunningCoroutines = new Dictionary<FadingObject, Coroutine>();
 
     private RaycastHit[] Hits = new RaycastHit[10];
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(CheckForObjects());
     }
 
     private IEnumerator CheckForObjects()
     {
-        WaitForSeconds Wait = new WaitForSeconds(1f / ChecksPerSecond);
-
         while (true)
         {
-            int hits = Physics.RaycastNonAlloc(Camera.transform.position, (Player.transform.position - Camera.transform.position).normalized, Hits, Vector3.Distance(Camera.transform.position, Player.transform.position), LayerMask);
+            int hits = Physics.RaycastNonAlloc(
+                Camera.transform.position,
+                (Target.transform.position + TargetPositionOffset - Camera.transform.position).normalized,
+                Hits,
+                Vector3.Distance(Camera.transform.position, Target.transform.position + TargetPositionOffset),
+                LayerMask
+            );
+
             if (hits > 0)
             {
                 for (int i = 0; i < hits; i++)
                 {
                     FadingObject fadingObject = GetFadingObjectFromHit(Hits[i]);
+
                     if (fadingObject != null && !ObjectsBlockingView.Contains(fadingObject))
                     {
                         if (RunningCoroutines.ContainsKey(fadingObject))
                         {
-                            if (RunningCoroutines[fadingObject] != null) // may be null if it's already ended
+                            if (RunningCoroutines[fadingObject] != null)
                             {
                                 StopCoroutine(RunningCoroutines[fadingObject]);
                             }
@@ -70,19 +73,21 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
             ClearHits();
 
-            yield return Wait;
+            yield return null;
         }
     }
 
     private void FadeObjectsNoLongerBeingHit()
     {
-        for (int i = 0; i < ObjectsBlockingView.Count; i++)
+        List<FadingObject> objectsToRemove = new List<FadingObject>(ObjectsBlockingView.Count);
+
+        foreach (FadingObject fadingObject in ObjectsBlockingView)
         {
             bool objectIsBeingHit = false;
-            for (int j = 0; j < Hits.Length; j++)
+            for (int i = 0; i < Hits.Length; i++)
             {
-                FadingObject fadingObject = GetFadingObjectFromHit(Hits[j]);
-                if (fadingObject != null && fadingObject == ObjectsBlockingView[i])
+                FadingObject hitFadingObject = GetFadingObjectFromHit(Hits[i]);
+                if (hitFadingObject != null && fadingObject == hitFadingObject)
                 {
                     objectIsBeingHit = true;
                     break;
@@ -91,64 +96,65 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
             if (!objectIsBeingHit)
             {
-                if (RunningCoroutines.ContainsKey(ObjectsBlockingView[i]))
+                if (RunningCoroutines.ContainsKey(fadingObject))
                 {
-                    if (RunningCoroutines[ObjectsBlockingView[i]] != null)
+                    if (RunningCoroutines[fadingObject] != null)
                     {
-                        StopCoroutine(RunningCoroutines[ObjectsBlockingView[i]]);
+                        StopCoroutine(RunningCoroutines[fadingObject]);
                     }
-                    RunningCoroutines.Remove(ObjectsBlockingView[i]);
+                    RunningCoroutines.Remove(fadingObject);
                 }
 
-                RunningCoroutines.Add(ObjectsBlockingView[i], StartCoroutine(FadeObjectIn(ObjectsBlockingView[i])));
-                ObjectsBlockingView.RemoveAt(i);
+                RunningCoroutines.Add(fadingObject, StartCoroutine(FadeObjectIn(fadingObject)));
+                 objectsToRemove.Add(fadingObject);
             }
+        }
+
+        foreach(FadingObject removeObject in objectsToRemove)
+        {
+            ObjectsBlockingView.Remove(removeObject);
         }
     }
 
     private IEnumerator FadeObjectOut(FadingObject FadingObject)
     {
-        float waitTime = 1f / FadeFPS;
-        WaitForSeconds Wait = new WaitForSeconds(waitTime);
-        int ticks = 1;
-
-        for (int i = 0; i < FadingObject.Materials.Count; i++)
+        foreach (Material material in FadingObject.Materials)
         {
-            FadingObject.Materials[i].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha); // affects both "Transparent" and "Fade" options
-            FadingObject.Materials[i].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha); // affects both "Transparent" and "Fade" options
-            FadingObject.Materials[i].SetInt("_ZWrite", 0); // disable Z writing
-            if (FadingMode == FadeMode.Fade)
-            {
-                FadingObject.Materials[i].EnableKeyword("_ALPHABLEND_ON");
-            }
-            else
-            {
-                FadingObject.Materials[i].EnableKeyword("_ALPHAPREMULTIPLY_ON");
-            }
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.SetInt("_Surface", 1);
 
-            FadingObject.Materials[i].renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+            material.SetShaderPassEnabled("DepthOnly", false);
+            material.SetShaderPassEnabled("SHADOWCASTER", RetainShadows);
+
+            material.SetOverrideTag("RenderType", "Transparent");
+
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
         }
 
-        if (FadingObject.Materials[0].HasProperty("_Color"))
-        {
-            while (FadingObject.Materials[0].color.a > FadedAlpha)
-            {
-                for (int i = 0; i < FadingObject.Materials.Count; i++)
-                {
-                    if (FadingObject.Materials[i].HasProperty("_Color"))
-                    {
-                        FadingObject.Materials[i].color = new Color(
-                            FadingObject.Materials[i].color.r,
-                            FadingObject.Materials[i].color.g,
-                            FadingObject.Materials[i].color.b,
-                            Mathf.Lerp(FadingObject.InitialAlpha, FadedAlpha, waitTime * ticks * FadeSpeed)
-                        );
-                    }
-                }
+        float time = 0;
 
-                ticks++;
-                yield return Wait;
+        while (FadingObject.Materials[0].color.a > FadedAlpha)
+        {
+            foreach (Material material in FadingObject.Materials)
+            {
+                if (material.HasProperty("_Color"))
+                {
+                    material.color = new Color(
+                        material.color.r,
+                        material.color.g,
+                        material.color.b,
+                        Mathf.Lerp(FadingObject.InitialAlpha, FadedAlpha, time * FadeSpeed)
+                    );
+                }
             }
+
+            time += Time.deltaTime;
+            yield return null;
         }
 
         if (RunningCoroutines.ContainsKey(FadingObject))
@@ -160,46 +166,43 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
     private IEnumerator FadeObjectIn(FadingObject FadingObject)
     {
-        float waitTime = 1f / FadeFPS;
-        WaitForSeconds Wait = new WaitForSeconds(waitTime);
-        int ticks = 1;
+        float time = 0;
 
-        if (FadingObject.Materials[0].HasProperty("_Color"))
+        while (FadingObject.Materials[0].color.a < FadingObject.InitialAlpha)
         {
-            while (FadingObject.Materials[0].color.a < FadingObject.InitialAlpha)
+            foreach (Material material in FadingObject.Materials)
             {
-                for (int i = 0; i < FadingObject.Materials.Count; i++)
+                if (material.HasProperty("_Color"))
                 {
-                    if (FadingObject.Materials[i].HasProperty("_Color"))
-                    {
-                        FadingObject.Materials[i].color = new Color(
-                            FadingObject.Materials[i].color.r,
-                            FadingObject.Materials[i].color.g,
-                            FadingObject.Materials[i].color.b,
-                            Mathf.Lerp(FadedAlpha, FadingObject.InitialAlpha, waitTime * ticks * FadeSpeed)
-                        );
-                    }
+                    material.color = new Color(
+                        material.color.r,
+                        material.color.g,
+                        material.color.b,
+                        Mathf.Lerp(FadedAlpha, FadingObject.InitialAlpha, time * FadeSpeed)
+                    );
                 }
-
-                ticks++;
-                yield return Wait;
             }
+
+            time += Time.deltaTime;
+            yield return null;
         }
 
-        for (int i = 0; i < FadingObject.Materials.Count; i++)
+        foreach (Material material in FadingObject.Materials)
         {
-            if (FadingMode == FadeMode.Fade)
-            {
-                FadingObject.Materials[i].DisableKeyword("_ALPHABLEND_ON");
-            }
-            else
-            {
-                FadingObject.Materials[i].DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            }
-            FadingObject.Materials[i].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            FadingObject.Materials[i].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-            FadingObject.Materials[i].SetInt("_ZWrite", 1); // re-enable Z Writing
-            FadingObject.Materials[i].renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            material.SetInt("_ZWrite", 1);
+            material.SetInt("_Surface", 0);
+
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+
+            material.SetShaderPassEnabled("DepthOnly", true);
+            material.SetShaderPassEnabled("SHADOWCASTER", true);
+
+            material.SetOverrideTag("RenderType", "Opaque");
+
+            material.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         }
 
         if (RunningCoroutines.ContainsKey(FadingObject))
@@ -209,23 +212,14 @@ public class FadeObjectBlockingObject : MonoBehaviour
         }
     }
 
+    private void ClearHits()
+    {
+        System.Array.Clear(Hits, 0, Hits.Length);
+    }
+
     private FadingObject GetFadingObjectFromHit(RaycastHit Hit)
     {
         return Hit.collider != null ? Hit.collider.GetComponent<FadingObject>() : null;
     }
 
-    private void ClearHits()
-    {
-        RaycastHit hit = new RaycastHit();
-        for (int i = 0; i < Hits.Length; i++)
-        {
-            Hits[i] = hit;
-        }
-    }
-
-    public enum FadeMode
-    {
-        Transparent,
-        Fade
-    }
 }
