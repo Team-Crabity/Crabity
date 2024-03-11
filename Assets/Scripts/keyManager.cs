@@ -8,10 +8,12 @@ public class keyManager : MonoBehaviour
     
     public float amp;
     public float freq;
-    Vector3 initPos;
     public bool isPickedUp;
-    private Vector3 vel;
     public float smoothTime;
+
+    Vector3 initPos;
+
+    private Vector3 vel;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,7 @@ public class keyManager : MonoBehaviour
     {
         if (isPickedUp)
         {
-            Vector3 offset = new Vector3(-22, -3, -34.5f);
+            Vector3 offset = new Vector3(-22, -5, -34.5f);
             transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + offset, ref vel, smoothTime);
         } else {
             transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, initPos.z);
