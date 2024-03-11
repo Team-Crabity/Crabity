@@ -89,6 +89,7 @@ public class PauseMenu : MonoBehaviour
 
     void ReturnToMainMenu()
     {
+        TogglePauseMenu(false);
         SceneManager.LoadScene(0);
     }
 

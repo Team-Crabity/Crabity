@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;  
 
 public class ChangeScene : MonoBehaviour
 {
@@ -14,10 +13,15 @@ public class ChangeScene : MonoBehaviour
     public GameObject door;
     bool moving = false;
     public bool isOpening = false;
+    private PauseMenu pauseMenuScript;
 
     private void Start()
     {
         ObjClickScript = Cam.GetComponent<ObjClick>();
+        pauseMenuScript = FindObjectOfType<PauseMenu>();
+        if (pauseMenuScript != null) {
+            pauseMenuScript.enabled = false;
+        }
     }
 
     public void MoveToScene(int sceneID) 
@@ -56,6 +60,9 @@ public class ChangeScene : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, Posi.transform.position, step);
             if (transform.position == Posi.transform.position) 
             {
+                if (pauseMenuScript != null) {
+                    pauseMenuScript.enabled = true;
+                }
                 moving = false;
                 MoveToScene(ID);
             }
