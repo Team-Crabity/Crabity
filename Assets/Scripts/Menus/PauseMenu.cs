@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.ComponentModel;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,11 +10,17 @@ public class PauseMenu : MonoBehaviour
     public Button mainMenuButton;
     public Button restartButton;
     public Button exitButton;
+    public Button pauseButton;
 
     public bool isPaused = false;
 
     private Movement movementScript;
     private Jump jumpScript;
+
+    public Sprite normalButtonImage;
+    public Sprite pausedButtonImage;
+
+    private AudioSlider audioSlider; // Reference to the AudioSlider script
 
     void Start()
     {
@@ -29,35 +34,50 @@ public class PauseMenu : MonoBehaviour
         // Find the Movement and Jump scripts on the player object
         movementScript = FindObjectOfType<Movement>();
         jumpScript = FindObjectOfType<Jump>();
+
+        // Find the AudioSlider script in the scene
+        audioSlider = FindObjectOfType<AudioSlider>();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            PauseButtonClick();
+        }
+
+        if (isPaused)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
                 ResumeGame();
-            else
-                PauseGame();
-        }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                RestartGame();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                ReturnToMainMenu();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                ExitGame();
+            }
 
-        if(Input.GetKeyDown(KeyCode.Alpha1) && isPaused)
-        {
-            ResumeGame();
+            // Check for Q and E key presses to update AudioSlider
+            if (audioSlider != null)
+            {
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    audioSlider.DecreaseVolume();
+                }
+                else if (Input.GetKey(KeyCode.E))
+                {
+                    audioSlider.IncreaseVolume();
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && isPaused)
-        {
-            RestartGame();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && isPaused)
-        {
-            ReturnToMainMenu();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && isPaused)
-        {
-            ExitGame();
-        }
-
     }
 
     void TogglePauseMenu(bool pause)
@@ -77,39 +97,69 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void PauseGame()
+    public void PauseGame()
     {
+        ChangeButtonImage(pausedButtonImage);
         TogglePauseMenu(true);
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
+        ChangeButtonImage(normalButtonImage);
         TogglePauseMenu(false);
     }
 
-    void ReturnToMainMenu()
+    public void ReturnToMainMenu()
     {
         TogglePauseMenu(false);
         SceneManager.LoadScene(0);
     }
 
-    void RestartGame()
+    public void PauseButtonClick()
+    {
+        if (isPaused)
+            ResumeGame();
+        else
+            PauseGame();
+        SetFocusToNull(); // Call the method to remove focus
+    }
+
+    public void RestartGame()
     {
         TogglePauseMenu(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    void ExitGame()
+
+    public void ExitGame()
     {
         Application.Quit();
         Debug.Log("Game Exited.");
     }
 
-    void stopMovement()
+    private void SetFocusToNull()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
     }
 
+    private void ChangeButtonImage(Sprite newImage)
+    {
+        if (pauseButton != null)
+        {
+            Image buttonImage = pauseButton.GetComponent<Image>();
+
+            if (buttonImage != null)
+            {
+                buttonImage.sprite = newImage;
+            }
+            else
+            {
+                Debug.LogError("Image component not found on the pauseButton GameObject.");
+            }
+        }
+        else
+        {
+            Debug.LogError("pauseButton GameObject not assigned in the inspector.");
+        }
+    }
 
 }
