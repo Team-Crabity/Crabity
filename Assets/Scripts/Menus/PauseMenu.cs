@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.ComponentModel;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,17 +11,11 @@ public class PauseMenu : MonoBehaviour
     public Button mainMenuButton;
     public Button restartButton;
     public Button exitButton;
-    public Button pauseButton;
 
     public bool isPaused = false;
 
     private Movement movementScript;
     private Jump jumpScript;
-
-    public Sprite normalButtonImage;
-    public Sprite pausedButtonImage;
-
-    private AudioSlider audioSlider; // Reference to the AudioSlider script
 
     void Start()
     {
@@ -34,50 +29,35 @@ public class PauseMenu : MonoBehaviour
         // Find the Movement and Jump scripts on the player object
         movementScript = FindObjectOfType<Movement>();
         jumpScript = FindObjectOfType<Jump>();
-
-        // Find the AudioSlider script in the scene
-        audioSlider = FindObjectOfType<AudioSlider>();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseButtonClick();
-        }
-
-        if (isPaused)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
+            if (isPaused)
                 ResumeGame();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                RestartGame();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                ReturnToMainMenu();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                ExitGame();
-            }
-
-            // Check for Q and E key presses to update AudioSlider
-            if (audioSlider != null)
-            {
-                if (Input.GetKey(KeyCode.Q))
-                {
-                    audioSlider.DecreaseVolume();
-                }
-                else if (Input.GetKey(KeyCode.E))
-                {
-                    audioSlider.IncreaseVolume();
-                }
-            }
+            else
+                PauseGame();
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1) && isPaused)
+        {
+            ResumeGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) && isPaused)
+        {
+            RestartGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) && isPaused)
+        {
+            ReturnToMainMenu();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) && isPaused)
+        {
+            ExitGame();
+        }
+
     }
 
     void TogglePauseMenu(bool pause)
@@ -97,62 +77,38 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void PauseGame()
+    void PauseGame()
     {
-        ChangeButtonImage(pausedButtonImage);
         TogglePauseMenu(true);
     }
 
-    public void ResumeGame()
+    void ResumeGame()
     {
-        ChangeButtonImage(normalButtonImage);
         TogglePauseMenu(false);
     }
 
-    public void ReturnToMainMenu()
+    void ReturnToMainMenu()
     {
         TogglePauseMenu(false);
         SceneManager.LoadScene(0);
     }
 
-    public void PauseButtonClick()
-    {
-        if (isPaused)
-            ResumeGame();
-        else
-            PauseGame();
-        SetFocusToNull(); // Call the method to remove focus
-    }
-
-    public void RestartGame()
+    void RestartGame()
     {
         TogglePauseMenu(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    public void ExitGame()
+    void ExitGame()
     {
         Application.Quit();
         Debug.Log("Game Exited.");
     }
 
-    private void SetFocusToNull()
+    void stopMovement()
     {
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-    }
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
 
-    private void ChangeButtonImage(Sprite newImage)
-    {
-        Image buttonImage = pauseButton.GetComponent<Image>();
-
-        if (buttonImage != null)
-        {
-            buttonImage.sprite = newImage;
-        }
-        else
-        {
-            Debug.LogError("Button component or Image component not found.");
-        }
     }
 
 
