@@ -1,6 +1,12 @@
-name: Actions 😎
+name: Build and Deploy Automation ⚙️
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   testRunner:
