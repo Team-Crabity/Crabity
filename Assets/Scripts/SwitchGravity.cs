@@ -105,6 +105,6 @@ public class SwitchGravity : MonoBehaviour
         movementDirection = Vector3.ProjectOnPlane(movementDirection, cameraTransform.forward);
 
         float effectiveSpeed = speed * (1 - groundDrag * Time.deltaTime);
-        rb.MovePosition(rb.position + movementDirection.normalized * speed * Time.deltaTime);
+        rb.MovePosition(rb.position + movementDirection * speed * Time.deltaTime);
     }
 }

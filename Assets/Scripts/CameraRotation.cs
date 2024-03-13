@@ -8,7 +8,7 @@ public class RotateCamera : MonoBehaviour
     public GameObject otherObject;
 
     // Variables for rotating
-    private float turnTime = 0.75f;
+    public float turnTime = 1.25f;
     private bool rotating = false;
 
     // Update is called once per frame
