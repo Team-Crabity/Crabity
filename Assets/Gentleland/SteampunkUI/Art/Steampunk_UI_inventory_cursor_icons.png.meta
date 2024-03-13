@@ -108,7 +108,7 @@ TextureImporter:
       213: -5999422824933822019
     second: Steampunk_UI_inventory_cursor_icons_43
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -125,11 +125,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -168,6 +169,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -176,9 +179,10 @@ TextureImporter:
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
-    crunchedCompression: 0
+    crunchedCompression: 1
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -191,6 +195,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -203,6 +208,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -215,6 +221,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -966,44 +986,43 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Steampunk_UI_inventory_cursor_icons_24: -3250116738703845074
       Steampunk_UI_inventory_cursor_icons_11: -2659740629439423499
-      Steampunk_UI_inventory_cursor_icons_32: 8027022815208280247
-      Steampunk_UI_inventory_cursor_icons_21: 5326031258848260206
-      Steampunk_UI_inventory_cursor_icons_6: -4676717269735476019
-      Steampunk_UI_inventory_cursor_icons_34: 3367770444138230542
-      Steampunk_UI_inventory_cursor_icons_8: -3512658301899701691
-      Steampunk_UI_inventory_cursor_icons_47: -6932456307053518182
-      Steampunk_UI_inventory_cursor_icons_3: 4859291981072315390
-      Steampunk_UI_inventory_cursor_icons_35: 1925567205052859930
-      Steampunk_UI_inventory_cursor_icons_4: -4396776607900809575
-      Steampunk_UI_inventory_cursor_icons_23: 2555940965172109900
-      Steampunk_UI_inventory_cursor_icons_38: 1481765990470897609
-      Steampunk_UI_inventory_cursor_icons_30: 4199241828208230157
-      Steampunk_UI_inventory_cursor_icons_42: 1771120098912506795
-      Steampunk_UI_inventory_cursor_icons_45: -6979345463012375436
-      Steampunk_UI_inventory_cursor_icons_33: 6555481737146133282
       Steampunk_UI_inventory_cursor_icons_17: 799399395971795687
-      Steampunk_UI_inventory_cursor_icons_7: 7730392875212249362
-      Steampunk_UI_inventory_cursor_icons_25: -3507967788200807427
-      Steampunk_UI_inventory_cursor_icons_41: -427028709421643391
-      Steampunk_UI_inventory_cursor_icons_40: 1723224636535454388
-      Steampunk_UI_inventory_cursor_icons_5: 283434034112114428
-      Steampunk_UI_inventory_cursor_icons_36: 3150122119415527721
-      Steampunk_UI_inventory_cursor_icons_31: 2071443655879868920
-      Steampunk_UI_inventory_cursor_icons_46: -2681782042891149300
-      Steampunk_UI_inventory_cursor_icons_39: 5129307334249272741
-      Steampunk_UI_inventory_cursor_icons_44: 152811537136535293
-      Steampunk_UI_inventory_cursor_icons_48: 3589525664035264429
-      Steampunk_UI_inventory_cursor_icons_9: -7088471328016812336
       Steampunk_UI_inventory_cursor_icons_19: -7123685762806065932
+      Steampunk_UI_inventory_cursor_icons_21: 5326031258848260206
+      Steampunk_UI_inventory_cursor_icons_23: 2555940965172109900
+      Steampunk_UI_inventory_cursor_icons_24: -3250116738703845074
+      Steampunk_UI_inventory_cursor_icons_25: -3507967788200807427
+      Steampunk_UI_inventory_cursor_icons_3: 4859291981072315390
+      Steampunk_UI_inventory_cursor_icons_30: 4199241828208230157
+      Steampunk_UI_inventory_cursor_icons_31: 2071443655879868920
+      Steampunk_UI_inventory_cursor_icons_32: 8027022815208280247
+      Steampunk_UI_inventory_cursor_icons_33: 6555481737146133282
+      Steampunk_UI_inventory_cursor_icons_34: 3367770444138230542
+      Steampunk_UI_inventory_cursor_icons_35: 1925567205052859930
+      Steampunk_UI_inventory_cursor_icons_36: 3150122119415527721
       Steampunk_UI_inventory_cursor_icons_37: 5740775765791094921
-      Steampunk_UI_inventory_cursor_icons_49: -8222878684418604810
-      Steampunk_UI_inventory_cursor_icons_50: -1202721662152821624
+      Steampunk_UI_inventory_cursor_icons_38: 1481765990470897609
+      Steampunk_UI_inventory_cursor_icons_39: 5129307334249272741
+      Steampunk_UI_inventory_cursor_icons_4: -4396776607900809575
+      Steampunk_UI_inventory_cursor_icons_40: 1723224636535454388
+      Steampunk_UI_inventory_cursor_icons_41: -427028709421643391
+      Steampunk_UI_inventory_cursor_icons_42: 1771120098912506795
       Steampunk_UI_inventory_cursor_icons_43: -5999422824933822019
-  spritePackingTag: 
+      Steampunk_UI_inventory_cursor_icons_44: 152811537136535293
+      Steampunk_UI_inventory_cursor_icons_45: -6979345463012375436
+      Steampunk_UI_inventory_cursor_icons_46: -2681782042891149300
+      Steampunk_UI_inventory_cursor_icons_47: -6932456307053518182
+      Steampunk_UI_inventory_cursor_icons_48: 3589525664035264429
+      Steampunk_UI_inventory_cursor_icons_49: -8222878684418604810
+      Steampunk_UI_inventory_cursor_icons_5: 283434034112114428
+      Steampunk_UI_inventory_cursor_icons_50: -1202721662152821624
+      Steampunk_UI_inventory_cursor_icons_6: -4676717269735476019
+      Steampunk_UI_inventory_cursor_icons_7: 7730392875212249362
+      Steampunk_UI_inventory_cursor_icons_8: -3512658301899701691
+      Steampunk_UI_inventory_cursor_icons_9: -7088471328016812336
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

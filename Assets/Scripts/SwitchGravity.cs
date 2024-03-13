@@ -12,7 +12,7 @@ public class SwitchGravity : MonoBehaviour
     public Transform cameraTransform;
 
     private Rigidbody rb;
-    private Vector3 gravityDirection = Vector3.zero;
+    public Vector3 gravityDirection = Vector3.zero;
     private bool gravityCooldown;
 
     void Start()
@@ -30,7 +30,7 @@ public class SwitchGravity : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         if (gravityDirection != Vector3.zero)
         {
@@ -39,7 +39,7 @@ public class SwitchGravity : MonoBehaviour
         }
     }
 
-    private void ChangeGravityDirection()
+    public void ChangeGravityDirection()
     {
         Dictionary<KeyCode, Vector3> keyToDirection = new Dictionary<KeyCode, Vector3>
         {
@@ -73,4 +73,5 @@ public class SwitchGravity : MonoBehaviour
             gravityCooldown = true;
         }
     }
+
 }
