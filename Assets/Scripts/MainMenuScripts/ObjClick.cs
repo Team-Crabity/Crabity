@@ -13,6 +13,8 @@ public class ObjClick : MonoBehaviour
     private ChangeScene ChangeSceneScript;
     public int SceneNumber;
 
+    Vector3 initPos;
+
     private void Start()
     {
         ChangeSceneScript = Cam.GetComponent<ChangeScene>();
@@ -54,7 +56,6 @@ public class ObjClick : MonoBehaviour
             Debug.Log("Mouse Off");
         }
     }
-
     GameObject GetClickedObject(out RaycastHit hit)
     {
         //Checks if Obj is clicked on tapped on, and returns it if so
