@@ -39,6 +39,18 @@ public class RotateCamera : MonoBehaviour
         {
             StartCoroutine(RotateAroundCameraAxis(-90, turnTime, Vector3.right));
         }
+
+        // Continue rotating object clockwise
+        if (!isRotating() && Input.GetKeyDown(KeyCode.E) && shiftHeld)
+        {
+            StartCoroutine(RotateAroundCameraAxis(90, turnTime, Vector3.forward));
+        }
+        
+        // Continue rotating object counterclockwise
+        if (!isRotating() && Input.GetKeyDown(KeyCode.Q) && shiftHeld)
+        {
+            StartCoroutine(RotateAroundCameraAxis(-90, turnTime, Vector3.forward));
+        }
     }
 
     bool isRotating()
