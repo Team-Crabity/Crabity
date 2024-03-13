@@ -11,9 +11,16 @@ public class SwitchGravity : MonoBehaviour
     [Header("Camera")]
     public Transform cameraTransform;
 
+    [Header("Movement")]
+    public float speed = 7.0f;
+    public float groundDrag = 0.5f;
+
     private Rigidbody rb;
-    public Vector3 gravityDirection = Vector3.zero;
+    private Vector3 gravityDirection = Vector3.zero;
     private bool gravityCooldown;
+
+    // Track the current orientation of gravity to adjust movement
+    private Vector3 currentGravityDirection = Vector3.down;
 
     void Start()
     {
@@ -30,16 +37,18 @@ public class SwitchGravity : MonoBehaviour
         }
     }
 
-    public void FixedUpdate()
+    void FixedUpdate()
     {
         if (gravityDirection != Vector3.zero)
         {
             UpdateGravity(gravityDirection);
+            currentGravityDirection = gravityDirection; // Update current gravity direction
             gravityDirection = Vector3.zero;
         }
+        MovePlayer();
     }
 
-    public void ChangeGravityDirection()
+    private void ChangeGravityDirection()
     {
         Dictionary<KeyCode, Vector3> keyToDirection = new Dictionary<KeyCode, Vector3>
         {
@@ -74,4 +83,28 @@ public class SwitchGravity : MonoBehaviour
         }
     }
 
+    private void MovePlayer()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector3 movementDirection = Vector3.zero;
+
+        if (currentGravityDirection == Vector3.down || currentGravityDirection == Vector3.up)
+        {
+            // Gravity is down/up, player moves left and right with A and D keys
+            movementDirection += cameraTransform.right * horizontalInput;
+        }
+        else if (currentGravityDirection == Vector3.left || currentGravityDirection == Vector3.right)
+        {
+            // Gravity is left/right, player moves up and down with W and S keys
+            movementDirection += cameraTransform.up * verticalInput;
+        }
+
+        // Ensure movementDirection does not include movement along the camera's forward axis
+        movementDirection = Vector3.ProjectOnPlane(movementDirection, cameraTransform.forward);
+
+        float effectiveSpeed = speed * (1 - groundDrag * Time.deltaTime);
+        rb.MovePosition(rb.position + movementDirection.normalized * speed * Time.deltaTime);
+    }
 }
