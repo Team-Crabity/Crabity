@@ -5,7 +5,7 @@ using UnityEngine;
 public class Jump : MonoBehaviour
 {
     [Header("Jumps")]
-    public float jumpForce = 8f;
+    public float jumpForce = 12.5f;
     public int jumpsLeft = 2;
     public int maxJumps = 2;
 

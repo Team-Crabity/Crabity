@@ -5,7 +5,7 @@ using UnityEngine;
 public class SwitchGravity : MonoBehaviour
 {
     [Header("Gravity")]
-    public float gravityScale = 3.0f;
+    public float gravityScale = 5.0f;
     public float gravity = 9.81f;
 
     [Header("Camera")]
