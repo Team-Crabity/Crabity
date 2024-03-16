@@ -11,7 +11,29 @@
     <script src="<<<TemplateData/diagnostics.js>>>"></script>
 #endif
   </head>
+  <style>
+    body {
+      background-color: linen;
+    }
+    
+    div {
+      color: maroon;
+      margin-left: 40px;
+      font-family: Arial, Helvetica, sans-serif;;
+    } 
+  </style>
   <body>
+    <div>
+      <h1>Crabity</h1>
+      <p>Vertical Slice made for the CMPM 171 class at UCSC, Winter 2024.</p>
+    </div>
+  
+    <div>
+      <h2>Team members</h2>
+      <p>This vertical slice was made possible thanks to Akhror Rakhmatov, Daniel Do, Ernani Raffo, Jentsen Maniti, Jordan
+      Reavis, and Lukas Licon.</p>
+    </div>
+
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -154,5 +176,18 @@
       document.body.appendChild(script);
 
     </script>
+    
+    <div>
+      <h2>Game Constraints</h2>
+      <p>Our game was designed under the following externally imposed constraints:</p>
+    </div>
+  
+    <div>
+      <ul>
+        <li>Accessibility: </li>
+        <li>Localization: Our game comes in both English and Arabic, supporting a right-to-left language.</li>
+        <li>Game Format: Our game can be downloaded to play offline on MacOS and Windows laptops. The compressed file sizes are below 100 Mb.</li>
+      </ul>
+    </div>
   </body>
 </html>
