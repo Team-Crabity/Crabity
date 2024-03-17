@@ -9,6 +9,9 @@ public class LocaleDropdown : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
 
+    // Public variable to assign the image in the Unity Editor
+    public Sprite defaultLocaleImage;
+
     IEnumerator Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -24,11 +27,11 @@ public class LocaleDropdown : MonoBehaviour
             var locale = LocalizationSettings.AvailableLocales.Locales[i];
             if (LocalizationSettings.SelectedLocale == locale)
                 selected = i;
-            options.Add(new TMP_Dropdown.OptionData(locale.name));
-            Debug.Log("Options: " + options);
+
+            // Add the option with the locale name and default image
+            options.Add(new TMP_Dropdown.OptionData(locale.name, defaultLocaleImage));
         }
         dropdown.options = options;
-        Debug.Log(options);
 
         dropdown.value = selected;
         dropdown.onValueChanged.AddListener(LocaleSelected);
