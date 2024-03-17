@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
 
-    public Animator animator;
+    //public Animator animator;
 
     private Queue <string> sentences;
 
@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
    public void StartDialogue (Dialogue dialogue)
     {
-        animator.SetBool("isOpen", true);
+       // animator.SetBool("isOpen", true);
 
         nameText.text = dialogue.name;
 
@@ -60,7 +60,7 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-        animator.SetBool("isOpen", false);
+       // animator.SetBool("isOpen", false);
     }
 
 
