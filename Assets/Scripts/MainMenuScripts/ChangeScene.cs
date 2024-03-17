@@ -47,6 +47,7 @@ public class ChangeScene : MonoBehaviour
         isOpening = true;
         door.GetComponent<Animator>().Play("DoorOpen");
         yield return new WaitForSeconds(0.05f);
+        door.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(5.0f);
         door.GetComponent<Animator>().Play("New State");
         isOpening = false;
