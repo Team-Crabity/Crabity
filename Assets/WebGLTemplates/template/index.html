@@ -1,352 +1,487 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-#if SHOW_DIAGNOSTICS
-    <link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
-    <script src="<<<TemplateData/diagnostics.js>>>"></script>
-#endif
-  </head>
-  <style>
-    body {
-      background-color: linen;
-    }
-    
-    div {
-      color: maroon;
-      margin-left: 40px;
-      font-family: Arial, Helvetica, sans-serif;;
-    } 
-  </style>
-  <body>
-    <div>
-      <h1>Crabity</h1>
-      <p>Vertical Slice made for the CMPM 171 class at UCSC, Winter 2024.</p>
-    </div>
-  
-    <div>
-      <h2>Team members</h2>
-      <p>This vertical slice was made possible thanks to Akhror Rakhmatov, Daniel Do, Ernani Raffo, Jentsen Maniti, Jordan
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  #if SHOW_DIAGNOSTICS
+  <link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
+  <script src="<<<TemplateData/diagnostics.js>>>"></script>
+  #endif
+</head>
+<style>
+  body {
+    background-color: linen;
+  }
+
+  div {
+    color: maroon;
+    margin-left: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    ;
+  }
+</style>
+
+<body>
+  <div>
+    <h1>Crabity</h1>
+    <p>Vertical Slice made for the CMPM 171 class at UCSC, Winter 2024.</p>
+  </div>
+
+  <div>
+    <h2>Team members</h2>
+    <p>This vertical slice was made possible thanks to Akhror Rakhmatov, Daniel Do, Ernani Raffo, Jentsen Maniti, Jordan
       Reavis, and Lukas Licon.</p>
-    </div>
+  </div>
 
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
-      <div id="unity-warning"> </div>
-      <div id="unity-footer">
-        <div id="unity-webgl-logo"></div>
-        <div id="unity-fullscreen-button"></div>
-#if SHOW_DIAGNOSTICS
-        <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
-#endif
-        <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
       </div>
     </div>
-    <script>
+    <div id="unity-warning"> </div>
+    <div id="unity-footer">
+      <div id="unity-webgl-logo"></div>
+      <div id="unity-fullscreen-button"></div>
+      #if SHOW_DIAGNOSTICS
+      <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
+      #endif
+      <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
+    </div>
+  </div>
+  <script>
 
-      var container = document.querySelector("#unity-container");
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      var warningBanner = document.querySelector("#unity-warning");
-#if SHOW_DIAGNOSTICS
-      var diagnostics_icon = document.getElementById("diagnostics-icon");
-#endif
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+    var warningBanner = document.querySelector("#unity-warning");
+    #if SHOW_DIAGNOSTICS
+    var diagnostics_icon = document.getElementById("diagnostics-icon");
+    #endif
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
-      function unityShowBanner(msg, type) {
-        function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-        }
-        var div = document.createElement('div');
-        div.innerHTML = msg;
-        warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 10px;';
-        else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
-            warningBanner.removeChild(div);
-            updateBannerVisibility();
-          }, 5000);
-        }
-        updateBannerVisibility();
+    // Shows a temporary message banner/ribbon for a few seconds, or
+    // a permanent error message on top of the canvas if type=='error'.
+    // If type=='warning', a yellow highlight color is used.
+    // Modify or remove this function to customize the visually presented
+    // way that non-critical warnings and error messages are presented to the
+    // user.
+    function unityShowBanner(msg, type) {
+      function updateBannerVisibility() {
+        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
       }
+      var div = document.createElement('div');
+      div.innerHTML = msg;
+      warningBanner.appendChild(div);
+      if (type == 'error') div.style = 'background: red; padding: 10px;';
+      else {
+        if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+        setTimeout(function () {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }, 5000);
+      }
+      updateBannerVisibility();
+    }
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
-      var config = {
-        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
-        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
-#if USE_THREADS
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+    var config = {
+      dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+      frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+      #if USE_THREADS
         workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
-#endif
+      #endif
 #if USE_WASM
         codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
-#endif
+      #endif
 #if MEMORY_FILENAME
         memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
-#endif
+      #endif
 #if SYMBOLS_FILENAME
         symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
-#endif
+      #endif
         streamingAssetsUrl: "StreamingAssets",
-        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
-        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
-        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
-        showBanner: unityShowBanner,
+      companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+    productName: { { { JSON.stringify(PRODUCT_NAME) } } },
+    productVersion: { { { JSON.stringify(PRODUCT_VERSION) } } },
+    showBanner: unityShowBanner,
       };
 
-      // By default, Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
+    // By default, Unity keeps WebGL canvas render target size matched with
+    // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+    // Set this to false if you want to decouple this synchronization from
+    // happening inside the engine, and you would instead like to size up
+    // the canvas DOM size and WebGL render target sizes yourself.
+    // config.matchWebGLToCanvasSize = false;
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      // Mobile device style: fill the whole browser client area with the game canvas:
 
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        container.className = "unity-mobile";
-        canvas.className = "unity-mobile";
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+      container.className = "unity-mobile";
+      canvas.className = "unity-mobile";
 
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
+      // To lower canvas resolution on mobile devices to gain some
+      // performance, uncomment the following line:
+      // config.devicePixelRatio = 1;
 
-#if SHOW_DIAGNOSTICS
-        // position the diagnostics icon in the corner on the canvas
-        diagnostics_icon.style.position = "fixed";
-        diagnostics_icon.style.bottom = "10px";
-        diagnostics_icon.style.right = "0px";
-        canvas.after(diagnostics_icon);
-#endif
+      #if SHOW_DIAGNOSTICS
+      // position the diagnostics icon in the corner on the canvas
+      diagnostics_icon.style.position = "fixed";
+      diagnostics_icon.style.bottom = "10px";
+      diagnostics_icon.style.right = "0px";
+      canvas.after(diagnostics_icon);
+      #endif
 
-      } else {
-        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+    } else {
+      // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "{{{ WIDTH }}}px";
-        canvas.style.height = "{{{ HEIGHT }}}px";
-      }
+      canvas.style.width = "{{{ WIDTH }}}px";
+      canvas.style.height = "{{{ HEIGHT }}}px";
+    }
 
-#if BACKGROUND_FILENAME
-      canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
-#endif
-      loadingBar.style.display = "block";
+    #if BACKGROUND_FILENAME
+    canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
+    #endif
+    loadingBar.style.display = "block";
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-                loadingBar.style.display = "none";
-#if SHOW_DIAGNOSTICS
-                diagnostics_icon.onclick = () => {
-                  unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
-                };
-#endif
-                fullscreenButton.onclick = () => {
-                  unityInstance.SetFullscreen(1);
-                };
-              }).catch((message) => {
-                alert(message);
-              });
-            };
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+        #if SHOW_DIAGNOSTICS
+        diagnostics_icon.onclick = () => {
+          unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
+        };
+        #endif
+        fullscreenButton.onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
 
-      document.body.appendChild(script);
+    document.body.appendChild(script);
 
-    </script>
-    
-    <div>
-      <h2>Game Constraints</h2>
-      <p>Our game was designed under the following externally imposed constraints:</p>
-    </div>
-    <div>
+  </script>
+
+  <div>
+    <h2>Game Constraints</h2>
+    <p>Our game was designed under the following externally imposed constraints:</p>
+  </div>
+  <div>
+    <ul>
+      <li><b>Accessibility</b>: </li>
+      <p></p>
       <ul>
-        <li><b>Accessibility</b>: </li>
-        <p></p>
-        <ul>
-          
-          <li>
-            <b>Limited Vision (Seeing)</b>
-            <p>
-              <i>Requirement</i>: the game needed to be completable even when simulating vision limitations such as constrast and color
-              sensitivity.
-            </p>
-            <p>
-              <i>Team's design:</i>
-            </p>
-            <ul>
-              <li>
-                To highlight interactable elements, we used continuous motion on objects to make them stand out to the player.
-                The motion made the objects go up and down, hinting to the player that they are items that have purpose in the game.
-              </li>
-              <p></p>
-              <li>
-                To fulfill this requirement, we also made our game indepedent of color. For example, there is no point in the game where the player
-                needs to grab a blue key or a red key to go through a blue or red door, respectively.
-              </li>
-              <p></p>
-              <li>
-                The in-game camera rotation UI element that appears in the second puzzle in the bottom-right is a product of careful design from the
-                team. At first, we wanted to create a UI element that highlights the platform you are on with a color, but by thinking of the
-                limiting vision constraint, we came up with an arrow that points to the house and follows it around so that the player does not
-                need to depend on color to understand where they are.
-              </li>
-            </ul>
-          </li>
-          
-          <p></p>
-          <li>
-            <b>Limited Dexterity (Touching)</b>
-            <p>
-              <i>Requirement:</i> the game must be completable by a player using just one hand of the controls at a time.
-            </p>
-            <p><i>Team's design:</i></p>
-            <ul>
-              <p><li>
-                Our game does not require both mouse and keyboard input at the same time.
-              </li></p>
-              <p><li>
-                While playing the game, the controls are all of the left side of the keyboard, and can be played with only one hand.
-              </li></p>
-              <p><li>
-                In the main menu, the player can use either a trackpad or a mouse to click on play, settings, or credits.
-              </li></p>
-              <p><li>
-                By keeping our controls simple, we were able to make a game that feels good to play with only one hand.
-              </li></p>
-            </ul>
-          </li>
 
-          <p></p>
-          <li>
-            <b>Limited Audition (Hearing)</b>
-            <p>
-              <i>Requirement:</i> the game must be completable by a player who cannot hear any sounds from the game.
-            </p>
+        <li>
+          <b>Limited Vision (Seeing)</b>
+          <p>
+            <i>Requirement</i>: the game needed to be completable even when simulating vision limitations such as
+            constrast and color
+            sensitivity.
+          </p>
+          <p>
+            <i>Team's design:</i>
+          </p>
+          <ul>
+            <li>
+              To highlight interactable elements, we used continuous motion on objects to make them stand out to the
+              player.
+              The motion made the objects go up and down, hinting to the player that they are items that have purpose in
+              the game.
+            </li>
+            <p></p>
+            <li>
+              To fulfill this requirement, we also made our game indepedent of color. For example, there is no point in
+              the game where the player
+              needs to grab a blue key or a red key to go through a blue or red door, respectively.
+            </li>
+            <p></p>
+            <li>
+              The in-game camera rotation UI element that appears in the second puzzle in the bottom-right is a product
+              of careful design from the
+              team. At first, we wanted to create a UI element that highlights the platform you are on with a color, but
+              by thinking of the
+              limiting vision constraint, we came up with an arrow that points to the house and follows it around so
+              that the player does not
+              need to depend on color to understand where they are.
+            </li>
+          </ul>
+        </li>
 
-            <p>
-              <i>Team's design:</i>
-            </p>
-
-            <ul>
-              <p><li>
-                To make our game completable by a player who cannot hear any sounds, we designed our game to not be depedent on sound cues.
-              </li></p>
-              <p><li>
-                We have included background music in our game for ambiance, but the sound can be turned all the way off and nothing would change
-                in terms of the gameplay.
-              </li></p>
-              <p><li>
-                To communicate controls and story with the player, we used a dialogue box on the left of the screen that the player can interact with.
-                By having this dialogue box with no voice attached to it, our game is completable without any sound cues.
-              </li></p>
-            </ul>
-          </li>
-
-          <p></p>
-          <li>
-            <b>Limited Energy and Attention (Resting)</b>
-            <p>
-              <i>Requirement:</i> during a completion run of the game, gameplay should always reach a natural resting point within two minutes
-              of active play without the player needing to take an extra action to pause the game.
-            </p>
-
-            <p>
-              <i>Team's design:</i>
-            </p>
-
-            <ul>
-              <p><li>
-                We designed our game to not have enemies, as you are your only enemy when it comes to solving puzzles.
-                With this design philosophy, you can rest at any point in a level.
-              </li></p>
-              <p><li>
-                In our next capstone course, CMPM 172 (Game Production Studio), we are planning to adding enemies, where we will need to
-                introduce some rest areas in between levels and in a level itself. For example, this could come in the form of a platform where no
-                enemies can come near you.
-              </li></p>
-            </ul>
-          </li>
-
-        </ul>
-        
         <p></p>
         <li>
-          <b>Localization:</b>
+          <b>Limited Dexterity (Touching)</b>
           <p>
-            <i>Requirement:</i> the game must support two different written languages. At least one language must use either a logographic script
-            or a right-to-left script.
+            <i>Requirement:</i> the game must be completable by a player using just one hand of the controls at a time.
+          </p>
+          <p><i>Team's design:</i></p>
+          <ul>
+            <p>
+              <li>
+                Our game does not require both mouse and keyboard input at the same time.
+              </li>
+            </p>
+            <p>
+              <li>
+                While playing the game, the controls are all of the left side of the keyboard, and can be played with
+                only one hand.
+              </li>
+            </p>
+            <p>
+              <li>
+                In the main menu, the player can use either a trackpad or a mouse to click on play, settings, or
+                credits.
+              </li>
+            </p>
+            <p>
+              <li>
+                By keeping our controls simple, we were able to make a game that feels good to play with only one hand.
+              </li>
+            </p>
+          </ul>
+        </li>
+
+        <p></p>
+        <li>
+          <b>Limited Audition (Hearing)</b>
+          <p>
+            <i>Requirement:</i> the game must be completable by a player who cannot hear any sounds from the game.
           </p>
 
           <p>
             <i>Team's design:</i>
           </p>
+
           <ul>
-            <p><li>
-              To fullfil this requirement, we included a button in the main menu that switches the locale of the game to Arabic.
-            </li></p>
-            <p><li>
-              We downloaded a font specificially for Arabic characters, and used Unity's RTL editor to port Arabic sentences properly.
-            </li></p>
+            <p>
+              <li>
+                To make our game completable by a player who cannot hear any sounds, we designed our game to not be
+                depedent on sound cues.
+              </li>
+            </p>
+            <p>
+              <li>
+                We have included background music in our game for ambiance, but the sound can be turned all the way off
+                and nothing would change
+                in terms of the gameplay.
+              </li>
+            </p>
+            <p>
+              <li>
+                To communicate controls and story with the player, we used a dialogue box on the left of the screen that
+                the player can interact with.
+                By having this dialogue box with no voice attached to it, our game is completable without any sound
+                cues.
+              </li>
+            </p>
           </ul>
         </li>
-        
+
         <p></p>
         <li>
-          <b>Game Format:</b> 
+          <b>Limited Energy and Attention (Resting)</b>
           <p>
-            <i>Requirements:</i>
-            <ul>
-              <p><li>
-                The game must be completable while the player's device is disconnected from the internet.
-              </li></p>
-              <p><li>
-                The total data transfer involved in downloading the game must be less than 100 MiB.
-              </li></p>
-              <p><li>
-                The game may target the platform of the team's choice, however if Windows is supported, macOS must also
-                be supported in principle.
-              </li></p>
-            </ul>
+            <i>Requirement:</i> during a completion run of the game, gameplay should always reach a natural resting
+            point within two minutes
+            of active play without the player needing to take an extra action to pause the game.
           </p>
 
           <p>
-            <i>Team's design</i>
+            <i>Team's design:</i>
           </p>
 
           <ul>
-            <p><li>
-              Our game is supported for both macOS and Windows, and both are below 100 MiB when transferred.
-            </li></p>
-            <p><li>
-              By using Unity's compression tool and compressing the assets used, we are able to achieve this file transfer
-              constraint.
-            </li></p>
+            <p>
+              <li>
+                We designed our game to not have enemies, as you are your only enemy when it comes to solving puzzles.
+                With this design philosophy, you can rest at any point in a level.
+              </li>
+            </p>
+            <p>
+              <li>
+                In our next capstone course, CMPM 172 (Game Production Studio), we are planning to adding enemies, where
+                we will need to
+                introduce some rest areas in between levels and in a level itself. For example, this could come in the
+                form of a platform where no
+                enemies can come near you.
+              </li>
+            </p>
           </ul>
         </li>
+
       </ul>
-    </div>
-  </body>
+
+      <p></p>
+      <li>
+        <b>Localization:</b>
+        <p>
+          <i>Requirement:</i> the game must support two different written languages. At least one language must use
+          either a logographic script
+          or a right-to-left script.
+        </p>
+
+        <p>
+          <i>Team's design:</i>
+        </p>
+        <ul>
+          <p>
+            <li>
+              To fullfil this requirement, we included a button in the main menu that switches the locale of the game to
+              Arabic.
+            </li>
+          </p>
+          <p>
+            <li>
+              We downloaded a font specificially for Arabic characters, and used Unity's RTL editor to port Arabic
+              sentences properly.
+            </li>
+          </p>
+        </ul>
+      </li>
+
+      <p></p>
+      <li>
+        <b>Game Format:</b>
+        <p>
+          <i>Requirements:</i>
+        <ul>
+          <p>
+            <li>
+              The game must be completable while the player's device is disconnected from the internet.
+            </li>
+          </p>
+          <p>
+            <li>
+              The total data transfer involved in downloading the game must be less than 100 MiB.
+            </li>
+          </p>
+          <p>
+            <li>
+              The game may target the platform of the team's choice, however if Windows is supported, macOS must also
+              be supported in principle.
+            </li>
+          </p>
+        </ul>
+        </p>
+
+        <p>
+          <i>Team's design</i>
+        </p>
+
+        <ul>
+          <p>
+            <li>
+              Our game is supported for both macOS and Windows, and both are below 100 MiB when transferred.
+            </li>
+          </p>
+          <p>
+            <li>
+              By using Unity's crunch compression tool and compressing the assets used, we are able to achieve this file
+              transfer
+              constraint.
+            </li>
+          </p>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2>Rapid Prototyping</h2>
+    <li><b>Minecraft Prototypes</b>: </li>
+    <p></p>
+    <ul>
+      <li>
+        <p>
+          First, Jentsen and Daniel began our rapid prototyping in Minecraft; with the quick installation of the mods
+          Freecam and Gravity Changer, we were able to create a basic prototype of what would be our game.
+        </p>
+        <img src="assets/gifs/jentsen_1.gif" alt="Jentsen and Daniel Minecraft Prototype" width="500">
+        <p>
+          We quickly noted that by changing the gravitational axis, the controls of the game can feel a bit challenging
+          to understand. Thus, we made sure to keep the controls the same regardless of the gravitational axis which
+          helped alleviate player confusion in future builds.
+        </p>
+      </li>
+    </ul>
+
+    <li><b>Unity Prototypes:</b></li>
+    <p></p>
+    <ul>
+      <li>
+        <p>
+          Lukas was also able to generate a quick idea of what the camera switching would look like in Unity using
+          primitives. This first introduced the idea that players would ONLY be allowed to move left and right.
+        </p>
+        <img src="assets/gifs/lukas_1.gif" alt="Lukas Prototype" width="500">
+        <p>
+          However, we weren't completely sure if the snappy camera movement was exactly what we wanted.
+        </p>
+      </li>
+      <li>
+        <p>
+          Ernani generated another prototype revolving around smoother camera rotations. This ended up being the main
+          script that we used in our final build. At the same time, he was able to use Github actions to auto build our
+          Unity prototypes; this allowed us to expedite and test our games faster on our site compared to having to
+          manually build the game over and over again.
+        </p>
+        <img src="assets/gifs/ernani_1.gif" alt="Ernani Prototype" width="500">
+      </li>
+      <li>
+        <p>
+          Lukas also created another protoype that centered around the idea of pushing objects onto a platform to reveal
+          new parts around the level. This opened the door for the idea of secret passages and easter eggs. However,
+          this ended up being a bit confusing for some players as we saw during playtests they weren't sure exactly what
+          to do with the spheres. Also, the rigid bodies on the spheres made it difficult for some players to guide
+          around.
+        </p>
+        <img src="assets/gifs/lukas_2.gif" alt="Lukas Prototype 2" width="500">
+      </li>
+      <li>
+        <p>
+          Jentsen was also working on a seemingly 2D prototype for the gravity mechanic that we wanted to include into
+          the game. At this point, the x, y, and z rotations of the player object were NOT locked, allowing players to
+          notice that this was actually a 3D game with a 2D camera. This allowed for tons of new level design that we
+          could explore in the future.
+        </p>
+        <img src="assets/gifs/jentsen_2.gif" alt="Jentsen Prototype 2" width="500">
+      </li>
+      <li>
+        <p>
+          Afterwards, Jentsen quickly threw multiple aspects of our prototypes together and we ended up with the
+          base for our mechanics in our final prototype.
+        </p>
+        <img src="assets/gifs/jentsen_3.gif" alt="Jentsen Prototype 3" width="500">
+      </li>
+      <li>
+        <p>
+          Lastly, Jentsen added some free assets from the asset store, we slowly started creating the narrative of the
+          game. He noted that he came up with the idea of centering the idea around a crab as they are known for
+          primarily moving left and right. With a few more assets, we decided to go with our intial idea of a steampunk
+          environment that the robot crab would venture around in, trying to find objects that would help him be able to
+          survive in the ocean like a real crab. Finally, the game was starting to come together.
+        </p>
+        <img src="assets/gifs/jentsen_4.gif" alt="Jentsen Prototype 4" width="500">
+      </li>
+    </ul>
+  </div>
+</body>
+
 </html>
