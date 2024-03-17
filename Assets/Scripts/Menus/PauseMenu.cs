@@ -113,6 +113,7 @@ public class PauseMenu : MonoBehaviour
     {
         TogglePauseMenu(false);
         SceneManager.LoadScene(0);
+        Destroy(nonDestroyablePauseMenu);
     }
 
     public void PauseButtonClick()
