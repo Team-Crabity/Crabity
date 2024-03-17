@@ -8,6 +8,6 @@ public class Dialogue
 {
     public string name;
 
-    [TextArea(3, 10)]
+    [TextArea(1, 3)]
     public string[] sentences;
 }

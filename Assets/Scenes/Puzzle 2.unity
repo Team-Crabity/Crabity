@@ -3242,6 +3242,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7969417, y: 0.2945925, z: 0.5057646}
   m_Center: {x: -0.000000029802322, y: 0.14729649, z: 0.000000074505806}
+--- !u!114 &351382431 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8270521631798089593, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
+  m_PrefabInstance: {fileID: 896415454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2914e788a0640a24fb7c12edfde5e695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &353028872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
@@ -8681,6 +8692,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5022816677436279409, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 351382431}
+    - target: {fileID: 5022816677436279409, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TriggerDialogue
+      objectReference: {fileID: 0}
     - target: {fileID: 7788694598717966532, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_Name
       value: DialogueManager
