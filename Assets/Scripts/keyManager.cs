@@ -31,6 +31,7 @@ public class KeyManager : MonoBehaviour
             transform.parent = null;
             Vector3 offset = new Vector3(0, -5, 0);
             transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + offset, ref vel, smoothTime);
+            transform.RotateAround(rotateAround.position, Vector3.up, 90 * Time.deltaTime);  // have object rotate in place
         }
         else
         {
