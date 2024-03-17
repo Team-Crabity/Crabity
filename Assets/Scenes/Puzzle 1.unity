@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6997336, g: 0.5594266, b: 0.38041604, a: 1}
+  m_IndirectSpecularColor: {r: 0.69981325, g: 0.55877304, b: 0.380202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5416,6 +5416,10 @@ PrefabInstance:
     - target: {fileID: 1363394148002060, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
       propertyPath: m_Name
       value: WoodBox4 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363394148002060, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 4506383596333396, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
       propertyPath: m_LocalScale.x
@@ -14479,6 +14483,10 @@ PrefabInstance:
     - target: {fileID: 1363394148002060, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
       propertyPath: m_Name
       value: WoodBox4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363394148002060, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 4506383596333396, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
       propertyPath: m_LocalScale.x
@@ -27191,6 +27199,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodBox4
       objectReference: {fileID: 0}
+    - target: {fileID: 1363394148002060, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 4506383596333396, guid: ae9429ee4c15e2f44a4fefbe634b297b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.776572
@@ -30996,7 +31008,7 @@ PrefabInstance:
     - target: {fileID: 8294287587432192267, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+      objectReference: {fileID: 11400000, guid: 914f64e15b7849c45ba26eba789759f6, type: 2}
     - target: {fileID: 8294287587432192267, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_fontSizeBase
       value: 24
@@ -31008,10 +31020,10 @@ PrefabInstance:
     - target: {fileID: 8294287587432192267, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -6949820610600499109, guid: 3fbde2e562e333d488bc46986fc6f4f1, type: 2}
+      objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
     - target: {fileID: 8294287587432192267, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8349391549326252974, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_text
