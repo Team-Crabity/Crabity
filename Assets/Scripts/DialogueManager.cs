@@ -46,6 +46,7 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue ();
         StopAllCoroutines();
         StartCoroutine(TypeSentence (sentence));
+        SetFocusToNull();
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -63,5 +64,9 @@ public class DialogueManager : MonoBehaviour
        // animator.SetBool("isOpen", false);
     }
 
+    private void SetFocusToNull()
+    {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+    }
 
 }

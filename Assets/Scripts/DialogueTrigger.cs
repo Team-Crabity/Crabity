@@ -9,5 +9,11 @@ public class DialogueTrigger : MonoBehaviour
     public void TriggerDialogue()
     {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        SetFocusToNull();
+    }
+
+    private void SetFocusToNull()
+    {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
     }
 }
