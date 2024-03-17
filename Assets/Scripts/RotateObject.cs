@@ -53,7 +53,7 @@ public class RotateObject : MonoBehaviour
         }
     }
 
-    bool isRotating()
+    public bool isRotating()
     {
         return rotating;
     }

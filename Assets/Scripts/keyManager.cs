@@ -2,36 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyManager : MonoBehaviour
+public class KeyManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    
+
     public float amp;
     public float freq;
     public bool isPickedUp;
     public float smoothTime;
+    public Transform rotateAround;
 
     Vector3 initPos;
 
+    private RotateObject rotateObject;
     private Vector3 vel;
-    // Start is called before the first frame update
+
     void Start()
     {
-        initPos = transform.position;   
+        initPos = transform.position;
+        rotateObject = GetComponentInParent<RotateObject>(); // Get the RotateObject script from the parent obj
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isPickedUp)
         {
-            Vector3 offset = new Vector3(-22, -5, -34.5f);
+            transform.parent = null;
+            Vector3 offset = new Vector3(0, -5, 0);
             transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + offset, ref vel, smoothTime);
-        } else {
-            transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, initPos.z);
+        }
+        else
+        {
+            if (rotateObject != null && !rotateObject.isRotating())
+            {
+                transform.position += new Vector3(0, Mathf.Sin(Time.time * freq) * amp, 0); // changed to no longer use initPos
+                transform.RotateAround(rotateAround.position, Vector3.up, 90 * Time.deltaTime);  // have object rotate in place
+            }
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (!isPickedUp)
