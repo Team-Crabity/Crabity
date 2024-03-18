@@ -7,10 +7,10 @@
   <title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
-  #if SHOW_DIAGNOSTICS
+#if SHOW_DIAGNOSTICS
   <link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
   <script src="<<<TemplateData/diagnostics.js>>>"></script>
-  #endif
+#endif
 </head>
 <style>
   body {
@@ -49,9 +49,9 @@
     <div id="unity-footer">
       <div id="unity-webgl-logo"></div>
       <div id="unity-fullscreen-button"></div>
-      #if SHOW_DIAGNOSTICS
+#if SHOW_DIAGNOSTICS
       <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
-      #endif
+#endif
       <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
     </div>
   </div>
@@ -63,9 +63,9 @@
     var progressBarFull = document.querySelector("#unity-progress-bar-full");
     var fullscreenButton = document.querySelector("#unity-fullscreen-button");
     var warningBanner = document.querySelector("#unity-warning");
-    #if SHOW_DIAGNOSTICS
+#if SHOW_DIAGNOSTICS
     var diagnostics_icon = document.getElementById("diagnostics-icon");
-    #endif
+#endif
 
     // Shows a temporary message banner/ribbon for a few seconds, or
     // a permanent error message on top of the canvas if type=='error'.
@@ -83,7 +83,7 @@
       if (type == 'error') div.style = 'background: red; padding: 10px;';
       else {
         if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-        setTimeout(function () {
+        setTimeout(function() {
           warningBanner.removeChild(div);
           updateBannerVisibility();
         }, 5000);
@@ -96,24 +96,24 @@
     var config = {
       dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
       frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
-      #if USE_THREADS
-        workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
-      #endif
+#if USE_THREADS
+      workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
+#endif
 #if USE_WASM
-        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
-      #endif
+      codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+#endif
 #if MEMORY_FILENAME
-        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
-      #endif
+      memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+#endif
 #if SYMBOLS_FILENAME
-        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
-      #endif
-        streamingAssetsUrl: "StreamingAssets",
+      symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+#endif
+      streamingAssetsUrl: "StreamingAssets",
       companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
-    productName: { { { JSON.stringify(PRODUCT_NAME) } } },
-    productVersion: { { { JSON.stringify(PRODUCT_VERSION) } } },
-    showBanner: unityShowBanner,
-      };
+      productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+      productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+      showBanner: unityShowBanner,
+    };
 
     // By default, Unity keeps WebGL canvas render target size matched with
     // the DOM size of the canvas element (scaled by window.devicePixelRatio)
@@ -136,13 +136,13 @@
       // performance, uncomment the following line:
       // config.devicePixelRatio = 1;
 
-      #if SHOW_DIAGNOSTICS
+#if SHOW_DIAGNOSTICS
       // position the diagnostics icon in the corner on the canvas
       diagnostics_icon.style.position = "fixed";
       diagnostics_icon.style.bottom = "10px";
       diagnostics_icon.style.right = "0px";
       canvas.after(diagnostics_icon);
-      #endif
+#endif
 
     } else {
       // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
@@ -151,9 +151,9 @@
       canvas.style.height = "{{{ HEIGHT }}}px";
     }
 
-    #if BACKGROUND_FILENAME
+#if BACKGROUND_FILENAME
     canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
-    #endif
+#endif
     loadingBar.style.display = "block";
 
     var script = document.createElement("script");
@@ -161,20 +161,20 @@
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
-      }).then((unityInstance) => {
-        loadingBar.style.display = "none";
-        #if SHOW_DIAGNOSTICS
-        diagnostics_icon.onclick = () => {
-          unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
-        };
-        #endif
-        fullscreenButton.onclick = () => {
-          unityInstance.SetFullscreen(1);
-        };
-      }).catch((message) => {
-        alert(message);
-      });
-    };
+            }).then((unityInstance) => {
+              loadingBar.style.display = "none";
+#if SHOW_DIAGNOSTICS
+              diagnostics_icon.onclick = () => {
+                unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
+              };
+#endif
+              fullscreenButton.onclick = () => {
+                unityInstance.SetFullscreen(1);
+              };
+            }).catch((message) => {
+              alert(message);
+            });
+          };
 
     document.body.appendChild(script);
 
