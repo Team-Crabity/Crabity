@@ -10,9 +10,10 @@ public class ObjClick : MonoBehaviour
     public GameObject Book;
     public GameObject Gear;
     public GameObject Cam;
+    [SerializeField] AudioSource HoverSound;
     private ChangeScene ChangeSceneScript;
     public int SceneNumber;
-
+    bool stepOff = true; // keeps audio from being played repetedly
     Vector3 initPos;
 
     private void Start()
@@ -21,6 +22,7 @@ public class ObjClick : MonoBehaviour
     }
     void Update()
     {
+        PlayAnim();
         if (Input.GetMouseButtonDown(0)) 
         {
             GameObject Name = GetClickedObject(out RaycastHit hit);
@@ -74,5 +76,31 @@ public class ObjClick : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(ped, results);
         return results.Count > 0;
+    }
+
+    void PlayAnim() 
+    {
+        GameObject Bot = GetClickedObject(out RaycastHit hit);
+        Debug.Log(Bot);
+        if (stepOff) {
+            stepOff = false;
+            if (Cube == Bot || Book == Bot || Gear == Bot)
+                {
+                    HoverSound.Play();         
+                }/*
+                else if (Book == Name)
+                {
+                    HoverSound.Play();
+                }
+                else if (Gear == Name)
+                {
+                    HoverSound.Play();
+                }*/ // in case we want to play different sounds for different objects.
+            else 
+            {
+                HoverSound.Stop();
+                stepOff = true;
+            }
+        }
     }
 }
