@@ -73,7 +73,7 @@
       if (type == 'error') div.style = 'background: red; padding: 10px;';
       else {
         if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-        setTimeout(function () {
+        setTimeout(function() {
           warningBanner.removeChild(div);
           updateBannerVisibility();
         }, 5000);
@@ -86,13 +86,13 @@
     var config = {
       dataUrl: buildUrl + "/WebGL.data.unityweb",
       frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
-        codeUrl: buildUrl + "/WebGL.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
+      codeUrl: buildUrl + "/WebGL.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
       companyName: "Team 17",
-    productName: { { { JSON.stringify(PRODUCT_NAME) } } },
-    productVersion: { { { JSON.stringify(PRODUCT_VERSION) } } },
-    showBanner: unityShowBanner,
-      };
+      productName: "Crabity",
+      productVersion: "0.0.118",
+      showBanner: unityShowBanner,
+    };
 
     // By default, Unity keeps WebGL canvas render target size matched with
     // the DOM size of the canvas element (scaled by window.devicePixelRatio)
@@ -130,15 +130,15 @@
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
-      }).then((unityInstance) => {
-        loadingBar.style.display = "none";
-        fullscreenButton.onclick = () => {
-          unityInstance.SetFullscreen(1);
-        };
-      }).catch((message) => {
-        alert(message);
-      });
-    };
+            }).then((unityInstance) => {
+              loadingBar.style.display = "none";
+              fullscreenButton.onclick = () => {
+                unityInstance.SetFullscreen(1);
+              };
+            }).catch((message) => {
+              alert(message);
+            });
+          };
 
     document.body.appendChild(script);
 
