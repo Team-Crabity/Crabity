@@ -7,10 +7,10 @@
   <title>Unity WebGL Player | {{{ PRODUCT_NAME }}}</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
   <link rel="stylesheet" href="TemplateData/style.css">
-#if SHOW_DIAGNOSTICS
+  #if SHOW_DIAGNOSTICS
   <link rel="stylesheet" href="<<<TemplateData/diagnostics.css>>>">
   <script src="<<<TemplateData/diagnostics.js>>>"></script>
-#endif
+  #endif
 </head>
 <style>
   body {
@@ -37,6 +37,16 @@
       Reavis, and Lukas Licon.</p>
   </div>
 
+  <div>
+    <h2>Download</h2>
+    <p>The game is available to download for macOS Intel-64bit, macOS Silicon, and Windows 64-bit computers at the
+      link: <a href="https://github.com/Jentsen/Crabity/releases">Crabity releases</a>. <b>Please download the zip file from
+      the latest release.
+      </b>
+      The latest release will have a green logo marked as "Latest". Lastly, uncompress the downloaded file and play the game!
+    </p>
+  </div>
+
   <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
     <div id="unity-loading-bar">
@@ -49,9 +59,9 @@
     <div id="unity-footer">
       <div id="unity-webgl-logo"></div>
       <div id="unity-fullscreen-button"></div>
-#if SHOW_DIAGNOSTICS
+      #if SHOW_DIAGNOSTICS
       <img id="diagnostics-icon" src="TemplateData/webmemd-icon.png">
-#endif
+      #endif
       <div id="unity-build-title">{{{ PRODUCT_NAME }}}</div>
     </div>
   </div>
@@ -63,9 +73,9 @@
     var progressBarFull = document.querySelector("#unity-progress-bar-full");
     var fullscreenButton = document.querySelector("#unity-fullscreen-button");
     var warningBanner = document.querySelector("#unity-warning");
-#if SHOW_DIAGNOSTICS
+    #if SHOW_DIAGNOSTICS
     var diagnostics_icon = document.getElementById("diagnostics-icon");
-#endif
+    #endif
 
     // Shows a temporary message banner/ribbon for a few seconds, or
     // a permanent error message on top of the canvas if type=='error'.
@@ -83,7 +93,7 @@
       if (type == 'error') div.style = 'background: red; padding: 10px;';
       else {
         if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-        setTimeout(function() {
+        setTimeout(function () {
           warningBanner.removeChild(div);
           updateBannerVisibility();
         }, 5000);
@@ -96,23 +106,23 @@
     var config = {
       dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
       frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
-#if USE_THREADS
+      #if USE_THREADS
       workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
-#endif
+      #endif
 #if USE_WASM
       codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
-#endif
+      #endif
 #if MEMORY_FILENAME
       memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
-#endif
+      #endif
 #if SYMBOLS_FILENAME
       symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
-#endif
+      #endif
       streamingAssetsUrl: "StreamingAssets",
       companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
-      productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
-      productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
-      showBanner: unityShowBanner,
+    productName: { { { JSON.stringify(PRODUCT_NAME) } } },
+    productVersion: { { { JSON.stringify(PRODUCT_VERSION) } } },
+    showBanner: unityShowBanner,
     };
 
     // By default, Unity keeps WebGL canvas render target size matched with
@@ -136,13 +146,13 @@
       // performance, uncomment the following line:
       // config.devicePixelRatio = 1;
 
-#if SHOW_DIAGNOSTICS
+      #if SHOW_DIAGNOSTICS
       // position the diagnostics icon in the corner on the canvas
       diagnostics_icon.style.position = "fixed";
       diagnostics_icon.style.bottom = "10px";
       diagnostics_icon.style.right = "0px";
       canvas.after(diagnostics_icon);
-#endif
+      #endif
 
     } else {
       // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
@@ -151,9 +161,9 @@
       canvas.style.height = "{{{ HEIGHT }}}px";
     }
 
-#if BACKGROUND_FILENAME
+    #if BACKGROUND_FILENAME
     canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
-#endif
+    #endif
     loadingBar.style.display = "block";
 
     var script = document.createElement("script");
@@ -161,20 +171,20 @@
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
-            }).then((unityInstance) => {
-              loadingBar.style.display = "none";
-#if SHOW_DIAGNOSTICS
-              diagnostics_icon.onclick = () => {
-                unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
-              };
-#endif
-              fullscreenButton.onclick = () => {
-                unityInstance.SetFullscreen(1);
-              };
-            }).catch((message) => {
-              alert(message);
-            });
-          };
+      }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+        #if SHOW_DIAGNOSTICS
+        diagnostics_icon.onclick = () => {
+          unityDiagnostics.openDiagnosticsDiv(unityInstance.GetMemoryInfo);
+        };
+        #endif
+        fullscreenButton.onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
 
     document.body.appendChild(script);
 
@@ -456,9 +466,10 @@
       </li>
       <li>
         <p>
-          Jentsen was working on a seemingly 2D prototype for the gravity mechanic we wanted to include in the game. At 
-          this point, the x, y, and z rotations of the player object were not locked, allowing players to realize that 
-          this was actually a 3D game viewed through a 2D camera. This unlocked a plethora of new level design possibilities
+          Jentsen was working on a seemingly 2D prototype for the gravity mechanic we wanted to include in the game. At
+          this point, the x, y, and z rotations of the player object were not locked, allowing players to realize that
+          this was actually a 3D game viewed through a 2D camera. This unlocked a plethora of new level design
+          possibilities
           for us to explore in the future.
         </p>
         <img src="assets/gifs/jentsen_2.gif" alt="Jentsen Prototype 2" width="500">
@@ -491,51 +502,59 @@
     <p>
       Our team was able to divide and conquer the work in a way that allowed us to work on our strengths and learn from
       each other. Here are the main contributions of each team member:</p>
-      <ul>
-        <li>
-          <b>Akhror Rakhmatov:</b>
-          <p>
-            "I worked on the main menu, options menu, some of the sound as well as the background music. 
-            I was able to create the background music from scratch using Native Access's Maschine DAW. 
-            The main menu was created with the intention of making a menu that's not too basic and fits into the 
-            same theme and genre that the game is played in. The options menu continues on from that same menu."
-          </p>
-        </li>
-        <li>
-          <b>Daniel Do</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-        <li>
-          <b>Ernani Raffo</b>
-          <p>
-            "I worked on the camera rotation mechanic and contributed to prototyping player movement. 
-            I contributed into the deployment process of our game, as we wanted an easy way 
-            to automatically create builds through Github actions that published the game on our site.  
-            I also contributed in level design, specifically levels 2 and 3, to create a fun experience for the player. 
-            Lastly, I worked on integrating Unity’s Localization Tool to make the game playable in both English and Arabic."
-          </p>
-        </li>
-        <li>
-          <b>Jentsen Maniti</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-        <li>
-          <b>Jordan Reavis</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-        <li>
-          <b>Lukas Licon</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-      </ul>
+    <ul>
+      <li>
+        <b>Akhror Rakhmatov:</b>
+        <p>
+          "I worked on the main menu, options menu, some of the sound as well as the background music.
+          I was able to create the background music from scratch using Native Access's Maschine DAW.
+          The main menu was created with the intention of making a menu that's not too basic and fits into the
+          same theme and genre that the game is played in. The options menu continues on from that same menu."
+        </p>
+      </li>
+      <li>
+        <b>Daniel Do</b>
+        <p>
+          "I worked on"
+        </p>
+      </li>
+      <li>
+        <b>Ernani Raffo</b>
+        <p>
+          "I worked on the camera rotation mechanic and contributed to prototyping player movement.
+          I contributed into the deployment process of our game, as we wanted an easy way
+          to automatically create builds through Github actions that published the game on our site.
+          I also contributed in level design, specifically levels 2 and 3, to create a fun experience for the player.
+          Lastly, I worked on integrating Unity’s Localization Tool to make the game playable in both English and
+          Arabic."
+        </p>
+      </li>
+      <li>
+        <b>Jentsen Maniti</b>
+        <p>
+          "I worked on"
+        </p>
+      </li>
+      <li>
+        <b>Jordan Reavis</b>
+        <p>
+          "I worked on the in-game dialogue system as well as coordinating in-class playtests of our
+          game and collecting user feedback via Google Forms"
+        </p>
+      </li>
+      <li>
+        <b>Lukas Licon</b>
+        <p>
+          "I worked on the pause menu and various UI aspects of the game.
+          I also added assets and level design to puzzle 3 to make it look interesting artistically.
+          I built a lot of pipes from scratch to make a level that would be fun to play from multiple angles.
+          I made sure the pause menu could be fully accessible using one hand through
+          hotkeys such as 1, 2, 3, and 4 for resume, menu, restart, and exit. I also implemented audio control,
+          mute, volume slider, and UI assets. I also did bits of debugging to improve the overall functionality
+          and polish of the game."
+        </p>
+      </li>
+    </ul>
   </div>
 </body>
 
