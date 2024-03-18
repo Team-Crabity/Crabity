@@ -26,7 +26,8 @@ public class Jump : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Wood" ||
+            collision.gameObject.tag == "Pipe" || collision.gameObject.tag == "Ground")
         {
             jumpsLeft = maxJumps;
         }
