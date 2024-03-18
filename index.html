@@ -33,6 +33,23 @@
       Reavis, and Lukas Licon.</p>
   </div>
 
+  <div>
+    <h2>Crabity Trailer</h2>
+    <p>Below is the trailer for our Vertical Slice and upcoming CMPM 172 game: Crabity!</p>
+
+    <iframe></iframe>
+  </div>
+
+  <div>
+    <h2>Download</h2>
+    <p>The game is available to download for macOS Intel-64bit, macOS Silicon, and Windows 64-bit computers at the
+      link: <a href="https://github.com/Jentsen/Crabity/releases">Crabity releases</a>. <b>Please download the zip file from
+      the latest release.
+      </b>
+      The latest release will have a green logo marked as "Latest". Lastly, uncompress the downloaded file and play the game!
+    </p>
+  </div>
+
   <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
     <div id="unity-loading-bar">
@@ -73,7 +90,7 @@
       if (type == 'error') div.style = 'background: red; padding: 10px;';
       else {
         if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-        setTimeout(function() {
+        setTimeout(function () {
           warningBanner.removeChild(div);
           updateBannerVisibility();
         }, 5000);
@@ -89,9 +106,9 @@
       codeUrl: buildUrl + "/WebGL.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Team 17",
-      productName: "Crabity",
-      productVersion: "0.0.118",
-      showBanner: unityShowBanner,
+    productName: { { { JSON.stringify(PRODUCT_NAME) } } },
+    productVersion: { { { JSON.stringify(PRODUCT_VERSION) } } },
+    showBanner: unityShowBanner,
     };
 
     // By default, Unity keeps WebGL canvas render target size matched with
@@ -130,15 +147,15 @@
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
-            }).then((unityInstance) => {
-              loadingBar.style.display = "none";
-              fullscreenButton.onclick = () => {
-                unityInstance.SetFullscreen(1);
-              };
-            }).catch((message) => {
-              alert(message);
-            });
-          };
+      }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+        fullscreenButton.onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
 
     document.body.appendChild(script);
 
@@ -420,9 +437,10 @@
       </li>
       <li>
         <p>
-          Jentsen was working on a seemingly 2D prototype for the gravity mechanic we wanted to include in the game. At 
-          this point, the x, y, and z rotations of the player object were not locked, allowing players to realize that 
-          this was actually a 3D game viewed through a 2D camera. This unlocked a plethora of new level design possibilities
+          Jentsen was working on a seemingly 2D prototype for the gravity mechanic we wanted to include in the game. At
+          this point, the x, y, and z rotations of the player object were not locked, allowing players to realize that
+          this was actually a 3D game viewed through a 2D camera. This unlocked a plethora of new level design
+          possibilities
           for us to explore in the future.
         </p>
         <img src="assets/gifs/jentsen_2.gif" alt="Jentsen Prototype 2" width="500">
@@ -434,7 +452,7 @@
         </p>
         <img src="assets/gifs/jentsen_3.gif" alt="Jentsen Prototype 3" width="500">
         <p>
-          But there was bound to be a few bugs while we were developing the game.
+          But there were bound to be a few bugs while we were developing the game.
         </p>
         <img src="assets/gifs/rotation_bug.gif" alt="Jentsen Prototype 2" width="500">
       </li>
@@ -455,51 +473,68 @@
     <p>
       Our team was able to divide and conquer the work in a way that allowed us to work on our strengths and learn from
       each other. Here are the main contributions of each team member:</p>
-      <ul>
-        <li>
-          <b>Akhror Rakhmatov:</b>
-          <p>
-            "I worked on the main menu, options menu, some of the sound as well as the background music. 
-            I was able to create the background music from scratch using Native Access's Maschine DAW. 
-            The main menu was created with the intention of making a menu that's not too basic and fits into the 
-            same theme and genre that the game is played in. The options menu continues on from that same menu."
-          </p>
-        </li>
-        <li>
-          <b>Daniel Do</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-        <li>
-          <b>Ernani Raffo</b>
-          <p>
-            "I worked on the camera rotation mechanic and contributed to prototyping player movement. 
-            I contributed into the deployment process of our game, as we wanted an easy way 
-            to automatically create builds through Github actions that published the game on our site.  
-            I also contributed in level design, specifically levels 2 and 3, to create a fun experience for the player. 
-            Lastly, I worked on integrating Unity’s Localization Tool to make the game playable in both English and Arabic."
-          </p>
-        </li>
-        <li>
-          <b>Jentsen Maniti</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-        <li>
-          <b>Jordan Reavis</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-        <li>
-          <b>Lukas Licon</b>
-          <p>
-            "I worked on"
-          </p>
-        </li>
-      </ul>
+    <ul>
+      <li>
+        <b>Akhror Rakhmatov:</b>
+        <p>
+          "I worked on the main menu, options menu, some of the sound as well as the background music.
+          I was able to create the background music from scratch using Native Access's Maschine DAW.
+          The main menu was created with the intention of making a menu that's not too basic and fits into the
+          same theme and genre that the game is played in. The options menu continues on from that same menu."
+        </p>
+      </li>
+      <li>
+        <b>Daniel Do</b>
+        <p>
+          "I worked on"
+        </p>
+      </li>
+      <li>
+        <b>Ernani Raffo</b>
+        <p>
+          "I worked on the camera rotation mechanic and contributed to prototyping player movement.
+          I contributed into the deployment process of our game, as we wanted an easy way
+          to automatically create builds through Github actions that published the game on our site.
+          I also contributed in level design, specifically levels 2 and 3, to create a fun experience for the player.
+          Lastly, I worked on integrating Unity’s Localization Tool to make the game playable in both English and
+          Arabic."
+        </p>
+      </li>
+      <li>
+        <b>Jentsen Maniti</b>
+        <p>
+          "I was the Co-Design Lead as well as the Production Lead! For level design, I worked on Level 1, but my 
+          primary focus was on the game's core mechanics, such as gravity shifting, restricted side-to-side and 
+          situational up and down movement, as well as reworking the camera rotation to prevent motion sickness. 
+          Additionally, with the use of a few simple mathematical equations, I was able to make the movement feel 
+          snappy and responsive. Furthermore, I implemented the fading object shader that our game uses to allow players 
+          to see inside the level. I also worked on a large portion of the game's debugging. For production, I ensured 
+          that our team stayed on track by implementing Notion into our workflow. This allowed us to easily keep track of 
+          what was being worked on and by whom. After listening to players' feedback during playtests, I helped alleviate 
+          confusion by adding a minimap to indicate level orientation. Lastly, I was largely responsible for maintaining 
+          the aesthetic of the game by importing assets and creating the environment and narrative."
+        </p>
+      </li>
+      <li>
+        <b>Jordan Reavis</b>
+        <p>
+          "I worked on the in-game dialogue system as well as coordinating in-class playtests of our
+          game and collecting user feedback via Google Forms"
+        </p>
+      </li>
+      <li>
+        <b>Lukas Licon</b>
+        <p>
+          "I worked on the pause menu and various UI aspects of the game.
+          I also added assets and level design to puzzle 3 to make it look interesting artistically.
+          I built a lot of pipes from scratch to make a level that would be fun to play from multiple angles.
+          I made sure the pause menu could be fully accessible using one hand through
+          hotkeys such as 1, 2, 3, and 4 for resume, menu, restart, and exit. I also implemented audio control,
+          mute, volume slider, and UI assets. I also did bits of debugging to improve the overall functionality
+          and polish of the game."
+        </p>
+      </li>
+    </ul>
   </div>
 </body>
 
