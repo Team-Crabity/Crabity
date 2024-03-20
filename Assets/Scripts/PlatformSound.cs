@@ -22,10 +22,10 @@ public class PlatformSound : MonoBehaviour
 
     void Update()
     {
-        // Debug.Log(TagOfMat);
+        //Debug.Log(TagOfMat);
     }
 
-    void PlayFootStep()
+    public void PlayFootStep()
     {
         AudioClip clip = null;
         switch (TagOfMat)
@@ -42,14 +42,14 @@ public class PlatformSound : MonoBehaviour
             default:
                 break;
         }
-        // Debug.Log(TagOfMat);
-        /*if (TagOfMat != FSMaterial.Empty)
+        if (TagOfMat != FSMaterial.Empty)
         {
             source.clip = clip;
             source.volume = Random.Range(0.02f, 0.05f);
             source.pitch = Random.Range(0.8f, 1.2f);
             source.Play();
-        }*/
+            Debug.Log(source.clip);
+        }
     }
 
     void OnCollisionEnter (Collision col)
