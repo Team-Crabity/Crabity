@@ -2,37 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobotSoundController : MonoBehaviour
+public class IdleSound : MonoBehaviour
 {
-    public float initialVolume = 0.25f;
-    public float initialPitch = 1f;
     private Rigidbody rb;
     private AudioSource source;
+    private bool isFadingIn = false;
+    private bool isFadingOut = false;
 
-    void Start()
+    private void Start()
     {
-        source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-
-        source.pitch = initialPitch;
-        source.volume = initialVolume;
+        source = GetComponent<AudioSource>();
+        source.pitch = 0.1f;
+        source.volume = 0.05f;
         source.loop = true;
-
-        Debug.Log("Idle Sound");
-
     }
 
-    void Update()
+    private void Update()
     {
-        if (rb.velocity.magnitude > 0.2f && !source.isPlaying)
+        // Check if the player is moving
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("Moving Sound");
-            source.pitch = initialPitch * 2.0f;
-            source.volume = initialVolume * 2.0f;
+            if (isFadingOut)
+            {
+                StopAllCoroutines(); // Stops the fade out if it's happening
+                isFadingOut = false;
+            }
+            if (!source.isPlaying)
+            {
+                source.Play();
+            }
+            StartCoroutine(Fade(true, source, 0.2f, 0.1f, 0.2f)); // Start fade in
         }
-        else if (rb.velocity.magnitude < 0.1f && source.isPlaying)
+        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
-            source.Stop();
+            if (isFadingIn)
+            {
+                StopAllCoroutines(); // Cut the fade short
+                isFadingIn = false;
+            }
+            StartCoroutine(Fade(false, source, 1f, 0.05f, 0.1f)); // Start fade out
         }
+    }
+
+    public IEnumerator Fade(bool fadeIn, AudioSource source, float duration, float targetVolume, float targetPitch)
+    {
+        if (fadeIn) isFadingIn = true; else isFadingOut = true;
+
+        float startVol = source.volume;
+        float startPitch = source.pitch;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            // string fadeSituation = fadeIn ? "fadeIn" : "fadeOut";
+            // Debug.Log(fadeSituation);
+            time += Time.deltaTime;
+            source.volume = Mathf.Lerp(startVol, targetVolume, time / duration);
+            source.pitch = Mathf.Lerp(startPitch, targetPitch, time / duration);
+            yield return null;
+        }
+
+        if (fadeIn) isFadingIn = false; else isFadingOut = false;
     }
 }
