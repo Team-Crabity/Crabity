@@ -5,16 +5,15 @@ using UnityEngine;
 public class PlatformSound : MonoBehaviour
 {
     public List<AudioClip> pipeSound;
-    public List<AudioClip> boxSound;
     public List<AudioClip> brickSound;
-    public List<AudioClip> floorSound; //floors and walls
+    public List<AudioClip> woodSound; //floors and walls
     private AudioSource source;
 
     private FSMaterial TagOfMat;
 
     enum FSMaterial
     {
-        Pipe,Box,Floor,Brick,Empty
+        Pipe,Wood,Brick,Empty
     }
     void Start()
     {
@@ -23,7 +22,7 @@ public class PlatformSound : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(TagOfMat);
+        // Debug.Log(TagOfMat);
     }
 
     void PlayFootStep()
@@ -34,11 +33,8 @@ public class PlatformSound : MonoBehaviour
             case FSMaterial.Pipe:
                 clip = pipeSound[Random.Range(0,pipeSound.Count)];
                 break;
-            case FSMaterial.Floor:
-                clip = floorSound[Random.Range(0,floorSound.Count)];
-                break;
-            case FSMaterial.Box:
-                clip = boxSound[Random.Range(0,boxSound.Count)];
+            case FSMaterial.Wood:
+                clip = woodSound[Random.Range(0,woodSound.Count)];
                 break;
             case FSMaterial.Brick:
                 clip = brickSound[Random.Range(0,brickSound.Count)];
@@ -46,7 +42,7 @@ public class PlatformSound : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log(TagOfMat);
+        // Debug.Log(TagOfMat);
         /*if (TagOfMat != FSMaterial.Empty)
         {
             source.clip = clip;
@@ -58,17 +54,13 @@ public class PlatformSound : MonoBehaviour
 
     void OnCollisionEnter (Collision col)
     {
-        if (col.gameObject.tag == "Ground") 
-        {
-            TagOfMat = FSMaterial.Floor;
-        }
-        else if (col.gameObject.tag == "Pipe") 
+        if (col.gameObject.tag == "Pipe") 
         {
             TagOfMat = FSMaterial.Pipe;
         }
         else if (col.gameObject.tag == "Wood") 
         {
-            TagOfMat = FSMaterial.Box;
+            TagOfMat = FSMaterial.Wood;
         }
         else if (col.gameObject.tag == "Brick") 
         {
@@ -84,6 +76,4 @@ public class PlatformSound : MonoBehaviour
     {
         TagOfMat = FSMaterial.Empty;
     }
-
-
 }
