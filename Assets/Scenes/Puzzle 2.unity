@@ -2340,6 +2340,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -3559,6 +3563,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -3713,6 +3721,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -3920,6 +3932,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5227,6 +5243,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -5886,6 +5906,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -6389,6 +6413,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7484,6 +7512,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -8864,6 +8896,7 @@ GameObject:
   - component: {fileID: 862881118}
   - component: {fileID: 862881117}
   - component: {fileID: 862881116}
+  - component: {fileID: 862881119}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8946,6 +8979,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &862881119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862881114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01a38e8ddfa63a47b9c2597c10eb6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pipeSound: []
+  boxSound: []
+  brickSound: []
+  floorSound: []
 --- !u!1 &873359888
 GameObject:
   m_ObjectHideFlags: 0
@@ -9239,6 +9288,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9631,6 +9684,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -9877,6 +9934,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11029,7 +11090,7 @@ GameObject:
   - component: {fileID: 1075905359}
   m_Layer: 0
   m_Name: ChestBoxes
-  m_TagString: Ground
+  m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12963,6 +13024,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -15019,7 +15084,7 @@ GameObject:
   - component: {fileID: 1439956621}
   m_Layer: 0
   m_Name: DoorBoxes
-  m_TagString: Untagged
+  m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15187,6 +15252,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16030,6 +16099,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -16680,6 +16753,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -16993,6 +17070,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18591,6 +18672,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -19059,6 +19144,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -19372,6 +19461,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -19927,7 +20020,7 @@ GameObject:
   - component: {fileID: 1976160552}
   m_Layer: 0
   m_Name: Stairs
-  m_TagString: Untagged
+  m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20499,6 +20592,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0426b1fb37126ae4084fb9dad32d354c, type: 3}
       propertyPath: m_StaticEditorFlags
