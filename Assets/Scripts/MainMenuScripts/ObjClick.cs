@@ -86,13 +86,20 @@ public class ObjClick : MonoBehaviour
             stepOff = false;
             if (Cube == Bot || Book == Bot || Gear == Bot)
                 {
+                    Debug.Log("Playing");
                     HoverSound.Play();         
                 }
             else 
-            {
+            {   
+                Debug.Log("Stopped");
                 HoverSound.Stop();
                 stepOff = true;
             }
+        }
+        if (Bot == null) 
+        {
+                HoverSound.Stop();
+                stepOff = true;
         }
     }
 }
