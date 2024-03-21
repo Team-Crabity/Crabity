@@ -48,7 +48,7 @@ public class PlatformSound : MonoBehaviour
             source.volume = Random.Range(0.2f, 0.3f);
             source.pitch = Random.Range(0.95f, 1.05f);
             source.Play();
-            Debug.Log(source.clip);
+            // Debug.Log(source.clip);
         }
     }
 
