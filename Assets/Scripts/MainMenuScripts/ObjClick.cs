@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -14,6 +15,11 @@ public class ObjClick : MonoBehaviour
     private ChangeScene ChangeSceneScript;
     public int SceneNumber;
     bool stepOff = true; // keeps audio from being played repetedly
+
+    public bool hoveringP = false;
+    public bool hoveringS = false;
+    public bool hoveringC = false;
+
     Vector3 initPos;
 
     private void Start()
@@ -81,23 +87,36 @@ public class ObjClick : MonoBehaviour
     void PlayAnim() 
     {
         GameObject Bot = GetClickedObject(out RaycastHit hit);
-        Debug.Log(Bot);
         if (stepOff) {
             stepOff = false;
-            if (Cube == Bot || Book == Bot || Gear == Bot)
+            if (Cube == Bot)
                 {
-                    Debug.Log("Playing");
+                    hoveringP = true;
+                    HoverSound.Play();         
+                }
+            else if (Book == Bot)
+                {
+                    hoveringC = true;
+                    HoverSound.Play();         
+                }
+            else if (Gear == Bot)
+                {
+                    hoveringS = true;
                     HoverSound.Play();         
                 }
             else 
             {   
-                Debug.Log("Stopped");
+                hoveringP = false;
+                hoveringS = false;
+                hoveringC = false;
                 HoverSound.Stop();
                 stepOff = true;
             }
         }
-        if (Bot == null) 
-        {
+        if (Bot == null) {
+                hoveringP = false;
+                hoveringS = false;
+                hoveringC = false;
                 HoverSound.Stop();
                 stepOff = true;
         }
