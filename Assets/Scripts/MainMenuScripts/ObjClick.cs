@@ -87,15 +87,7 @@ public class ObjClick : MonoBehaviour
             if (Cube == Bot || Book == Bot || Gear == Bot)
                 {
                     HoverSound.Play();         
-                }/*
-                else if (Book == Name)
-                {
-                    HoverSound.Play();
                 }
-                else if (Gear == Name)
-                {
-                    HoverSound.Play();
-                }*/ // in case we want to play different sounds for different objects.
             else 
             {
                 HoverSound.Stop();

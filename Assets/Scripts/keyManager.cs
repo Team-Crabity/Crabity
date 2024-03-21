@@ -11,6 +11,7 @@ public class KeyManager : MonoBehaviour
     public bool isPickedUp;
     public float smoothTime;
     public Transform rotateAround;
+    private AudioSource keyCollect;
 
     Vector3 initPos;
 
@@ -20,8 +21,7 @@ public class KeyManager : MonoBehaviour
     void Start()
     {
         initPos = transform.position;
-        rotateObject = GetComponentInParent<RotateObject>(); // Get the RotateObject script from the parent obj
-        
+        rotateObject = GetComponentInParent<RotateObject>();
     }
 
     void Update()
@@ -47,6 +47,7 @@ public class KeyManager : MonoBehaviour
     {
         if (!isPickedUp)
         {
+            GetComponent<AudioSource>().Play();
             isPickedUp = true;
         }
     }

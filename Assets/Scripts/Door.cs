@@ -5,23 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float delay = 0.5f;
+    private AudioSource doorSound;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        doorSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Change Scenes
+        doorSound.Play();
+        StartCoroutine(Delayed());
+    }
+
+    public IEnumerator Delayed()
+    {
+        yield return new WaitForSeconds(delay);
         Scene s = SceneManager.GetActiveScene();
         Debug.Log("Going to scene: " + (s.buildIndex + 1));
         SceneManager.LoadScene(s.buildIndex + 1);
     }
+
 }

@@ -5,16 +5,28 @@ using UnityEngine;
 public class IdleSound : MonoBehaviour
 {
     private Rigidbody rb;
-    private AudioSource source;
+    [SerializeField] AudioSource source;
     private bool isFadingIn = false;
     private bool isFadingOut = false;
+
+    [Header("Pitch")]
+    public float idlePitch = 1f;
+    public float movingPitch = 2f;
+
+    [Header("Volume")]
+    public float idleVolume = 0.05f;
+    public float movingVolume = 0.25f;
+
+    [Header("Fade")]
+    public float fadeIn = 0.5f;
+    public float fadeOut = 1f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
-        source.pitch = 0.1f;
-        source.volume = 0.05f;
+        source.pitch = idlePitch;
+        source.volume = idleVolume;
         source.loop = true;
     }
 
@@ -32,7 +44,7 @@ public class IdleSound : MonoBehaviour
             {
                 source.Play();
             }
-            StartCoroutine(Fade(true, source, 0.2f, 0.1f, 0.2f)); // Start fade in
+            StartCoroutine(Fade(true, source, fadeIn, movingVolume, movingPitch)); // Start fade in
         }
         else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
@@ -41,7 +53,7 @@ public class IdleSound : MonoBehaviour
                 StopAllCoroutines(); // Cut the fade short
                 isFadingIn = false;
             }
-            StartCoroutine(Fade(false, source, 1f, 0.05f, 0.1f)); // Start fade out
+            StartCoroutine(Fade(false, source, fadeOut, idleVolume, idlePitch)); // Start fade out
         }
     }
 
