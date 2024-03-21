@@ -45,8 +45,8 @@ public class PlatformSound : MonoBehaviour
         if (TagOfMat != FSMaterial.Empty)
         {
             source.clip = clip;
-            source.volume = Random.Range(0.02f, 0.05f);
-            source.pitch = Random.Range(0.8f, 1.2f);
+            source.volume = Random.Range(0.2f, 0.3f);
+            source.pitch = Random.Range(0.95f, 1.05f);
             source.Play();
             Debug.Log(source.clip);
         }
