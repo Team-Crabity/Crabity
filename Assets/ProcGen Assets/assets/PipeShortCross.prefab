@@ -177,7 +177,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.1009983
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -224,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5155502413950446292}
   - component: {fileID: 132321311998467493}
+  - component: {fileID: 8250981641871181926}
   m_Layer: 0
   m_Name: PipeShortCross
   m_TagString: Pipe
@@ -281,6 +282,36 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5143862762242193738}
   m_Enabled: 1
+--- !u!114 &8250981641871181926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532626572564967534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32254f2a9aa44006a54911a42d38907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upNeighbour:
+  - {fileID: 8250981641871181926}
+  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
+  downNeighbour:
+  - {fileID: 8250981641871181926}
+  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
+  frontNeighbour:
+  - {fileID: 8250981641871181926}
+  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
+  backNeighbour:
+  - {fileID: 8250981641871181926}
+  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
+  leftNeighbour:
+  - {fileID: 8250981641871181926}
+  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
+  rightNeighbour:
+  - {fileID: 8250981641871181926}
+  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
 --- !u!1 &7869806457535416896
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +382,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.021265013
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -458,7 +489,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.05086947
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
