@@ -2670,7 +2670,7 @@ Transform:
   m_GameObject: {fileID: 249721918}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.13, y: -4.89, z: -9.98}
+  m_LocalPosition: {x: -13.13, y: -4.89, z: -11.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5649,15 +5649,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f752a9d6facc140fc8288e8ac6ca1895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 6
-  height: 6
-  depth: 5
-  cellWidth: 2.5
-  cellHeight: 2.5
-  cellDepth: 2.5
+  width: 10
+  height: 10
+  depth: 9
+  cellWidth: 1.5
+  cellHeight: 1.5
+  cellDepth: 1.5
   tileObjects:
   - {fileID: 8250981641871181926, guid: 52bf017677b522049a18e1fd6228735c, type: 3}
   - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
+  - {fileID: -4082251774046420977, guid: 58c65cd456f41e44d92b04cabd23c411, type: 3}
   parentObject: {fileID: 249721918}
 --- !u!4 &801779461
 Transform:

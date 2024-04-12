@@ -5,15 +5,15 @@ using System.Linq;
 
 public class WaveFunctionCollapse : MonoBehaviour
 {
-    public int width = 10;  // Number of cells along the X-axis
-    public int height = 10; // Number of cells along the Y-axis
-    public int depth = 10;  // Number of cells along the Z-axis
-    public float cellWidth = 1.0f;  // Width of each cell
-    public float cellHeight = 1.0f; // Height of each cell
-    public float cellDepth = 1.0f;  // Depth of each cell
-    public Cell[,,] gridComponents; // 3D grid of cells
-    public Tile[] tileObjects; // Array of possible tile types
-    public GameObject parentObject; // Parent GameObject where all cells will be spawned
+    public int width = 10;
+    public int height = 10;
+    public int depth = 10;
+    public float cellWidth = 1.0f;
+    public float cellHeight = 1.0f;
+    public float cellDepth = 1.0f;
+    public Cell[,,] gridComponents;
+    public Tile[] tileObjects;
+    public GameObject parentObject;
 
     void Start()
     {
@@ -21,7 +21,6 @@ public class WaveFunctionCollapse : MonoBehaviour
         SetNeighboringCells();
         CollapseWaveFunction();
     }
-
     void InitializeGrid()
     {
         if (parentObject == null)
@@ -38,11 +37,10 @@ public class WaveFunctionCollapse : MonoBehaviour
                 for (int z = 0; z < depth; z++)
                 {
                     GameObject cellGameObject = new GameObject($"Cell_{x}_{y}_{z}");
-                    cellGameObject.transform.parent = parentObject.transform; // Set parent
-                    // Set position relative to parent, using specified cell dimensions
+                    cellGameObject.transform.parent = parentObject.transform;
                     cellGameObject.transform.localPosition = new Vector3(x * cellWidth, y * cellHeight, z * cellDepth);
                     Cell cellComponent = cellGameObject.AddComponent<Cell>();
-                    cellComponent.CreateCell(false, tileObjects); // Initially, all tiles are possible
+                    cellComponent.CreateCell(false, tileObjects);
                     gridComponents[x, y, z] = cellComponent;
                     cellGameObject.isStatic = false;
                 }
@@ -69,15 +67,11 @@ public class WaveFunctionCollapse : MonoBehaviour
             }
         }
     }
-
     void CollapseWaveFunction()
     {
-        // Randomly select a starting cell
         int startX = Random.Range(0, width);
         int startY = Random.Range(0, height);
         int startZ = Random.Range(0, depth);
-
-        // Start collapse from the initial cell
         CollapseCell(gridComponents[startX, startY, startZ]);
     }
     void CollapseCell(Cell cell)
@@ -98,15 +92,13 @@ public class WaveFunctionCollapse : MonoBehaviour
         UpdateNeighbors(cell);
     }
 
-
     void InstantiateTile(Tile tile, Vector3 position)
     {
         Debug.Log($"Instantiating tile at {position}");
         var tileInstance = Instantiate(tile.gameObject, position, Quaternion.identity);
         tileInstance.transform.parent = parentObject.transform;
-        tileInstance.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
+        tileInstance.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f); 
     }
-
 
     void UpdateNeighbors(Cell cell)
     {
@@ -128,7 +120,6 @@ public class WaveFunctionCollapse : MonoBehaviour
             }
         }
     }
-
     bool AreTilesCompatible(Tile candidate, Tile current)
     {
         return candidate.upNeighbour.Contains(current) ||
