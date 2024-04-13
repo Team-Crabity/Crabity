@@ -5,6 +5,12 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    public static DialogueTrigger instance;
+
+    private void Awake()
+    {
+        instance = this;  
+    }
 
     public void TriggerDialogue()
     {
@@ -15,5 +21,10 @@ public class DialogueTrigger : MonoBehaviour
     private void SetFocusToNull()
     {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    private void Start()
+    {
+        TriggerDialogue();
     }
 }
