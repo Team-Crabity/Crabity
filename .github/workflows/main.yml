@@ -1,6 +1,9 @@
 name: Build and Deploy Automation ⚙️
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   testRunner:
