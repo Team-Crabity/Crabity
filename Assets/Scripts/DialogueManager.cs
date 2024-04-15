@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
    public void StartDialogue (Dialogue dialogue)
     {
-       // animator.SetBool("isOpen", true);
+        //animator.SetBool("isOpen", true);
 
         nameText.text = dialogue.name;
 
@@ -52,16 +52,18 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence)
     {
         dialogueText.text = "";
+        float waitTime = 0.03f;
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return null;
+            //yield return null;
+            yield return new WaitForSeconds (waitTime); 
         }
     }
 
     void EndDialogue()
     {
-       // animator.SetBool("isOpen", false);
+        //animator.SetBool("isOpen", false);
     }
 
     private void SetFocusToNull()
