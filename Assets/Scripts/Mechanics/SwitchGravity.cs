@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SwitchGravity : MonoBehaviour
@@ -55,7 +56,7 @@ public class SwitchGravity : MonoBehaviour
     {
         bool altHeld = Input.GetKey(KeyCode.RightAlt);
         bool cHeld = Input.GetKey(KeyCode.C);
-        
+
         if (altHeld || cHeld)
         {
             ChangeGravity();
@@ -75,52 +76,38 @@ public class SwitchGravity : MonoBehaviour
     private void ChangeGravity()
     {
         bool mode = PlayerManager.instance.CompanionMode;
-        if (mode && isGrounded)
+        if (!isGrounded) return;
+
+        var playerOneKeyMap = new Dictionary<KeyCode, Vector3>
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            { KeyCode.W, Vector3.up },
+            { KeyCode.S, Vector3.down },
+            { KeyCode.D, Vector3.right },
+            { KeyCode.A, Vector3.left }
+        };
+
+        var playerTwoKeyMap = new Dictionary<KeyCode, Vector3>
+        {
+            { KeyCode.UpArrow, Vector3.up },
+            { KeyCode.DownArrow, Vector3.down },
+            { KeyCode.RightArrow, Vector3.right },
+            { KeyCode.LeftArrow, Vector3.left }
+        };
+
+        // Determine which keymap to use based on CompanionMode
+        Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
+
+        // Check key presses and update grav direction
+        foreach (var entry in currentKeyMap)
+        {
+            if (Input.GetKeyDown(entry.Key))
             {
-                gravityDirection = Vector3.up;
+                gravityDirection = entry.Value;
                 isGrounded = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                gravityDirection = Vector3.down;
-                isGrounded = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                gravityDirection = Vector3.right;
-                isGrounded = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                gravityDirection = Vector3.left;
-                isGrounded = false;
+                break;
             }
         }
-        else if (!mode && isGrounded)
-        {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                gravityDirection = Vector3.up;
-                isGrounded = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                gravityDirection = Vector3.down;
-                isGrounded = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                gravityDirection = Vector3.right;
-                isGrounded = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                gravityDirection = Vector3.left;
-                isGrounded = false;
-            }
-        }
+
     }
 
     private void UpdateGravity(Vector3 direction)
