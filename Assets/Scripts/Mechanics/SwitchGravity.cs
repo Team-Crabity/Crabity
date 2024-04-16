@@ -4,53 +4,81 @@ using UnityEngine;
 
 public class SwitchGravity : MonoBehaviour
 {
+    [Header("Player Selection")]
+    public bool playerOne;
+    public bool playerTwo;
+
     [Header("Gravity")]
     public float gravityScale = 5.0f;
     public float gravity = 9.81f;
 
-    [Header("Camera")]
-    public Transform cameraTransform;
-
     [Header("Movement")]
-    public float speed = 7.0f;
-    public float groundDrag = 0.5f;
+    [Range(5f, 10f)] public float speed = 7.0f;
+    [Range(0f, 0.5f)] public float groundDrag = 0.5f;
+    // [Range(0f, 0.5f)] public float airDrag = 0.25f; //Can add different drag cofeffcient when the player is in the air for faster speed
+
+    [Header("Jumping")]
+    public int jumpCounter = 1;
+    public float jumpMultiplier;
+    public bool isJumping { get; private set; }
+    public bool isGrounded { get; private set; }
 
     private Rigidbody rb;
+    private KeyCode up;
+    private KeyCode down;
+    private KeyCode left;
+    private KeyCode right;
     private Vector3 gravityDirection = Vector3.zero;
-    private bool gravityCooldown;
-
-    // Track the current orientation of gravity to adjust movement
-    private Vector3 currentGravityDirection = Vector3.down;
+    public Vector3 newGravity { get; private set; }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
         UpdateGravity(Vector3.down);
+        if (playerOne)
+        {
+            up = KeyCode.W;
+            down = KeyCode.S;
+            left = KeyCode.A;
+            right = KeyCode.D;
+        }
+        else
+        {
+            up = KeyCode.UpArrow;
+            down = KeyCode.DownArrow;
+            left = KeyCode.LeftArrow;
+            right = KeyCode.RightArrow;
+        }
     }
 
     void Update()
     {
+        bool altHeld = Input.GetKey(KeyCode.RightAlt);
         bool cHeld = Input.GetKey(KeyCode.C);
-        if (cHeld)
+
+        if (altHeld || cHeld)
         {
-            ChangeGravityDirection();
+            ChangeGravity();
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (gravityDirection != Vector3.zero)
         {
             UpdateGravity(gravityDirection);
-            currentGravityDirection = gravityDirection; // Update current gravity direction
             gravityDirection = Vector3.zero;
         }
-        MovePlayer();
+        Movement();
     }
 
-    private void ChangeGravityDirection()
+    private void ChangeGravity()
     {
-        Dictionary<KeyCode, Vector3> keyToDirection = new Dictionary<KeyCode, Vector3>
+        bool mode = PlayerManager.instance.CompanionMode;
+        if (!isGrounded) return;
+
+        var playerOneKeyMap = new Dictionary<KeyCode, Vector3>
         {
             { KeyCode.W, Vector3.up },
             { KeyCode.S, Vector3.down },
@@ -58,20 +86,33 @@ public class SwitchGravity : MonoBehaviour
             { KeyCode.A, Vector3.left }
         };
 
-        foreach (var keyDirectionPair in keyToDirection)
+        var playerTwoKeyMap = new Dictionary<KeyCode, Vector3>
         {
-            if (Input.GetKeyDown(keyDirectionPair.Key) && gravityCooldown)
+            { KeyCode.UpArrow, Vector3.up },
+            { KeyCode.DownArrow, Vector3.down },
+            { KeyCode.RightArrow, Vector3.right },
+            { KeyCode.LeftArrow, Vector3.left }
+        };
+
+        // Determine which keymap to use based on CompanionMode
+        Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
+
+        // Check key presses and update grav direction
+        foreach (var entry in currentKeyMap)
+        {
+            if (Input.GetKeyDown(entry.Key))
             {
-                gravityDirection = keyDirectionPair.Value;
-                gravityCooldown = false;
+                gravityDirection = entry.Value;
+                isGrounded = false;
                 break;
             }
         }
+
     }
 
     private void UpdateGravity(Vector3 direction)
     {
-        Vector3 newGravity = cameraTransform.rotation * direction * gravity * gravityScale;
+        Vector3 newGravity = direction * gravity * gravityScale;
         Physics.gravity = newGravity;
     }
 
@@ -80,32 +121,78 @@ public class SwitchGravity : MonoBehaviour
         if (collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Wood" ||
             collision.gameObject.tag == "Pipe" || collision.gameObject.tag == "Ground")
         {
-            gravityCooldown = true;
+            isGrounded = true;
+            isJumping = false;
+            jumpCounter = 1;
         }
     }
 
-    private void MovePlayer()
+    private void Movement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
         Vector3 movementDirection = Vector3.zero;
-
-        if (currentGravityDirection == Vector3.down || currentGravityDirection == Vector3.up)
+        float effectiveSpeed = speed * (1 - groundDrag) * Time.deltaTime;
+        if (Input.GetKey(up))
         {
-            // Gravity is down/up, player moves left and right with A and D keys
-            movementDirection += cameraTransform.right * horizontalInput;
+            if (Physics.gravity.normalized == Vector3.down && isGrounded)
+            {
+                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + up + " key.");
+                PerformJump();
+            }
+            else
+            {
+                // Debug.Log("Regular upwards movement.");
+                movementDirection += Vector3.up * effectiveSpeed;
+            }
         }
-        else if (currentGravityDirection == Vector3.left || currentGravityDirection == Vector3.right)
+        if (Input.GetKey(down))
         {
-            // Gravity is left/right, player moves up and down with W and S keys
-            movementDirection += cameraTransform.up * verticalInput;
+            if (Physics.gravity.normalized == Vector3.up && isGrounded)
+            {
+                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + down + " key.");
+                PerformJump();
+            }
+            else
+            {
+                // Debug.Log("Regular downwards movement.");
+                movementDirection += Vector3.down * effectiveSpeed;
+            }
         }
+        if (Input.GetKey(left))
+        {
+            if (Physics.gravity.normalized == Vector3.right && isGrounded)
+            {
+                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + left + " key.");
+                PerformJump();
+            }
+            else
+            {
+                // Debug.Log("Regular left movement.");
+                movementDirection += Vector3.left * effectiveSpeed;
+            }
+        }
+        if (Input.GetKey(right))
+        {
+            if (Physics.gravity.normalized == Vector3.left && isGrounded)
+            {
+                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + right + " key.");
+                PerformJump();
+            }
+            else
+            {
+                // Debug.Log("Regular right movement.");
+                movementDirection += Vector3.right * effectiveSpeed;
+            }
+        }
+        rb.MovePosition(transform.position + movementDirection);
+    }
 
-        // Ensure movementDirection does not include movement along the camera's forward axis
-        movementDirection = Vector3.ProjectOnPlane(movementDirection, cameraTransform.forward);
-
-        float effectiveSpeed = speed * (1 - groundDrag * Time.deltaTime);
-        rb.MovePosition(rb.position + movementDirection * speed * Time.deltaTime);
+    public void PerformJump()
+    {
+        if (!isJumping && jumpCounter > 0) // Check to make sure the player isn't already jumping
+        {
+            Vector3 jumpDirection = -Physics.gravity.normalized;
+            rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
+            isJumping = true;
+        }
     }
 }

@@ -14,8 +14,7 @@ public class PauseMenu : MonoBehaviour
 
     public bool isPaused = false;
 
-    private Movement movementScript;
-    private Jump jumpScript;
+    private SwitchGravity gravityScript;
 
     public Sprite normalButtonImage;
     public Sprite pausedButtonImage;
@@ -32,8 +31,7 @@ public class PauseMenu : MonoBehaviour
         exitButton.onClick.AddListener(ExitGame);
 
         // Find the Movement and Jump scripts on the player object
-        movementScript = FindObjectOfType<Movement>();
-        jumpScript = FindObjectOfType<Jump>();
+        gravityScript = FindObjectOfType<SwitchGravity>();
 
         // Find the AudioSlider script in the scene
         audioSlider = FindObjectOfType<AudioSlider>();
@@ -86,14 +84,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = pause ? 0 : 1;
         isPaused = pause;
 
-        if (movementScript != null)
+        if (gravityScript != null)
         {
-            movementScript.enabled = !pause;
-        }
-
-        if (jumpScript != null)
-        {
-            jumpScript.enabled = !pause;
+            gravityScript.enabled = !pause;
         }
     }
 

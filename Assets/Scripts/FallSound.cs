@@ -5,7 +5,7 @@ using UnityEngine;
 public class FallSound : MonoBehaviour
 {
     [SerializeField] AudioSource fallSound;
-    private float fallThresholdVelocity = 1f;
+    private float fallThresholdVelocity = 5f;
     private bool grounded = true;
     private bool previousGrounded = true;
     private Rigidbody rb;
@@ -18,13 +18,13 @@ public class FallSound : MonoBehaviour
     void Update()
     {
         // Debug.Log("rb.velocity.y: " + rb.velocity.y);
+        // Debug.Log(rb.velocity.y < -fallThresholdVelocity);
         if (!previousGrounded && grounded)
         {
-            Debug.Log("Play landed sound " + (rb.velocity.y < -fallThresholdVelocity));
             if (rb.velocity.y < -fallThresholdVelocity)
             {
                 // Increase sound based on velocity
-                fallSound.volume = Mathf.Clamp01(Mathf.Abs(rb.velocity.y));
+                fallSound.volume = Mathf.Clamp01(Mathf.Abs(rb.velocity.y) / fallThresholdVelocity);
                 fallSound.Play();
             }
         }
