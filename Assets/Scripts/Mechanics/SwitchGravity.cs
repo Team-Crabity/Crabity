@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class SwitchGravity : MonoBehaviour
     public float gravity = 9.81f;
 
     [Header("Movement")]
-    [Range(5f, 10f)] public float speed = 7.0f;
+    [Range(5f, 20f)] public float speed = 7.0f;
     [Range(0f, 0.5f)] public float groundDrag = 0.5f;
     // [Range(0f, 0.5f)] public float airDrag = 0.25f; //Can add different drag cofeffcient when the player is in the air for faster speed
 
@@ -22,6 +23,9 @@ public class SwitchGravity : MonoBehaviour
     public float jumpMultiplier;
     public bool isJumping { get; private set; }
     public bool isGrounded { get; private set; }
+
+    [Header("Animator")]
+    public Animator animator;
 
     private Rigidbody rb;
     private KeyCode up;
@@ -34,8 +38,10 @@ public class SwitchGravity : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        animator = GetComponent<Animator>();
         UpdateGravity(Vector3.down);
+
+        //Set keybinds based on player selection
         if (playerOne)
         {
             up = KeyCode.W;
@@ -54,10 +60,10 @@ public class SwitchGravity : MonoBehaviour
 
     void Update()
     {
-        bool altHeld = Input.GetKey(KeyCode.RightAlt);
-        bool cHeld = Input.GetKey(KeyCode.C);
+        bool rightHeld = Input.GetKey(KeyCode.RightControl);
+        bool leftHeld = Input.GetKey(KeyCode.C);
 
-        if (altHeld || cHeld)
+        if (rightHeld || leftHeld)
         {
             ChangeGravity();
         }
@@ -78,6 +84,7 @@ public class SwitchGravity : MonoBehaviour
         bool mode = PlayerManager.instance.CompanionMode;
         if (!isGrounded) return;
 
+        // Keymaps for player one and player two to handle gravity directions
         var playerOneKeyMap = new Dictionary<KeyCode, Vector3>
         {
             { KeyCode.W, Vector3.up },
@@ -103,6 +110,9 @@ public class SwitchGravity : MonoBehaviour
             if (Input.GetKeyDown(entry.Key))
             {
                 gravityDirection = entry.Value;
+                // Rotate the player to match the new gravity direction
+                Quaternion targetRotation = Quaternion.FromToRotation(transform.up, -gravityDirection) * transform.rotation;
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 3.0f);;
                 isGrounded = false;
                 break;
             }
@@ -116,8 +126,10 @@ public class SwitchGravity : MonoBehaviour
         Physics.gravity = newGravity;
     }
 
+
     void OnCollisionEnter(Collision collision)
     {
+        // Check if the player is grounded
         if (collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Wood" ||
             collision.gameObject.tag == "Pipe" || collision.gameObject.tag == "Ground")
         {
@@ -183,7 +195,13 @@ public class SwitchGravity : MonoBehaviour
                 movementDirection += Vector3.right * effectiveSpeed;
             }
         }
+
+        // Handle player movement and animation
         rb.MovePosition(transform.position + movementDirection);
+        animator.SetFloat("moveX", Math.Abs(rb.velocity.x));
+        animator.SetFloat("moveY", Math.Abs(rb.velocity.y));
+        // Debug.Log("X Velocity: " + rb.velocity.x);
+        // Debug.Log("Y Velocity: " + rb.velocity.y);
     }
 
     public void PerformJump()
