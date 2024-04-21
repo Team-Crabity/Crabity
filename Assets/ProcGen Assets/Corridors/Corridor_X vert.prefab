@@ -1604,9 +1604,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462610}
-  - component: {fileID: 929338803713061395}
   m_Layer: 0
-  m_Name: Corridor_X
+  m_Name: Corridor_X vert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1641,30 +1640,6 @@ Transform:
   - {fileID: 477218}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &929338803713061395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32254f2a9aa44006a54911a42d38907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upNeighbour:
-  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
-  downNeighbour:
-  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
-  frontNeighbour:
-  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
-  backNeighbour:
-  - {fileID: 6706058815761722819, guid: 6e395f8924bf4684286d83fb2a774e21, type: 3}
-  leftNeighbour:
-  - {fileID: 929338803713061395}
-  rightNeighbour:
-  - {fileID: 929338803713061395}
 --- !u!1 &155254
 GameObject:
   m_ObjectHideFlags: 0
