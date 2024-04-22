@@ -8,8 +8,13 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
+    bool walkLeft = false;
+    bool walkRight = false; 
+    bool hasJumped = false;
+    bool cameraRotated = false;
+    bool gravShift = false;
 
-    //public Animator animator;
+    public Animator animator;
 
     private Queue <string> sentences;
 
@@ -19,9 +24,63 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue <string> ();
     }
 
-   public void StartDialogue (Dialogue dialogue)
+    private void Update()
     {
-        //animator.SetBool("isOpen", true);
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            walkLeft = true;
+            Debug.Log("Moved left");
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            walkRight = true;
+            Debug.Log("Moved right");
+        }
+
+        if(walkLeft && walkRight)
+        {
+            walkLeft = false;
+            walkRight = false;
+            DisplayNextSentence ();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            hasJumped = true;
+        }
+
+        if (hasJumped)
+        {
+            DisplayNextSentence ();
+            hasJumped = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.W)) { 
+            cameraRotated = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A))
+        {
+            cameraRotated = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S))
+        {
+            cameraRotated = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D))
+        {
+            cameraRotated = true;
+        }
+
+        if(cameraRotated)
+        {
+            DisplayNextSentence();
+            cameraRotated = false;
+        }
+    }
+
+    public void StartDialogue (Dialogue dialogue)
+    {
+        animator.SetBool("isOpen", true);
 
         nameText.text = dialogue.name;
 
@@ -63,7 +122,7 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-        //animator.SetBool("isOpen", false);
+        animator.SetBool("isOpen", false);
     }
 
     private void SetFocusToNull()

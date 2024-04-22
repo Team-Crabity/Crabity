@@ -1871,7 +1871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &156875547
 Transform:
   m_ObjectHideFlags: 0
@@ -4406,6 +4406,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326756220}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &327001893 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3903458668177014703, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
+  m_PrefabInstance: {fileID: 3863146719208801578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &328402048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6941,7 +6946,7 @@ RectTransform:
   m_Father: {fileID: 555398913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10093,6 +10098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 224149115}
   dialogueText: {fileID: 167543660}
+  animator: {fileID: 327001893}
 --- !u!4 &768227157
 Transform:
   m_ObjectHideFlags: 0
@@ -14660,7 +14666,7 @@ RectTransform:
   m_Father: {fileID: 937520055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -31458,6 +31464,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 768227156}
+    - target: {fileID: 3903458668177014703, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c315f7124b63027469413397be1c3a71, type: 2}
     - target: {fileID: 5022816677436279409, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -31599,6 +31609,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8270521631798089593, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
       propertyPath: dialogue.sentences.Array.data[2]
+      value: "I see you're unable to make it onto the platform.\n \r\nYou're also
+        able perform a second jump by pressing \"Space\" once again while in the
+        air. It looks like your creators were rather fond of old video games with
+        a \"double jump\" functionality."
+      objectReference: {fileID: 0}
+    - target: {fileID: 8270521631798089593, guid: 5cb718d1477c09b409e3b6d4bd8d6243, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
       value: "I see you're unable to make it onto the platform.\n \r\nYou're also
         able perform a second jump by pressing \"Space\" once again while in the
         air. It looks like your creators were rather fond of old video games with
