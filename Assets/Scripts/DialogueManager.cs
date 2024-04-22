@@ -26,15 +26,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
+        //Check for left/right movement
         if (Input.GetKeyDown(KeyCode.A))
         {
             walkLeft = true;
-            Debug.Log("Moved left");
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             walkRight = true;
-            Debug.Log("Moved right");
         }
 
         if(walkLeft && walkRight)
@@ -43,7 +42,7 @@ public class DialogueManager : MonoBehaviour
             walkRight = false;
             DisplayNextSentence ();
         }
-
+        //Check for jumps
         if (Input.GetKeyDown(KeyCode.Space))
         {
             hasJumped = true;
@@ -55,6 +54,7 @@ public class DialogueManager : MonoBehaviour
             hasJumped = false;
         }
 
+        //Check for camera rotation
         if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.W)) { 
             cameraRotated = true;
         }
@@ -76,6 +76,30 @@ public class DialogueManager : MonoBehaviour
             DisplayNextSentence();
             cameraRotated = false;
         }
+        
+        //Check for gravity shift
+        if(Input.GetKeyDown(KeyCode.RightControl) &&  Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            gravShift = true;
+        }
+        if (Input.GetKeyDown(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            gravShift = true;
+        }
+        if (Input.GetKeyDown(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            gravShift = true;
+        }
+        if (Input.GetKeyDown(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            gravShift = true;
+        }
+
+        if(gravShift)
+        {
+            DisplayNextSentence();
+            gravShift = false;
+        }
     }
 
     public void StartDialogue (Dialogue dialogue)
@@ -90,7 +114,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue (sentence);
         }
-
+        Debug.Log("Initial sentence count:" + sentences.Count.ToString());
         DisplayNextSentence();
     }
 
@@ -99,10 +123,12 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            Debug.Log("No more sentences\n");
             return;
         }
 
         string sentence = sentences.Dequeue ();
+        Debug.Log(sentences.Count.ToString());
         StopAllCoroutines();
         StartCoroutine(TypeSentence (sentence));
         SetFocusToNull();
@@ -115,8 +141,8 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            //yield return null;
-            yield return new WaitForSeconds (waitTime); 
+            yield return null;
+            //yield return new WaitForSeconds (waitTime); 
         }
     }
 
