@@ -40,7 +40,8 @@ public class MultipleTargetCamera : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
     }
-    Vector3 GetCenterPoint()
+    
+    public Vector3 GetCenterPoint()
     {
         if (targets.Count == 1)
         {
@@ -57,7 +58,7 @@ public class MultipleTargetCamera : MonoBehaviour
             Debug.Log("Bounds z: " + bounds.size.z);
 
             // Check to see if the any of the bounds are out of the camera view
-            if(bounds.size.x > 60 || bounds.size.y > 60 || bounds.size.z > 60)
+            if(bounds.size.x > 60 || bounds.size.y > 30 || bounds.size.z > 45)
             {
                 
                 if(targets.Contains(playerTwo.transform))
@@ -70,7 +71,7 @@ public class MultipleTargetCamera : MonoBehaviour
                     targets.Remove(playerTwo.transform);
                 }
             }
-            else if (bounds.size.x < 60 || bounds.size.y < 60 || bounds.size.z < 60)
+            else if (bounds.size.x < 60 || bounds.size.y < 30 || bounds.size.z < 45)
             {
                 // Currently not working as expected bc of conditional
                 if(!targets.Contains(playerTwo.transform))
