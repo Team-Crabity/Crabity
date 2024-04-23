@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
     private SwitchGravity playerOneGravity;
     private SwitchGravity playerTwoGravity;
 
+    public GameObject playerOneSpawnPoint;
+    public GameObject playerTwoSpawnPoint;
+
     void Awake()
     {
         if (instance == null)
