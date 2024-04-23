@@ -9,6 +9,7 @@ public class ChangeScene : MonoBehaviour
     public GameObject Cam;
     private ObjClick ObjClickScript;
     public GameObject Posi;
+    public GameObject SettingsMenu;
     int ID; 
     public GameObject door;
     bool moving = false;
@@ -57,15 +58,22 @@ public class ChangeScene : MonoBehaviour
     {
         if (Moving) 
         {
+
             var step = 3.5f * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, Posi.transform.position, step);
             if (transform.position == Posi.transform.position) 
             {
-                if (pauseMenuScript != null) {
-                    pauseMenuScript.enabled = true;
-                }
                 moving = false;
-                MoveToScene(ID);
+                if (ID == 1) {
+                    if (pauseMenuScript != null) {
+                        pauseMenuScript.enabled = true;
+                    }
+                    MoveToScene(ID);
+                }
+                else if (ID == 2) {
+                    SettingsMenu.SetActive(true);
+                    //ID = 0;
+                }
             }
         }
     }

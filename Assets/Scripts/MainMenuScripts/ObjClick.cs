@@ -25,6 +25,7 @@ public class ObjClick : MonoBehaviour
     private void Start()
     {
         ChangeSceneScript = Cam.GetComponent<ChangeScene>();
+        Cam.transform.position = new Vector3(0.35f, 0.8f, 3.94f);
     }
     void Update()
     {
@@ -42,26 +43,20 @@ public class ObjClick : MonoBehaviour
                 //Gets rid of the NameTags too this way
                 
             }
-            else if (Book == Name)
+            else if (Book == Name) //Change this to an exit button
             {
-                SceneNumber = 2;
-                ChangeSceneScript.ChangeTheScene = true;
-                Book.GetComponent<AudioSource>().Play();
-                Destroy(Cube.transform.parent.gameObject);
-                Destroy(Gear.transform.parent.gameObject);
+                Application.Quit();
             }
             else if (Gear == Name)
             {
-                SceneNumber = 3;
+                SceneNumber = 2;
                 ChangeSceneScript.ChangeTheScene = true;
                 Gear.GetComponent<AudioSource>().Play();
-                Destroy(Book.transform.parent.gameObject);
-                Destroy(Cube.transform.parent.gameObject);
             }
         }
         if (Input.GetMouseButtonUp(0)) 
         {
-            Debug.Log("Mouse Off");
+            //Debug.Log("Mouse Off");
         }
     }
     GameObject GetClickedObject(out RaycastHit hit)
