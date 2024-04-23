@@ -13,7 +13,6 @@ public class PlayerManager : MonoBehaviour
     private RotateObject playerOneRotate;
     private SwitchGravity playerOneGravity;
     private SwitchGravity playerTwoGravity;
-    private MultipleTargetCamera cameraScript;
 
     void Awake()
     {
@@ -29,8 +28,6 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        cameraScript = Camera.main.GetComponent<MultipleTargetCamera>();
-        
         if (playerOne != null)
         {
             playerOneRotate = playerOne.GetComponentInParent<RotateObject>();
@@ -44,7 +41,6 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        Transform playerTwoChild = playerTwo.transform.Find("robotSphere").gameObject.transform;
         if (CompanionMode)
         {
             playerTwo.SetActive(true);
@@ -60,22 +56,10 @@ public class PlayerManager : MonoBehaviour
                 playerTwoGravity.playerTwo = true;
                 playerTwoGravity.enabled = true;
             }
-            
-            // Add player two's child to camera script list
-            if (cameraScript != null && !cameraScript.targets.Contains(playerTwoChild))
-            {
-                cameraScript.targets.Add(playerTwoChild);
-            }
         }
         else
         {
             playerTwo.SetActive(false);
-
-            // Remove player two's child from camera script list
-            if (cameraScript != null && cameraScript.targets.Contains(playerTwoChild))
-            {
-                cameraScript.targets.Remove(playerTwoChild);
-            }
 
             // Allow both functionality for player one when not in companion mode
             if (playerOneGravity != null)

@@ -6,6 +6,10 @@ public class RotateObject : MonoBehaviour
 {
     // GameObject to rotate about
     public GameObject otherObject;
+    
+    // Player game objects
+    public GameObject playerOne;
+    public GameObject playerTwo;
 
     // Variables for rotationg
     public float turnTime = 1f;
@@ -41,13 +45,13 @@ public class RotateObject : MonoBehaviour
         }
 
         // Continue rotating object clockwise
-        if (!isRotating() && Input.GetKeyDown(KeyCode.Q) && shiftHeld)
+        if (!isRotating() && Input.GetKeyDown(KeyCode.E) && shiftHeld)
         {
             StartCoroutine(Rotate(transform, otherObject.transform, Vector3.forward, 90, turnTime));
         }
         
         // Continue rotating object counterclockwise
-        if (!isRotating() && Input.GetKeyDown(KeyCode.E) && shiftHeld)
+        if (!isRotating() && Input.GetKeyDown(KeyCode.Q) && shiftHeld)
         {
             StartCoroutine(Rotate(transform, otherObject.transform, Vector3.forward * -1, 90, turnTime));
         }
@@ -75,6 +79,8 @@ public class RotateObject : MonoBehaviour
         for (float i = 0; i < degrees; i += Time.deltaTime * rate)
         {
             thisTransform.RotateAround(otherTransform.position, rotateAxis, Time.deltaTime * rate);
+            playerOne.transform.RotateAround(playerOne.transform.position, rotateAxis, -Time.deltaTime * rate);
+            playerTwo.transform.RotateAround(playerTwo.transform.position, rotateAxis, -Time.deltaTime * rate);
             yield return null;
         }
 
