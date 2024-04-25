@@ -1,4 +1,4 @@
-name: Build and Deploy Automation ⚙️
+name: Build Automation ⚙️
 
 on:
   push:
@@ -34,55 +34,26 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-            
-  buildWebGL:
-    needs: testRunner
-    name: Build for WebGL 🖥️
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      # Cache
-      - uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
-
-      # Build
-      - uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: WebGL
-      
-      # Output to build folder
-      - name: Upload WebGL artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-WebGL
-          path: build/WebGL
+          unityVersion: 2022.3.15f1
 
   buildWindows:
     needs: testRunner
     name: Build for Windows 🖥️
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     strategy:
       fail-fast: false
+      matrix:
+        unityVersion:
+          - 2022.3.15f1
+        targetPlatform:
+          - StandaloneWindows # Build a Windows 32-bit standalone.
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
     steps:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           lfs: true
 
       # Cache
@@ -100,25 +71,33 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: StandaloneWindows64
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: ${{ matrix.unityVersion }}
 
       # Output to build folder
       - uses: actions/upload-artifact@v4
         with:
-          name: build-StandaloneWindows64
-          path: build/StandaloneWindows64
+          name: Build
+          path: build
 
   buildMacOS:
     needs: testRunner
     name: Build for MacOS 🍎
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       fail-fast: false
+      matrix:
+        unityVersion:
+          - 2022.3.15f1
+        targetPlatform:
+          - StandaloneOSX # Build a macOS standalone.
+
     steps:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           lfs: true
 
       # Cache
@@ -136,35 +115,11 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: StandaloneOSX
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: ${{ matrix.unityVersion }}
   
       # Output to build folder
       - uses: actions/upload-artifact@v4
         with:
-          name: build-StandaloneOSX
-          path: build/StandaloneOSX
-
-  deployPages:
-    needs: buildWebGL
-    name: Deploy WebGL build to Github Pages 🌐
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      # Download artifact
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build-WebGL
+          name: Build
           path: build
-
-      # Deploy to Github Pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
-        with:
-          branch: gh-pages
-          folder: build/WebGL
