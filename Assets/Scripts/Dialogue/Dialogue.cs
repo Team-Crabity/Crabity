@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using System.Runtime.InteropServices;
 
 public class Dialogue : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
+        // change companion gravity key text for Mac users
+        bool isOnMac = SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX;
+        string companionGravityKey = isOnMac ? "RIGHT CTRL" : "RIGHT OPTIONS";
+        
         if (PlayerManager.instance.CompanionMode == false) //single player dialogue
         {
             lines = new string[]
@@ -42,23 +47,8 @@ public class Dialogue : MonoBehaviour
                 "CRB 1: Use the W, A, S and D keys to navigate the environment.", 
                 "CRB 1: Utilize the rotation drive with LEFT SHIFT + WASD.",
                 "CRB 2: Use the LEFT, RIGHT, UP, AND DOWN arrow keys to navigate the environment.",
-                "CRB 2: Utilize the gravity drive with RIGHT CTRL + ARROW KEYS.",
+                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " ARROW KEYS.",
             };
-        }
-
-        if(SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX) // Mac edge case
-        {
-            lines = new string[]
-           {
-                "Tip: advance this dialogue by using either SPACE or ENTER.",
-                "Initiating contact...done.",
-                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
-                "CRB 1: Utilize the rotation drive with LEFT SHIFT + WASD.",
-                "CRB 2: Use the LEFT, RIGHT, UP, AND DOWN arrow keys to navigate the environment.",
-                "CRB 2: Utilize the gravity drive with RIGHT OPTIONS + ARROW KEYS.",
-           };
         }
         textComponent.text = string.Empty;
         StartDialogue();
