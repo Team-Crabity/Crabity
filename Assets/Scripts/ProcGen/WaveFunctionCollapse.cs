@@ -83,14 +83,43 @@ public class WaveFunctionCollapse : MonoBehaviour
         }
 
         Debug.Log("Collapsing Cell");
-        Tile chosenTile = cell.tileOptions[Random.Range(0, cell.tileOptions.Length)];
-        cell.RecreateCell(new Tile[] { chosenTile });
-        cell.collapsed = true;
 
-        InstantiateTile(chosenTile, cell.transform.position);
+        // Check compatibility with all neighbors
+        bool allNeighborsCompatible = true;
+        foreach (Cell neighbor in GetAllNeighbors(cell))
+        {
+            bool neighborCompatible = false;
+            foreach (Tile neighborTile in neighbor.tileOptions)
+            {
+                if (AreTilesCompatible(cell.tileOptions, neighborTile))
+                {
+                    neighborCompatible = true;
+                    break;
+                }
+            }
+            if (!neighborCompatible)
+            {
+                allNeighborsCompatible = false;
+                break;
+            }
+        }
 
-        UpdateNeighbors(cell);
+        if (allNeighborsCompatible)
+        {
+            Tile chosenTile = cell.tileOptions[Random.Range(0, cell.tileOptions.Length)];
+            cell.RecreateCell(new Tile[] { chosenTile });
+            cell.collapsed = true;
+            InstantiateTile(chosenTile, cell.transform.position);
+
+            // Update neighbors
+            UpdateNeighbors(cell);
+        }
+        else
+        {
+            Debug.LogError($"Not all neighbors are compatible for cell at {cell.transform.position}. Cell not collapsed.");
+        }
     }
+
 
     void InstantiateTile(Tile tile, Vector3 position)
     {
@@ -107,10 +136,19 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             if (neighbor != null && !neighbor.collapsed)
             {
-                Tile[] validTiles = neighbor.tileOptions.Where(t => AreTilesCompatible(t, cell.tileOptions[0])).ToArray();
-                if (validTiles.Length > 0)
+                // Check compatibility of each neighbor tile with all candidate tiles of the current cell
+                List<Tile> compatibleTiles = new List<Tile>();
+                foreach (Tile neighborTile in neighbor.tileOptions)
                 {
-                    neighbor.RecreateCell(validTiles);
+                    if (AreTilesCompatible(cell.tileOptions, neighborTile))
+                    {
+                        compatibleTiles.Add(neighborTile);
+                    }
+                }
+
+                if (compatibleTiles.Count > 0)
+                {
+                    neighbor.RecreateCell(compatibleTiles.ToArray());
                     CollapseCell(neighbor);
                 }
                 else
@@ -120,24 +158,41 @@ public class WaveFunctionCollapse : MonoBehaviour
             }
         }
     }
-    bool AreTilesCompatible(Tile candidate, Tile current)
+
+
+    bool AreTilesCompatible(Tile[] currentCellTiles, Tile neighborTile)
     {
-        bool compatible = candidate.upNeighbour.Contains(current) ||
-                          candidate.downNeighbour.Contains(current) ||
-                          candidate.leftNeighbour.Contains(current) ||
-                          candidate.rightNeighbour.Contains(current) ||
-                          candidate.frontNeighbour.Contains(current) ||
-                          candidate.backNeighbour.Contains(current);
-
-        if (compatible)
+        foreach (Tile currentTile in currentCellTiles)
         {
-            Debug.Log($"{candidate.name} considers {current.name} as its neighbor.");
+            if (currentTile.upNeighbour.Contains(neighborTile) ||
+                currentTile.downNeighbour.Contains(neighborTile) ||
+                currentTile.leftNeighbour.Contains(neighborTile) ||
+                currentTile.rightNeighbour.Contains(neighborTile) ||
+                currentTile.frontNeighbour.Contains(neighborTile) ||
+                currentTile.backNeighbour.Contains(neighborTile))
+            {
+                return true;
+            }
         }
-        else
-        {
-            Debug.Log($"{candidate.name} does not consider {current.name} as its neighbor.");
-        }
-
-        return compatible;
+        return false;
     }
+
+
+
+
+
+    IEnumerable<Cell> GetAllNeighbors(Cell cell)
+    {
+        List<Cell> neighbors = new List<Cell>();
+
+        if (cell.upNeighbor != null) neighbors.Add(cell.upNeighbor);
+        if (cell.downNeighbor != null) neighbors.Add(cell.downNeighbor);
+        if (cell.leftNeighbor != null) neighbors.Add(cell.leftNeighbor);
+        if (cell.rightNeighbor != null) neighbors.Add(cell.rightNeighbor);
+        if (cell.frontNeighbor != null) neighbors.Add(cell.frontNeighbor);
+        if (cell.backNeighbor != null) neighbors.Add(cell.backNeighbor);
+
+        return neighbors;
+    }
+
 }
