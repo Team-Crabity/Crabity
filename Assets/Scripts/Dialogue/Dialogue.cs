@@ -1,16 +1,103 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
-
-[System.Serializable]
-public class Dialogue 
+public class Dialogue : MonoBehaviour
 {
-    public string name;
+    public TextMeshProUGUI textComponent;
+    public float textSpeed;
+    private int index;
+    public AudioSource source;
+    public AudioClip clip;
+    PlayerManager player;
+    private string[] lines = new string[]
+    {
 
-    [TextArea(1, 3)]
-    public string[] sentences;
+    };
 
+    void Start()
+    {
+        player = FindObjectOfType<PlayerManager>();
+        if (player.CompanionMode == false) //single player dialogue
+        {
+            lines = new string[]
+            {
+                "Tip: advance this dialogue by using SPACE.",
+                "Initiating contact...done.",
+                "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol.",
+                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
+                "CRB 1: Use the A and D keys to move left and right; use the W key to jump.",
+                "Utilize the rotation drive with LEFT SHIFT + WASD.",
+                "Utilize the gravity drive with C + WASD.",
+            };
+        }
+        else //coop dialogue
+        {
+            lines = new string[]
+            {
+                "Tip: advance this dialogue by using either SPACE or ENTER.",
+                "Initiating contact...done.",
+                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
+                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
+                "CRB 1: Use the A and D keys to move left and right; use the W key to jump.", 
+                "CRB 1: Utilize the rotation drive with LEFT SHIFT + WASD.",
+                "CRB 2: Use the LEFT and RIGHT arrow keys to move; use the UP arrow key to jump.",
+                "CRB 2: Utilize the gravity drive with RIGHT CTRL + ARROW KEYS.",
+            };
+        }
+        textComponent.text = string.Empty;
+        StartDialogue();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            if (textComponent.text == lines[index])
+            {
+                NextLine();
+            }
+            else
+            {
+                StopAllCoroutines();
+                textComponent.text = lines[index];
+            }
+        }
+        if (!gameObject.activeSelf && Input.GetKeyDown(KeyCode.T))
+        {
+            gameObject.SetActive(true);
+            StartDialogue();
+        }
+    }
 
+    void StartDialogue()
+    {
+        index = 0;
+        StartCoroutine(TypeLine());
+    }
+
+    IEnumerator TypeLine()
+    {
+        foreach (char c in lines[index].ToCharArray())
+        {
+            textComponent.text += c;
+            source.PlayOneShot(clip);
+            yield return new WaitForSeconds(textSpeed);
+        }
+    }
+
+    void NextLine()
+    {
+        if (index < lines.Length - 1)
+        {
+            index++;
+            textComponent.text = string.Empty;
+            StartCoroutine(TypeLine());
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }
-
