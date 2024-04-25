@@ -97,7 +97,7 @@ public class WaveFunctionCollapse : MonoBehaviour
         Debug.Log($"Instantiating tile at {position}");
         var tileInstance = Instantiate(tile.gameObject, position, Quaternion.identity);
         tileInstance.transform.parent = parentObject.transform;
-        tileInstance.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f); 
+        tileInstance.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
     }
 
     void UpdateNeighbors(Cell cell)
@@ -122,11 +122,22 @@ public class WaveFunctionCollapse : MonoBehaviour
     }
     bool AreTilesCompatible(Tile candidate, Tile current)
     {
-        return candidate.upNeighbour.Contains(current) ||
-               candidate.downNeighbour.Contains(current) ||
-               candidate.leftNeighbour.Contains(current) ||
-               candidate.rightNeighbour.Contains(current) ||
-               candidate.frontNeighbour.Contains(current) ||
-               candidate.backNeighbour.Contains(current);
+        bool compatible = candidate.upNeighbour.Contains(current) ||
+                          candidate.downNeighbour.Contains(current) ||
+                          candidate.leftNeighbour.Contains(current) ||
+                          candidate.rightNeighbour.Contains(current) ||
+                          candidate.frontNeighbour.Contains(current) ||
+                          candidate.backNeighbour.Contains(current);
+
+        if (compatible)
+        {
+            Debug.Log($"{candidate.name} considers {current.name} as its neighbor.");
+        }
+        else
+        {
+            Debug.Log($"{candidate.name} does not consider {current.name} as its neighbor.");
+        }
+
+        return compatible;
     }
 }
