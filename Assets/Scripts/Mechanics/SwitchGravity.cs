@@ -60,8 +60,8 @@ public class SwitchGravity : MonoBehaviour
 
     void Update()
     {
-        bool rightHeld = Input.GetKey(KeyCode.RightControl);
-        bool leftHeld = Input.GetKey(KeyCode.C);
+        bool rightHeld = Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.RightShift);
+        bool leftHeld = Input.GetKey(KeyCode.LeftControl);
 
         if (rightHeld || leftHeld)
         {
@@ -198,8 +198,8 @@ public class SwitchGravity : MonoBehaviour
 
         // Handle player movement and animation
         rb.MovePosition(transform.position + movementDirection);
-        animator.SetFloat("moveX", Math.Abs(rb.velocity.x));
-        animator.SetFloat("moveY", Math.Abs(rb.velocity.y));
+        // animator.SetFloat("moveX", Math.Abs(rb.velocity.x));
+        // animator.SetFloat("moveY", Math.Abs(rb.velocity.y));
         // Debug.Log("X Velocity: " + rb.velocity.x);
         // Debug.Log("Y Velocity: " + rb.velocity.y);
     }

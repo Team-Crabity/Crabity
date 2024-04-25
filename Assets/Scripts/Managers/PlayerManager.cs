@@ -17,6 +17,11 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerOneSpawnPoint;
     public GameObject playerTwoSpawnPoint;
 
+    public void ToggleCompanionMode()
+    {
+        CompanionMode = !CompanionMode;
+    }
+
     void Awake()
     {
         if (instance == null)
@@ -44,6 +49,12 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        // Secret hotkey for companion mode
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            CompanionMode = !CompanionMode;
+        }
+
         if (CompanionMode)
         {
             playerTwo.SetActive(true);

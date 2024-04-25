@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MultipleTargetCamera : MonoBehaviour
 {
-    //TODO: Change camera to adaptive split screen instead of regular camera
+    //IN-PROGRESS: Change camera to adaptive split screen instead of regular camera
     //CREDITS: Brackeys - https://www.youtube.com/watch?v=aLpixrPvlB8
     [Header("Players to Track")]
     public List<Transform> targets;
@@ -16,8 +16,14 @@ public class MultipleTargetCamera : MonoBehaviour
     public GameObject playerTwo;
 
     [Header("Player Cameras")]
+    public GameObject mainCamera;
     public GameObject playerOneCamera;
     public GameObject playerTwoCamera;
+
+    [Header("Door")]
+    public GameObject doorCamera;
+    private bool focusingOnDoor = false;
+    private bool finishedCutscene = false;
 
     private Vector3 velocity;
 
@@ -38,9 +44,15 @@ public class MultipleTargetCamera : MonoBehaviour
 
         Vector3 newPosition = centerPoint + offset;
 
-        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
+        mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, newPosition, ref velocity, smoothTime);
+
+        if(PressurePlateManager.instance.allPlatesPressed && !finishedCutscene)
+        {
+            FocusOnDoor();
+            finishedCutscene = true;
+        }
     }
-    
+
     public Vector3 GetCenterPoint()
     {
         if (targets.Count == 1)
@@ -58,25 +70,27 @@ public class MultipleTargetCamera : MonoBehaviour
             Debug.Log("Bounds z: " + bounds.size.z);
 
             // Check to see if the any of the bounds are out of the camera view
-            if(bounds.size.x > 60 || bounds.size.y > 30 || bounds.size.z > 45)
+            if (bounds.size.x > 50 || bounds.size.y > 25 || bounds.size.z > 50 && !focusingOnDoor)
             {
-                
-                if(targets.Contains(playerTwo.transform))
+                // mainCamera.SetActive(false);
+                if (targets.Contains(PlayerManager.instance.playerTwo.transform) && targets.Contains(PlayerManager.instance.playerOne.transform))
                 {
                     // Activate separate cameras
                     playerOneCamera.SetActive(true);
                     playerTwoCamera.SetActive(true);
 
-                    // Remove player two from the targets list
-                    targets.Remove(playerTwo.transform);
+                    // Remove players from the targets list
+                    targets.Remove(PlayerManager.instance.playerOne.transform);
+                    targets.Remove(PlayerManager.instance.playerTwo.transform);
                 }
             }
-            else if (bounds.size.x < 60 || bounds.size.y < 30 || bounds.size.z < 45)
+            else if (bounds.size.x < 50 || bounds.size.y < 25 || bounds.size.z < 50 && !focusingOnDoor)
             {
-                // Currently not working as expected bc of conditional
-                if(!targets.Contains(playerTwo.transform))
+                // mainCamera.SetActive(true);
+                if (!targets.Contains(playerTwo.transform) && !targets.Contains(playerOne.transform))
                 {
-                    // Add player two to the targets list
+                    // Add players to the targets list
+                    targets.Add(playerOne.transform);
                     targets.Add(playerTwo.transform);
                 }
                 // Deactivate separate cameras
@@ -85,5 +99,23 @@ public class MultipleTargetCamera : MonoBehaviour
             }
         }
         return bounds.center;
+    }
+
+    private void FocusOnDoor()
+    {
+        StartCoroutine(FocusSequence());
+    }
+
+    private IEnumerator FocusSequence()
+    {
+        focusingOnDoor = true;
+        doorCamera.SetActive(true);
+        GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(3.0f);
+
+        finishedCutscene = true;
+        focusingOnDoor = false;
+        doorCamera.SetActive(false);
+        Debug.Log("Door camera sequence complete");
     }
 }

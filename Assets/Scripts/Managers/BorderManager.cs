@@ -6,7 +6,9 @@ public class BorderManager : MonoBehaviour
 {
 
     public static BorderManager instance { get; private set;}
-
+    public int borderDistance = 100;
+    
+    public GameObject rotatingObjects;
     public GameObject borderPrefab;
     private List<GameObject> borders;
 
@@ -31,18 +33,18 @@ public class BorderManager : MonoBehaviour
         borders = new List<GameObject>
         {
             // Create 6 planes 500 meters away from spawn position
-
             // front and back borders
-            Instantiate(borderPrefab, new Vector3(0, 0, 200), transform.rotation),
-            Instantiate(borderPrefab, new Vector3(0, 0, -200), transform.rotation),
+
+            Instantiate(borderPrefab, new Vector3(0, 0, borderDistance), transform.rotation, rotatingObjects.transform),
+            Instantiate(borderPrefab, new Vector3(0, 0, -borderDistance), transform.rotation, rotatingObjects.transform),
 
             // left and right borders
-            Instantiate(borderPrefab, new Vector3(-200, 0, 0), y_rot),
-            Instantiate(borderPrefab, new Vector3(200, 0, 0), y_rot),
+            Instantiate(borderPrefab, new Vector3(-borderDistance, 0, 0), y_rot, rotatingObjects.transform),
+            Instantiate(borderPrefab, new Vector3(borderDistance, 0, 0), y_rot, rotatingObjects.transform),
 
             // up and down borders
-            Instantiate(borderPrefab, new Vector3(0, -200, 0), x_rot),
-            Instantiate(borderPrefab, new Vector3(0, 200, 0), x_rot)
+            Instantiate(borderPrefab, new Vector3(0, -borderDistance, 0), x_rot, rotatingObjects.transform),
+            Instantiate(borderPrefab, new Vector3(0, borderDistance, 0), x_rot, rotatingObjects.transform)
         };
 
         for (int i = 0; i < borders.Count; i += 1) {
