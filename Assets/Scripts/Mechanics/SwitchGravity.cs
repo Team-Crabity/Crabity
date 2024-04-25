@@ -60,8 +60,9 @@ public class SwitchGravity : MonoBehaviour
 
     void Update()
     {
-        bool rightHeld = Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.RightShift);
-        bool leftHeld = Input.GetKey(KeyCode.LeftControl);
+        bool isOnMac = SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX;
+        bool rightHeld = isOnMac ? Input.GetKey(KeyCode.RightAlt) : Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.RightShift);
+        bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
 
         if (rightHeld || leftHeld)
         {

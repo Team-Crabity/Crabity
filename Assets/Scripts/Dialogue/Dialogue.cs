@@ -19,40 +19,15 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
-        // change companion gravity key text for Mac users
-        bool isOnMac = SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX;
-        string companionGravityKey = isOnMac ? "RIGHT CTRL" : "RIGHT OPTIONS";
-        
-        if (PlayerManager.instance.CompanionMode == false) //single player dialogue
+        lines = new string[]
         {
-            lines = new string[]
-            {
-                "Tip: advance this dialogue by using SPACE.",
-                "Initiating contact...done.",
-                "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
-                "Utilize the rotation drive with LEFT SHIFT + WASD.",
-                "Utilize the gravity drive with LEFT CTRL + WASD.",
-            };
-        }
-        else //coop dialogue
-        {
-            lines = new string[]
-            {
-                "Tip: advance this dialogue by using either SPACE or ENTER.",
-                "Initiating contact...done.",
-                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.", 
-                "CRB 1: Utilize the rotation drive with LEFT SHIFT + WASD.",
-                "CRB 2: Use the LEFT, RIGHT, UP, AND DOWN arrow keys to navigate the environment.",
-                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " ARROW KEYS.",
-            };
-        }
+            "Tip: advance this dialogue by using SPACE.",
+            "Initiating contact...done.",
+        };
         textComponent.text = string.Empty;
         StartDialogue();
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
@@ -72,6 +47,39 @@ public class Dialogue : MonoBehaviour
             gameObject.SetActive(true);
             StartDialogue();
         }
+    }
+
+    void LateUpdate()
+    {
+        // change companion gravity key text for Mac users
+        bool isOnMac = SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX;
+        string companionGravityKey = isOnMac ? "RIGHT OPTION" : "RIGHT ALT or RIGHT SHIFT";
+        string singlePlayerGravityKey = isOnMac ? "C" : "LEFT CTRL";
+
+        if (PlayerManager.instance.CompanionMode == false) //single player dialogue
+        {
+            lines = new string[]
+            {
+                "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol.",
+                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
+                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
+                "Utilize the rotation drive with LEFT SHIFT + WASD.",
+                "Utilize the gravity drive with " + singlePlayerGravityKey + " + WASD.",
+            };
+        }
+        else //coop dialogue
+        {
+            lines = new string[]
+            {
+                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
+                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
+                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
+                "CRB 1: Utilize the rotation drive with LEFT SHIFT + WASD.",
+                "CRB 2: Use the LEFT, RIGHT, UP, AND DOWN arrow keys to navigate the environment.",
+                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " + ARROW KEYS.",
+            };
+        }
+
     }
 
     void StartDialogue()
