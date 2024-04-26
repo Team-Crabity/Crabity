@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateObject : MonoBehaviour
 {
     // GameObject to rotate about
-    public GameObject otherObject;
+    // public GameObject otherObject;
 
     // Variables for rotationg
     public float turnTime = 1f;
@@ -27,9 +27,11 @@ public class RotateObject : MonoBehaviour
 
     void RotationInput(KeyCode keyCode, Vector3 axis)
     {
+        Vector3 centerPoint = GetCenterPoint();
+        
         if (Input.GetKeyDown(keyCode))
         {
-            StartCoroutine(Rotate(transform, otherObject.transform, axis, 90, turnTime));
+            StartCoroutine(Rotate(transform, centerPoint, axis, 90, turnTime));
         }
     }
 
@@ -38,17 +40,36 @@ public class RotateObject : MonoBehaviour
         return rotating;
     }
 
-    // https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
-    IEnumerator Rotate(Transform thisTransform, Transform otherTransform, Vector3 rotateAxis, float degrees, float totalTime)
+    public Vector3 GetCenterPoint()
     {
-        Transform playerOneTransform = PlayerManager.instance.playerOne.transform;
-        Transform playerTwoTransform = PlayerManager.instance.playerTwo.transform;
+        Transform playerOneTransform = global::PlayerManager.instance.playerOne.transform;
+        Transform playerTwoTransform = global::PlayerManager.instance.playerTwo.transform;
+
+        if (playerOneTransform == null && playerTwoTransform == null)
+        {
+            return transform.position;
+        }
+        else if (playerTwoTransform == null)  // TODO: have it also check if splitscreen camera is active
+        {
+            return playerOneTransform.position;
+        }
+        else
+        {
+            return (playerOneTransform.position + playerTwoTransform.position) / 2;
+        }
+    }
+
+    // https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
+    IEnumerator Rotate(Transform thisTransform, Vector3 rotateAround, Vector3 rotateAxis, float degrees, float totalTime)
+    {
+        Transform playerOneTransform = global::PlayerManager.instance.playerOne.transform;
+        Transform playerTwoTransform = global::PlayerManager.instance.playerTwo.transform;
 
         rotating = true;
 
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;
-        transform.RotateAround(otherTransform.position, rotateAxis, degrees);
+        transform.RotateAround(rotateAround, rotateAxis, degrees);
         var endRotation = thisTransform.rotation;
         var endPosition = thisTransform.position;
         thisTransform.rotation = startRotation;
@@ -58,7 +79,7 @@ public class RotateObject : MonoBehaviour
 
         for (float i = 0; i < degrees; i += Time.deltaTime * rate)
         {
-            thisTransform.RotateAround(otherTransform.position, rotateAxis, Time.deltaTime * rate);
+            thisTransform.RotateAround(rotateAround, rotateAxis, Time.deltaTime * rate);
             playerOneTransform.RotateAround(playerOneTransform.position, rotateAxis, -Time.deltaTime * rate);
             playerTwoTransform.RotateAround(playerTwoTransform.position, rotateAxis, -Time.deltaTime * rate);
             yield return null;
