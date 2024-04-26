@@ -144,65 +144,32 @@ public class SwitchGravity : MonoBehaviour
     {
         Vector3 movementDirection = Vector3.zero;
         float effectiveSpeed = speed * (1 - groundDrag) * Time.deltaTime;
-        if (Input.GetKey(up))
-        {
-            if (Physics.gravity.normalized == Vector3.down && isGrounded)
-            {
-                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + up + " key.");
-                PerformJump();
-            }
-            else
-            {
-                // Debug.Log("Regular upwards movement.");
-                movementDirection += Vector3.up * effectiveSpeed;
-            }
-        }
-        if (Input.GetKey(down))
-        {
-            if (Physics.gravity.normalized == Vector3.up && isGrounded)
-            {
-                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + down + " key.");
-                PerformJump();
-            }
-            else
-            {
-                // Debug.Log("Regular downwards movement.");
-                movementDirection += Vector3.down * effectiveSpeed;
-            }
-        }
-        if (Input.GetKey(left))
-        {
-            if (Physics.gravity.normalized == Vector3.right && isGrounded)
-            {
-                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + left + " key.");
-                PerformJump();
-            }
-            else
-            {
-                // Debug.Log("Regular left movement.");
-                movementDirection += Vector3.left * effectiveSpeed;
-            }
-        }
-        if (Input.GetKey(right))
-        {
-            if (Physics.gravity.normalized == Vector3.left && isGrounded)
-            {
-                // Debug.Log("Current gravity " + Physics.gravity.normalized + ". Jumping using " + right + " key.");
-                PerformJump();
-            }
-            else
-            {
-                // Debug.Log("Regular right movement.");
-                movementDirection += Vector3.right * effectiveSpeed;
-            }
-        }
 
-        // Handle player movement and animation
+        // Dictionary to map input keys to movement directions
+        var directionMappings = new Dictionary<KeyCode, Vector3>
+        {
+            { up, Vector3.up },
+            { down, Vector3.down },
+            { left, Vector3.left },
+            { right, Vector3.right }
+        };
+
+        foreach (var mapping in directionMappings)
+        {
+            if (Input.GetKey(mapping.Key))
+            {
+                if (Physics.gravity.normalized == -mapping.Value && isGrounded)
+                {
+                    PerformJump();
+                }
+                else
+                {
+                    movementDirection += mapping.Value * effectiveSpeed;
+                }
+            }
+        }
+        // Handle player movement
         rb.MovePosition(transform.position + movementDirection);
-        // animator.SetFloat("moveX", Math.Abs(rb.velocity.x));
-        // animator.SetFloat("moveY", Math.Abs(rb.velocity.y));
-        // Debug.Log("X Velocity: " + rb.velocity.x);
-        // Debug.Log("Y Velocity: " + rb.velocity.y);
     }
 
     public void PerformJump()
