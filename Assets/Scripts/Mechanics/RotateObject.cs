@@ -6,10 +6,6 @@ public class RotateObject : MonoBehaviour
 {
     // GameObject to rotate about
     public GameObject otherObject;
-    
-    // Player game objects
-    public GameObject playerOne;
-    public GameObject playerTwo;
 
     // Variables for rotationg
     public float turnTime = 1f;
@@ -18,42 +14,22 @@ public class RotateObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
-
-        // Continue rotating object left
-        if (!isRotating() && Input.GetKeyDown(KeyCode.D) && shiftHeld)
+        if(!isRotating() && Input.GetKey(KeyCode.LeftShift))
         {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.up, 90, turnTime));
+            RotationInput(KeyCode.D, Vector3.up);
+            RotationInput(KeyCode.A, Vector3.up * -1);
+            RotationInput(KeyCode.S, Vector3.right);
+            RotationInput(KeyCode.W, Vector3.right * -1);
+            RotationInput(KeyCode.E, Vector3.forward);
+            RotationInput(KeyCode.Q, Vector3.forward * -1);
         }
+    }
 
-        // Continue rotating object right
-        if (!isRotating() && Input.GetKeyDown(KeyCode.A) && shiftHeld)
+    void RotationInput(KeyCode keyCode, Vector3 axis)
+    {
+        if (Input.GetKeyDown(keyCode))
         {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.up * -1, 90, turnTime));
-        }
-
-        // Continue rotating object up
-        if (!isRotating() && Input.GetKeyDown(KeyCode.S) && shiftHeld)
-        {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.right, 90, turnTime));
-        }
-
-        // Continue rotating object down
-        if (!isRotating() && Input.GetKeyDown(KeyCode.W) && shiftHeld)
-        {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.right * -1, 90, turnTime));
-        }
-
-        // Continue rotating object clockwise
-        if (!isRotating() && Input.GetKeyDown(KeyCode.E) && shiftHeld)
-        {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.forward, 90, turnTime));
-        }
-        
-        // Continue rotating object counterclockwise
-        if (!isRotating() && Input.GetKeyDown(KeyCode.Q) && shiftHeld)
-        {
-            StartCoroutine(Rotate(transform, otherObject.transform, Vector3.forward * -1, 90, turnTime));
+            StartCoroutine(Rotate(transform, otherObject.transform, axis, 90, turnTime));
         }
     }
 
@@ -65,6 +41,9 @@ public class RotateObject : MonoBehaviour
     // https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
     IEnumerator Rotate(Transform thisTransform, Transform otherTransform, Vector3 rotateAxis, float degrees, float totalTime)
     {
+        Transform playerOneTransform = PlayerManager.instance.playerOne.transform;
+        Transform playerTwoTransform = PlayerManager.instance.playerTwo.transform;
+
         rotating = true;
 
         var startRotation = thisTransform.rotation;
@@ -76,11 +55,12 @@ public class RotateObject : MonoBehaviour
         thisTransform.position = startPosition;
 
         var rate = degrees / totalTime;
+
         for (float i = 0; i < degrees; i += Time.deltaTime * rate)
         {
             thisTransform.RotateAround(otherTransform.position, rotateAxis, Time.deltaTime * rate);
-            playerOne.transform.RotateAround(playerOne.transform.position, rotateAxis, -Time.deltaTime * rate);
-            playerTwo.transform.RotateAround(playerTwo.transform.position, rotateAxis, -Time.deltaTime * rate);
+            playerOneTransform.RotateAround(playerOneTransform.position, rotateAxis, -Time.deltaTime * rate);
+            playerTwoTransform.RotateAround(playerTwoTransform.position, rotateAxis, -Time.deltaTime * rate);
             yield return null;
         }
 
