@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
-    // GameObject to rotate about
-    // public GameObject otherObject;
-
-    // Variables for rotationg
-    public float turnTime = 1f;
+    [Header("Rotation")]
+    public float turnTime = 0.5f;
     private bool rotating = false;
 
-    // Update is called once per frame
     void Update()
     {
         if(!isRotating() && Input.GetKey(KeyCode.LeftShift))
@@ -60,16 +56,20 @@ public class RotateObject : MonoBehaviour
     }
 
     // https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
-    IEnumerator Rotate(Transform thisTransform, Vector3 rotateAround, Vector3 rotateAxis, float degrees, float totalTime)
+    IEnumerator Rotate(Transform thisTransform, Vector3 center, Vector3 rotateAxis, float degrees, float totalTime)
     {
+        if (rotating)
+        {
+            yield return null;
+        }
+        rotating = true;
+
         Transform playerOneTransform = global::PlayerManager.instance.playerOne.transform;
         Transform playerTwoTransform = global::PlayerManager.instance.playerTwo.transform;
 
-        rotating = true;
-
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;
-        transform.RotateAround(rotateAround, rotateAxis, degrees);
+        transform.RotateAround(center, rotateAxis, degrees);
         var endRotation = thisTransform.rotation;
         var endPosition = thisTransform.position;
         thisTransform.rotation = startRotation;
@@ -79,7 +79,7 @@ public class RotateObject : MonoBehaviour
 
         for (float i = 0; i < degrees; i += Time.deltaTime * rate)
         {
-            thisTransform.RotateAround(rotateAround, rotateAxis, Time.deltaTime * rate);
+            thisTransform.RotateAround(center, rotateAxis, Time.deltaTime * rate);
             playerOneTransform.RotateAround(playerOneTransform.position, rotateAxis, -Time.deltaTime * rate);
             playerTwoTransform.RotateAround(playerTwoTransform.position, rotateAxis, -Time.deltaTime * rate);
             yield return null;
