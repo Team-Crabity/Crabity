@@ -60,6 +60,7 @@ public class SwitchGravity : MonoBehaviour
 
     void Update()
     {
+        // Check if player is on mac
         bool isOnMac = SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX;
         bool rightHeld = isOnMac ? Input.GetKey(KeyCode.RightAlt) : Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.RightShift);
         bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
@@ -82,7 +83,6 @@ public class SwitchGravity : MonoBehaviour
 
     private void ChangeGravity()
     {
-        bool mode = PlayerManager.instance.CompanionMode;
         if (!isGrounded) return;
 
         // Keymaps for player one and player two to handle gravity directions
@@ -111,9 +111,10 @@ public class SwitchGravity : MonoBehaviour
             if (Input.GetKeyDown(entry.Key))
             {
                 gravityDirection = entry.Value;
+
                 // Rotate the player to match the new gravity direction
                 Quaternion targetRotation = Quaternion.FromToRotation(transform.up, -gravityDirection) * transform.rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 3.0f);;
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 1.0f);;
                 isGrounded = false;
                 break;
             }
@@ -131,8 +132,7 @@ public class SwitchGravity : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // Check if the player is grounded
-        if (collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Wood" ||
-            collision.gameObject.tag == "Pipe" || collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
             isJumping = false;
@@ -158,12 +158,14 @@ public class SwitchGravity : MonoBehaviour
         {
             if (Input.GetKey(mapping.Key))
             {
+                // Check if the player is trying to jump
                 if (Physics.gravity.normalized == -mapping.Value && isGrounded)
                 {
                     PerformJump();
                 }
                 else
                 {
+                    // Add the movement direction to the player's current position
                     movementDirection += mapping.Value * effectiveSpeed;
                 }
             }

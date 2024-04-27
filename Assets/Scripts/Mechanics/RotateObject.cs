@@ -4,10 +4,32 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
+    public static RotateObject instance;
     [Header("Rotation")]
     public float turnTime = 0.5f;
     private bool rotating = false;
 
+    private Transform playerOneTransform;
+    private Transform playerTwoTransform;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    
+    void Start()
+    {
+        playerOneTransform = PlayerManager.instance.playerOne.transform;
+        playerTwoTransform = PlayerManager.instance.playerTwo.transform;
+    }
+    
     void Update()
     {
         if(!isRotating() && Input.GetKey(KeyCode.LeftShift))
@@ -38,14 +60,11 @@ public class RotateObject : MonoBehaviour
 
     public Vector3 GetCenterPoint()
     {
-        Transform playerOneTransform = global::PlayerManager.instance.playerOne.transform;
-        Transform playerTwoTransform = global::PlayerManager.instance.playerTwo.transform;
-
         if (playerOneTransform == null && playerTwoTransform == null)
         {
             return transform.position;
         }
-        else if (playerTwoTransform == null)  // TODO: have it also check if splitscreen camera is active
+        else if (playerTwoTransform == null)
         {
             return playerOneTransform.position;
         }
@@ -63,9 +82,6 @@ public class RotateObject : MonoBehaviour
             yield return null;
         }
         rotating = true;
-
-        Transform playerOneTransform = global::PlayerManager.instance.playerOne.transform;
-        Transform playerTwoTransform = global::PlayerManager.instance.playerTwo.transform;
 
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;

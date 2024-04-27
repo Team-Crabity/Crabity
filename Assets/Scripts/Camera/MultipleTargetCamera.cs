@@ -49,35 +49,34 @@ public class MultipleTargetCamera : MonoBehaviour
             FocusOnDoor();
         }
 
-        if (PlayerManager.instance.CompanionMode)
+        if (PlayerManager.instance.CompanionMode) 
         {
-            if ((OutOfBounds(playerOneTransform) && !focusingOnDoor) ||
-                (OutOfBounds(playerTwoTransform) && !focusingOnDoor))
+            if ((OutOfBounds(playerOneTransform) && !focusingOnDoor))
             {
-                playerOneCamera.SetActive(true);
-                playerTwoCamera.SetActive(true);
-                isSplitScreen = true;
+                ToggleSplitScreen(true);
             }
             else
             {
-                DisableSplitScreen();
+                ToggleSplitScreen(false);
             }
         }
         else
         {
-            DisableSplitScreen();
+            ToggleSplitScreen(false);
         }
     }
 
-    void DisableSplitScreen()
+    private void ToggleSplitScreen(bool toggle)
     {
-        playerOneCamera.SetActive(false);
-        playerTwoCamera.SetActive(false);
-        isSplitScreen = false;
+        // Disable or enable both player cameras
+        playerOneCamera.SetActive(toggle);
+        playerTwoCamera.SetActive(toggle);
+        isSplitScreen = toggle;
     }
 
     private bool OutOfBounds(Transform target)
     {
+        // Check if target is out of bounds of the main camera
         Vector3 screenPoint = mainCamera.GetComponent<Camera>().WorldToViewportPoint(target.position);
         return screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1;
     }
@@ -104,6 +103,7 @@ public class MultipleTargetCamera : MonoBehaviour
 
     private IEnumerator FocusSequence()
     {
+        // Start cutscene on the door for 3 sec
         focusingOnDoor = true;
         doorCamera.SetActive(true);
         GetComponent<AudioSource>().Play();
