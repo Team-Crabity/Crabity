@@ -54,16 +54,7 @@ public class MapManager : MonoBehaviour
         if(!mapOpening)
         {
             mapOpening = true;
-            // Check if map is minimized or not, if not then set targetWidth to 0
-            if (map.transform.localScale.x == 0)
-            {
-                targetWidth = 1;
-            }
-            else
-            {
-                targetWidth = 0;
-            
-            }
+            targetWidth = map.transform.localScale.x == 0 ? 1 : 0;
 
             float time = 0;
             float currentWidth = map.transform.localScale.x;
