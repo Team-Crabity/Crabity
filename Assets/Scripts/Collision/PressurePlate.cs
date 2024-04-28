@@ -5,6 +5,7 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
     private bool isPressed;
+    public Material baseColor;
 
     void OnCollisionEnter(Collision other)
     {
@@ -16,16 +17,12 @@ public class PressurePlate : MonoBehaviour
             GetComponent<AudioSource>().Play();
             transform.localScale = new Vector3(transform.localScale.x, 0.15f, transform.localScale.z);
             isPressed = true;
-
-            // GetComponent<Collider>().enabled = false;
-            // Material remover curerntly not working
-            // Material[] materials = new Material[renderer.materials.Length - 1];
-
-            // for (int i = 0; i < materials.Length; i++)
-            // {
-            //     materials[i-1] = renderer.materials[i];
-            // }
-            // renderer.materials = materials;
+            // Change the pressure plate material element 0 to base color
+            if (renderer.materials.Length > 0)
+            {
+                Debug.Log("Changing material color");
+                renderer.materials[0] = baseColor;
+            }
 
             PressurePlateManager.instance.PlatePressed();
         }
