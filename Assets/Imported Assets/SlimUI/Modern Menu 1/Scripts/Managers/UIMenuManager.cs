@@ -23,6 +23,7 @@ namespace SlimUI.ModernMenu{
 		public GameObject door;
 		public GameObject SettingsMenu;
 		public GameObject Cam; // The camera object
+		private Animator camAnimator;
         
 
         // highlights in settings screen
@@ -42,6 +43,7 @@ namespace SlimUI.ModernMenu{
 
 		void Start(){
 			SetThemeColors();
+			camAnimator = Cam.gameObject.GetComponent<Animator>();
 		}
 
 
@@ -78,10 +80,14 @@ namespace SlimUI.ModernMenu{
 			lineVideo.SetActive(false);
 		}
 
+    	public void TurnOnSettings()
+    	{
+        	SettingsMenu.SetActive(true);
+    	}
 		public void Return()
 		{
 			SettingsMenu.SetActive(false);
-			Cam.transform.position = new Vector3(0.35f, 0.8f, 3.94f);
+			camAnimator.SetBool("SettingsOn", false);
 		}
 		public void GamePanel(){
 			DisablePanels();
