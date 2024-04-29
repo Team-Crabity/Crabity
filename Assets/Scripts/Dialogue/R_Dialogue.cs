@@ -67,7 +67,7 @@ public class R_Dialogue : MonoBehaviour
             lines = new string[]
             {
                "CRB 1: Utilize the rotation drive with L SHIFT + WASD or L SHIFT + Q or E.",
-               "CRB 2: Await further instruction.",
+               "CRB 2: Await further instructions.",
             };
         }
 
