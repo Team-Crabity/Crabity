@@ -61,6 +61,7 @@ public class M_Dialogue : MonoBehaviour
             lines = new string[]
             {
                 "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol.",
+                "Find and deactivate airlock seals to proceed further.",
                 "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
                 "CRB 1: Use the W, A, S and D keys to navigate the environment.",
             };
