@@ -4,32 +4,24 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
-    public static RotateObject instance;
     [Header("Rotation")]
     public float turnTime = 0.5f;
-    private bool rotating = false;
+    [Header("Set to -1 to reverse rotation")]
+    public int reverseRotation = 1;
 
+    [SerializeField]
+    private GameObject rotateAroundObject;
+
+    private bool rotating = false;
     private Transform playerOneTransform;
     private Transform playerTwoTransform;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
     
     void Start()
     {
         playerOneTransform = PlayerManager.instance.playerOne.transform;
         playerTwoTransform = PlayerManager.instance.playerTwo.transform;
     }
-    
+
     void Update()
     {
         if(!isRotating() && Input.GetKey(KeyCode.LeftShift))
@@ -45,11 +37,11 @@ public class RotateObject : MonoBehaviour
 
     void RotationInput(KeyCode keyCode, Vector3 axis)
     {
-        Vector3 centerPoint = GetCenterPoint();
+        // Vector3 centerPoint = GetCenterPoint();
         
         if (Input.GetKeyDown(keyCode))
         {
-            StartCoroutine(Rotate(transform, centerPoint, axis, 90, turnTime));
+            StartCoroutine(Rotate(transform, rotateAroundObject.transform, axis * reverseRotation, 90, turnTime));
         }
     }
 
@@ -58,24 +50,24 @@ public class RotateObject : MonoBehaviour
         return rotating;
     }
 
-    public Vector3 GetCenterPoint()
-    {
-        if (playerOneTransform == null && playerTwoTransform == null)
-        {
-            return transform.position;
-        }
-        else if (playerTwoTransform == null)
-        {
-            return playerOneTransform.position;
-        }
-        else
-        {
-            return (playerOneTransform.position + playerTwoTransform.position) / 2;
-        }
-    }
+    // public Vector3 GetCenterPoint()
+    // {
+    //     if (playerOneTransform == null && playerTwoTransform == null)
+    //     {
+    //         return transform.position;
+    //     }
+    //     else if (playerTwoTransform == null)
+    //     {
+    //         return playerOneTransform.position;
+    //     }
+    //     else
+    //     {
+    //         return (playerOneTransform.position + playerTwoTransform.position) / 2;
+    //     }
+    // }
 
     // https://forum.unity.com/threads/rotating-exactly-90-degrees-specific-direction-answered.44056/
-    IEnumerator Rotate(Transform thisTransform, Vector3 center, Vector3 rotateAxis, float degrees, float totalTime)
+    IEnumerator Rotate(Transform thisTransform, Transform rotateAround, Vector3 rotateAxis, float degrees, float totalTime)
     {
         if (rotating)
         {
@@ -85,7 +77,7 @@ public class RotateObject : MonoBehaviour
 
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;
-        transform.RotateAround(center, rotateAxis, degrees);
+        transform.RotateAround(rotateAround.position, rotateAxis, degrees);
         var endRotation = thisTransform.rotation;
         var endPosition = thisTransform.position;
         thisTransform.rotation = startRotation;
@@ -95,7 +87,7 @@ public class RotateObject : MonoBehaviour
 
         for (float i = 0; i < degrees; i += Time.deltaTime * rate)
         {
-            thisTransform.RotateAround(center, rotateAxis, Time.deltaTime * rate);
+            thisTransform.RotateAround(rotateAround.position, rotateAxis, Time.deltaTime * rate);
             playerOneTransform.RotateAround(playerOneTransform.position, rotateAxis, -Time.deltaTime * rate);
             playerTwoTransform.RotateAround(playerTwoTransform.position, rotateAxis, -Time.deltaTime * rate);
             yield return null;
