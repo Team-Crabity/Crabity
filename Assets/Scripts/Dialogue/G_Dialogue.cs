@@ -21,8 +21,8 @@ public class G_Dialogue : MonoBehaviour
     {
         lines = new string[]
         {
-            "Tip: advance this dialogue by using SPACE.",
-            "Initiating contact...done.",
+            "Loading training module 3/3... done."
+
         };
         textComponent.text = string.Empty;
         StartDialogue();
@@ -60,22 +60,13 @@ public class G_Dialogue : MonoBehaviour
         {
             lines = new string[]
             {
-                "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
-                "Utilize the rotation drive with LEFT SHIFT + WASD.",
-                "Utilize the gravity drive with " + singlePlayerGravityKey + " + WASD.",
+                "CRB 1: Utilize the gravity drive with " + singlePlayerGravityKey + " + WASD.",
             };
         }
         else //coop dialogue
         {
             lines = new string[]
             {
-                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
-                "CRB 1: Utilize the rotation drive with LEFT SHIFT + WASD.",
-                "CRB 2: Use the LEFT, RIGHT, UP, AND DOWN arrow keys to navigate the environment.",
                 "CRB 2: Utilize the gravity drive with " + companionGravityKey + " + ARROW KEYS.",
             };
         }
