@@ -35,6 +35,7 @@ public class Dialogue : MonoBehaviour
         {
             lines = new string[]
             {
+                "Hello! I've been transformed into a prefab!!!",
                 "Tip: advance this dialogue by using either SPACE or ENTER.",
                 "Initiating contact...done.",
                 "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
