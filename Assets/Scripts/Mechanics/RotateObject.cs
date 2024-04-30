@@ -6,9 +6,14 @@ public class RotateObject : MonoBehaviour
 {
     [Header("Rotation")]
     public float turnTime = 0.5f;
+
     [Header("Set to -1 to reverse rotation")]
     public int rotationInteger = 1;
     public bool reverseRotation = false;
+
+    [Header("PlayerOne and PlayerTwo Cameras")]
+    public Camera playerOneCamera;
+    public Camera playerTwoCamera;
 
     private bool rotating = false;
     private Transform playerOneTransform;
@@ -38,7 +43,6 @@ public class RotateObject : MonoBehaviour
             {
                 if (Input.GetKeyDown(entry.Key))
                 {
-                    Debug.Log("Key Pressed: " + entry.Key + " Value: " + entry.Value);
                     RotationInput(entry.Key, entry.Value);
                 }
             }
@@ -80,6 +84,11 @@ public class RotateObject : MonoBehaviour
     {
         rotating = true;
 
+        // Set smooth time for playerOneCamera and playerTwoCamera to 0 to prevent camera from moving during rotation
+        float originalSmoothTime = playerOneCamera.GetComponent<PlayerFollow>().smoothTime;
+        playerOneCamera.GetComponent<PlayerFollow>().smoothTime = 0f;
+        playerTwoCamera.GetComponent<PlayerFollow>().smoothTime = 0f;
+
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;
         transform.RotateAround(center, rotateAxis, degrees);
@@ -100,6 +109,9 @@ public class RotateObject : MonoBehaviour
             }
             yield return null;
         }
+
+        playerOneCamera.GetComponent<PlayerFollow>().smoothTime = originalSmoothTime;
+        playerTwoCamera.GetComponent<PlayerFollow>().smoothTime = originalSmoothTime;
 
         thisTransform.rotation = endRotation;
         thisTransform.position = endPosition;
