@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ObjClick : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class ObjClick : MonoBehaviour
 
 //Exit Button
     public GameObject Exit;
+    
 
 //Settings button
     public GameObject Settings;
+    public GameObject SettingsKey;
 
 
 //Camera
@@ -26,6 +29,10 @@ public class ObjClick : MonoBehaviour
     [SerializeField] GameObject Door;
     private Animator doorAnimator;
 
+// Play Door Animation
+    [SerializeField] GameObject PlayDoor;   
+    private Animator PlayDoorAnimator;
+
 //Cursor SFX
     [SerializeField] AudioSource HoverSound;
     bool stepOff = true; // keeps audio from being played repetedly
@@ -35,13 +42,14 @@ public class ObjClick : MonoBehaviour
     public bool hoveringC = false;
 
 //For Raycasting the buttons
-    private int layerNumber = 8;
+    private int layerNumber = 9;
     private int MainMenuOptions;
 
     private void Start()
     {
         MainMenuOptions = 1 << layerNumber;
         doorAnimator = Door.gameObject.GetComponent<Animator>();
+        PlayDoorAnimator = PlayDoor.gameObject.GetComponent<Animator>();
         camAnimator = Cam.gameObject.GetComponent<Animator>();
     }
     void Update()
@@ -53,11 +61,14 @@ public class ObjClick : MonoBehaviour
             if (Play == Name) // If play is clicked, start game
             {
                 doorAnimator.SetBool("character_nearby", true);
-                camAnimator.SetBool("SettingsOn", true); // change this to gameplay animation not settings.
+                camAnimator.SetBool("PlayOn", true);
                 //Play.GetComponent<AudioSource>().Play();
                 Debug.Log("The Scene is changing");
                 //Destroy(Exit);
-                //Destroy(Settings);
+                if (Settings != null)
+                {
+                    Destroy(Settings);
+                }
                 //Gets rid of the NameTags too this way
                 
             }
@@ -68,6 +79,7 @@ public class ObjClick : MonoBehaviour
             else if (Settings == Name) //If Settings is clicked, play settings cam animation and open settings
             {
                 doorAnimator.SetBool("character_nearby", true);
+                camAnimator.SetBool("SettingsOn", true); // change this to gameplay animation not settings.
             }
         }
         if (Input.GetMouseButtonUp(0)) 
@@ -114,14 +126,28 @@ public class ObjClick : MonoBehaviour
                 }
             else if (Settings == Bot)
                 {
-                    //.GetComponent<Bobbing>().enabled = true;
                     hoveringS = true;
-                    HoverSound.Play();         
+                    HoverSound.Play();  
+                    SettingsKey.GetComponent<Bobbing>().enabled = true;       
                 }
             else 
             {   
+                if (Settings != null) {
+                    Key.GetComponent<Bobbing>().enabled = false;
+                    SettingsKey.GetComponent<Bobbing>().enabled = false;
+                    //.GetComponent<Bobbing>().enabled = false;
+                    hoveringP = false;
+                    hoveringS = false;
+                    hoveringC = false;
+                    HoverSound.Stop();
+                    stepOff = true;
+                }
+            }
+        }
+        if (Bot == null) {
+            if (Settings != null) {
                 Key.GetComponent<Bobbing>().enabled = false;
-                //.GetComponent<Bobbing>().enabled = false;
+                SettingsKey.GetComponent<Bobbing>().enabled = false;
                 //.GetComponent<Bobbing>().enabled = false;
                 hoveringP = false;
                 hoveringS = false;
@@ -130,15 +156,15 @@ public class ObjClick : MonoBehaviour
                 stepOff = true;
             }
         }
-        if (Bot == null) {
-            Key.GetComponent<Bobbing>().enabled = false;
-            //.GetComponent<Bobbing>().enabled = false;
-            //.GetComponent<Bobbing>().enabled = false;
-            hoveringP = false;
-            hoveringS = false;
-            hoveringC = false;
-            HoverSound.Stop();
-            stepOff = true;
-        }
+    }
+
+    public void OpenPlayDoor()
+    {
+        PlayDoorAnimator.SetBool("character_nearby", true);
+    }
+
+    public void LoadScene() 
+    {
+        SceneManager.LoadScene(1);
     }
 }
