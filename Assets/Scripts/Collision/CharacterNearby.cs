@@ -30,6 +30,7 @@ public class CharacterNearby : MonoBehaviour
             || other.gameObject == PlayerManager.instance.playerTwo)
         {
             doorAnimator.SetBool("character_nearby", true);
+            GetComponent<AudioSource>().Play();
         }
     }
 
