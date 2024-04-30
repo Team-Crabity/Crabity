@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PressurePlateManager : MonoBehaviour
@@ -8,9 +9,10 @@ public class PressurePlateManager : MonoBehaviour
 
     public static int totalPlates;
     public static int platesPressed;
-    public static Animator doorAnimator;
     public bool allPlatesPressed;
-    public GameObject door;
+
+    [SerializeField]
+    List<GameObject> doors;
 
     void Awake()
     {
@@ -26,7 +28,6 @@ public class PressurePlateManager : MonoBehaviour
 
     private void Start()
     {
-        doorAnimator = door.GetComponent<Animator>();
         totalPlates = FindObjectsOfType<PressurePlate>().Length;
     }
 
@@ -43,6 +44,8 @@ public class PressurePlateManager : MonoBehaviour
 
     private void OpenDoor()
     {
-        doorAnimator.SetBool("character_nearby", true);
+        for (int i = 0; i < doors.Count; i += 1) {
+            doors[i].GetComponent<Animator>().SetBool("character_nearby", true);
+        }
     }
 }
