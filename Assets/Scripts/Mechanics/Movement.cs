@@ -5,28 +5,107 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [Header("Movement")]
-    public float speed;
-    public float groundDrag;
+    [Range(5f, 20f)] public float speed = 15.0f;
+    [Range(0f, 1f)] public float groundDrag = 0.5f;
+    [Range(0f, 0.5f)] public float airDrag = 0.25f; //Can add different drag cofeffcient when the player is in the air for faster speed
+
+    [Header("Jumping")]
+    public int jumpCounter = 1;
+    public float jumpMultiplier = 15.0f;
+    public bool isJumping;
+    public bool isGrounded;
 
     private Rigidbody rb;
+    private KeyCode up;
+    private KeyCode down;
+    private KeyCode left;
+    private KeyCode right;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        //Set keybinds based on player selection
+        if (PlayerManager.instance.IsPlayerOne(gameObject))
+        {
+            up = KeyCode.W;
+            left = KeyCode.A;
+            down = KeyCode.S;
+            right = KeyCode.D;
+        }
+        else if (PlayerManager.instance.IsPlayerTwo(gameObject))
+        {
+            up = KeyCode.O;
+            left = KeyCode.K;
+            down = KeyCode.L;
+            right = KeyCode.Semicolon;
+        }
     }
 
+    private void MovePlayer()
+    {
+        Vector3 movementDirection = Vector3.zero;
+        float effectiveSpeed = speed * (1 - groundDrag) * Time.deltaTime;
+        if(!isGrounded)
+        {
+            effectiveSpeed = speed * (1 - airDrag) * Time.deltaTime;
+        }
+
+        // Dictionary to map input keys to movement directions
+        var directionMappings = new Dictionary<KeyCode, Vector3>
+        {
+            { up, Vector3.up },
+            { down, Vector3.down },
+            { left, Vector3.left },
+            { right, Vector3.right }
+        };
+
+        foreach (var mapping in directionMappings)
+        {
+            if (Input.GetKey(mapping.Key))
+            {
+                // Check if the player is trying to jump
+                if (Physics.gravity.normalized == -mapping.Value && isGrounded)
+                {
+                    PerformJump();
+                }
+                else
+                {
+                    // Add the movement direction to the player's current position
+                    movementDirection += mapping.Value * effectiveSpeed;
+                }
+            }
+        }
+        // Handle player movement
+        rb.MovePosition(transform.position + movementDirection);
+    }
+    
     private void FixedUpdate()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        MovePlayer();
+    }
 
-        Vector3 movementDirection = Vector3.zero;
+    public void PerformJump()
+    {
+        if (!isJumping && jumpCounter > 0) // Check to make sure the player isn't already jumping
+        {
+            Vector3 jumpDirection = -Physics.gravity.normalized;
+            rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
+            isJumping = true;
+        }
+    }
 
-        Vector3 cameraRight = Camera.main.transform.right;
-        cameraRight.y = 0; // Prevents the player from moving up or down
-        movementDirection = cameraRight.normalized * horizontalInput;
-
-
-        float effectiveSpeed = speed * (1 - groundDrag * Time.deltaTime);
-        rb.MovePosition(rb.position + movementDirection * effectiveSpeed * Time.deltaTime);
+    /*TODO: Update the way isGrounded is determined
+    Currently allows for funky superjumps to occur when jumping along walls
+    */
+    void OnCollisionEnter(Collision collision)
+    {
+        // Check if the player is grounded
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+            isJumping = false;
+            jumpCounter = 1;
+        }
     }
 }

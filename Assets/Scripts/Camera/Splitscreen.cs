@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class Splitscreen : MonoBehaviour
 {
+    [Header("Cameras")]
     public GameObject mainCamera;
     public GameObject playerOneCamera;
     public GameObject playerTwoCamera;
+
+    [Header("Split Screen")]
     public bool isSplitScreen = false;
+
+    [Header("Screen Bounds")]
+    public float xMin = 0.05f;
+    public float xMax = 0.95f;
+    public float yMin = 0.2f;
+    public float yMax = 0.8f;
 
     // Update is called once per frame
     void LateUpdate()
@@ -41,6 +50,6 @@ public class Splitscreen : MonoBehaviour
     {
         // Check if target is out of bounds of the main camera
         Vector3 screenPoint = mainCamera.GetComponent<Camera>().WorldToViewportPoint(target.position);
-        return screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1;
+        return screenPoint.x < xMin || screenPoint.x > xMax || screenPoint.y < yMin || screenPoint.y > yMax;
     }
 }

@@ -7,8 +7,7 @@ public class RotateObject : MonoBehaviour
     [Header("Rotation")]
     public float turnTime = 0.5f;
 
-    [Header("Set to -1 to reverse rotation")]
-    public int rotationInteger = 1;
+    [Header("Reverse Rotation")]
     public bool reverseRotation = false;
 
     [Header("PlayerOne and PlayerTwo Cameras")]
@@ -18,11 +17,15 @@ public class RotateObject : MonoBehaviour
     private bool rotating = false;
     private Transform playerOneTransform;
     private Transform playerTwoTransform;
-    private Dictionary<KeyCode, Vector3> keyRotationMap;
+    private Dictionary<KeyCode, Vector3> playerOneKeyMap;
+    private Dictionary<KeyCode, Vector3> playerTwoKeyMap;
 
     void Start()
     {
-        keyRotationMap = new Dictionary<KeyCode, Vector3>
+        playerOneTransform = PlayerManager.instance.playerOne.transform;
+        playerTwoTransform = PlayerManager.instance.playerTwo.transform;
+
+        playerOneKeyMap = new Dictionary<KeyCode, Vector3>
         {
             { KeyCode.W, Vector3.right * -1 },
             { KeyCode.A, Vector3.up * -1 },
@@ -31,15 +34,33 @@ public class RotateObject : MonoBehaviour
             { KeyCode.Q, Vector3.forward * -1 },
             { KeyCode.E, Vector3.forward }
         };
-        playerOneTransform = PlayerManager.instance.playerOne.transform;
-        playerTwoTransform = PlayerManager.instance.playerTwo.transform;
+
+        playerTwoKeyMap = new Dictionary<KeyCode, Vector3>
+        {
+            { KeyCode.O, Vector3.right * -1 },
+            { KeyCode.K, Vector3.up * -1 },
+            { KeyCode.L, Vector3.right },
+            { KeyCode.Semicolon, Vector3.up },
+            { KeyCode.I, Vector3.forward * -1 },
+            { KeyCode.P, Vector3.forward }
+        };
     }
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            foreach (KeyValuePair<KeyCode, Vector3> entry in keyRotationMap)
+            foreach (KeyValuePair<KeyCode, Vector3> entry in playerOneKeyMap)
+            {
+                if (Input.GetKeyDown(entry.Key))
+                {
+                    RotationInput(entry.Key, entry.Value);
+                }
+            }
+        }
+        if (Input.GetKey(KeyCode.RightShift))
+        {
+            foreach (KeyValuePair<KeyCode, Vector3> entry in playerTwoKeyMap)
             {
                 if (Input.GetKeyDown(entry.Key))
                 {
@@ -52,10 +73,17 @@ public class RotateObject : MonoBehaviour
     void RotationInput(KeyCode keyCode, Vector3 axis)
     {
         Vector3 centerPoint = GetCenterPoint();
-        
+
         if (!isRotating())
         {
-            StartCoroutine(Rotate(transform, centerPoint, axis * rotationInteger, 90, turnTime));
+            if(!reverseRotation)
+            {
+                StartCoroutine(Rotate(transform, centerPoint, axis, 90, turnTime));
+            }
+            else
+            {
+                StartCoroutine(Rotate(transform, centerPoint, axis * -1, 90, turnTime));
+            }
         }
     }
 
@@ -86,8 +114,6 @@ public class RotateObject : MonoBehaviour
 
         // Set smooth time for playerOneCamera and playerTwoCamera to 0 to prevent camera from moving during rotation
         float originalSmoothTime = playerOneCamera.GetComponent<PlayerFollow>().smoothTime;
-        playerOneCamera.GetComponent<PlayerFollow>().smoothTime = 0f;
-        playerTwoCamera.GetComponent<PlayerFollow>().smoothTime = 0f;
 
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;
@@ -102,14 +128,19 @@ public class RotateObject : MonoBehaviour
         for (float i = 0; i < degrees; i += Time.deltaTime * rate)
         {
             thisTransform.RotateAround(center, rotateAxis, Time.deltaTime * rate);
-            if(!reverseRotation)
+            if (!reverseRotation)
             {
+                // Rotate the playerOne and playerTwo cameras around the center point in the opposite direction
                 playerOneTransform.RotateAround(playerOneTransform.position, rotateAxis, -Time.deltaTime * rate);
                 playerTwoTransform.RotateAround(playerTwoTransform.position, rotateAxis, -Time.deltaTime * rate);
+
+                // Set the playerOne and playerTwo cameras smooth time to 0 while rotating
+                playerOneCamera.GetComponent<PlayerFollow>().smoothTime = 0f;
+                playerTwoCamera.GetComponent<PlayerFollow>().smoothTime = 0f;
             }
             yield return null;
         }
-
+        // Set the playerOne and playerTwo cameras back to their original smooth time
         playerOneCamera.GetComponent<PlayerFollow>().smoothTime = originalSmoothTime;
         playerTwoCamera.GetComponent<PlayerFollow>().smoothTime = originalSmoothTime;
 

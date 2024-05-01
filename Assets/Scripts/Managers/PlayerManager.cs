@@ -10,17 +10,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerOne;
     public GameObject playerTwo;
 
-    private RotateObject playerOneRotate;
-    private SwitchGravity playerOneGravity;
-    private SwitchGravity playerTwoGravity;
-
     public GameObject playerOneSpawnPoint;
     public GameObject playerTwoSpawnPoint;
-
-    public void ToggleCompanionMode()
-    {
-        CompanionMode = !CompanionMode;
-    }
 
     void Awake()
     {
@@ -31,19 +22,6 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
-        }
-    }
-
-    void Start()
-    {
-        if (playerOne != null)
-        {
-            playerOneRotate = playerOne.GetComponentInParent<RotateObject>();
-            playerOneGravity = playerOne.GetComponent<SwitchGravity>();
-        }
-        else if (playerTwo != null)
-        {
-            playerTwoGravity = playerTwo.GetComponent<SwitchGravity>();
         }
     }
 
@@ -58,33 +36,25 @@ public class PlayerManager : MonoBehaviour
         if (CompanionMode)
         {
             playerTwo.SetActive(true);
-            // Disable player one gravity switching in companion mode
-            if (playerOneGravity != null)
-            {
-                playerOneGravity.playerOne = true;
-            }
-
-            // Enable player two gravity switching in companion mode
-            if (playerTwoGravity != null)
-            {
-                playerTwoGravity.playerTwo = true;
-                playerTwoGravity.enabled = true;
-            }
         }
         else
         {
             playerTwo.SetActive(false);
-
-            // Allow both functionality for player one when not in companion mode
-            if (playerOneGravity != null)
-            {
-                playerOneGravity.enabled = true;
-            }
-
-            if (playerOneRotate != null)
-            {
-                playerOneRotate.enabled = true;
-            }
         }
+    }
+
+    public void ToggleCompanionMode()
+    {
+        CompanionMode = !CompanionMode;
+    }
+
+    public bool IsPlayerOne(GameObject player)
+    {
+        return player == playerOne;
+    }
+
+    public bool IsPlayerTwo(GameObject player)
+    {
+        return player == playerTwo;
     }
 }
