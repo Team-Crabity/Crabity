@@ -12,7 +12,7 @@ public class Cell : MonoBehaviour
     public Cell rightNeighbor;
     public Cell frontNeighbor;
     public Cell backNeighbor;
-
+    public Tile[] fallbackOptions;
     public void CreateCell(bool collapsedState, Tile[] tiles)
     {
         collapsed = collapsedState;

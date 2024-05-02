@@ -1,198 +1,285 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using System.Linq;
+using System.Collections;
 
 public class WaveFunctionCollapse : MonoBehaviour
 {
-    public int width = 10;
-    public int height = 10;
-    public int depth = 10;
     public float cellWidth = 1.0f;
     public float cellHeight = 1.0f;
     public float cellDepth = 1.0f;
-    public Cell[,,] gridComponents;
+    public int dimensions;
     public Tile[] tileObjects;
-    public GameObject parentObject;
+    public List<Cell> gridComponents;
+    public Cell cellObj;
 
-    void Start()
+    public Tile backupTile;
+
+    private int iteration;
+
+    private void Awake()
     {
+        gridComponents = new List<Cell>();
         InitializeGrid();
-        SetNeighboringCells();
-        CollapseWaveFunction();
     }
+
     void InitializeGrid()
     {
-        if (parentObject == null)
+        for (int z = 0; z < dimensions; z++)
         {
-            Debug.LogError("Parent GameObject is not assigned!");
-            return;
-        }
-
-        gridComponents = new Cell[width, height, depth];
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < dimensions; y++)
             {
-                for (int z = 0; z < depth; z++)
+                for (int x = 0; x < dimensions; x++)
                 {
-                    GameObject cellGameObject = new GameObject($"Cell_{x}_{y}_{z}");
-                    cellGameObject.transform.parent = parentObject.transform;
-                    cellGameObject.transform.localPosition = new Vector3(x * cellWidth, y * cellHeight, z * cellDepth);
-                    Cell cellComponent = cellGameObject.AddComponent<Cell>();
-                    cellComponent.CreateCell(false, tileObjects);
-                    gridComponents[x, y, z] = cellComponent;
-                    cellGameObject.isStatic = false;
+                    float xPos = x * cellWidth;
+                    float yPos = y * cellHeight;
+                    float zPos = z * cellDepth;
+
+                    Cell newCell = Instantiate(cellObj, new Vector3(xPos, yPos, zPos), cellObj.transform.rotation);
+                    newCell.CreateCell(false, tileObjects);
+
+                    gridComponents.Add(newCell);
                 }
             }
         }
+
+        StartCoroutine(CheckEntropy());
+        SetNeighboringCells();
     }
 
     void SetNeighboringCells()
     {
-        for (int x = 0; x < width; x++)
+        for (int z = 0; z < dimensions; z++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < dimensions; y++)
             {
-                for (int z = 0; z < depth; z++)
+                for (int x = 0; x < dimensions; x++)
                 {
-                    Cell currentCell = gridComponents[x, y, z];
-                    currentCell.upNeighbor = (y < height - 1) ? gridComponents[x, y + 1, z] : null;
-                    currentCell.downNeighbor = (y > 0) ? gridComponents[x, y - 1, z] : null;
-                    currentCell.leftNeighbor = (x > 0) ? gridComponents[x - 1, y, z] : null;
-                    currentCell.rightNeighbor = (x < width - 1) ? gridComponents[x + 1, y, z] : null;
-                    currentCell.frontNeighbor = (z < depth - 1) ? gridComponents[x, y, z + 1] : null;
-                    currentCell.backNeighbor = (z > 0) ? gridComponents[x, y, z - 1] : null;
+                    int index = x + y * dimensions + z * dimensions * dimensions;
+                    Cell currentCell = gridComponents[index];
+
+                    // set the neighboring cells for the current cell
+                    currentCell.frontNeighbor = GetNeighborCell(x, y, z + 1);
+                    currentCell.backNeighbor = GetNeighborCell(x, y, z - 1);
+                    currentCell.leftNeighbor = GetNeighborCell(x - 1, y, z);
+                    currentCell.rightNeighbor = GetNeighborCell(x + 1, y, z);
+                    currentCell.upNeighbor = GetNeighborCell(x, y + 1, z);
+                    currentCell.downNeighbor = GetNeighborCell(x, y - 1, z);
                 }
             }
         }
     }
-    void CollapseWaveFunction()
+
+    Cell GetNeighborCell(int x, int y, int z)
     {
-        int startX = Random.Range(0, width);
-        int startY = Random.Range(0, height);
-        int startZ = Random.Range(0, depth);
-        CollapseCell(gridComponents[startX, startY, startZ]);
+        if (x >= 0 && x < dimensions && y >= 0 && y < dimensions && z >= 0 && z < dimensions)
+        {
+            return gridComponents[x + y * dimensions + z * dimensions * dimensions];
+        }
+
+        return null;
     }
-    void CollapseCell(Cell cell)
+
+    IEnumerator CheckEntropy()
     {
-        if (cell.collapsed)
+        List<Cell> tempGrid = new List<Cell>(gridComponents);
+        tempGrid.RemoveAll(c => c.collapsed);
+        tempGrid.Sort((a, b) => a.tileOptions.Length - b.tileOptions.Length);
+        tempGrid.RemoveAll(a => a.tileOptions.Length != tempGrid[0].tileOptions.Length);
+
+        yield return new WaitForSeconds(.025f);
+
+        CollapseCell(tempGrid);
+    }
+    void CollapseCell(List<Cell> tempGrid)
+    {
+        int randIndex = UnityEngine.Random.Range(0, tempGrid.Count);
+        Cell cellToCollapse = tempGrid[randIndex];
+
+        cellToCollapse.collapsed = true;
+
+        // Select a random tile from the available options
+        if (cellToCollapse.tileOptions.Length > 0)
         {
-            Debug.Log("Cell already collapsed");
-            return;
-        }
+            int randomTileIndex = UnityEngine.Random.Range(0, cellToCollapse.tileOptions.Length);
+            Tile selectedTile = cellToCollapse.tileOptions[randomTileIndex];
 
-        Debug.Log("Collapsing Cell");
+            cellToCollapse.tileOptions = new Tile[] { selectedTile };
 
-        // Check compatibility with all neighbors
-        bool allNeighborsCompatible = true;
-        foreach (Cell neighbor in GetAllNeighbors(cell))
-        {
-            bool neighborCompatible = false;
-            foreach (Tile neighborTile in neighbor.tileOptions)
-            {
-                if (AreTilesCompatible(cell.tileOptions, neighborTile))
-                {
-                    neighborCompatible = true;
-                    break;
-                }
-            }
-            if (!neighborCompatible)
-            {
-                allNeighborsCompatible = false;
-                break;
-            }
-        }
-
-        if (allNeighborsCompatible)
-        {
-            Tile chosenTile = cell.tileOptions[Random.Range(0, cell.tileOptions.Length)];
-            cell.RecreateCell(new Tile[] { chosenTile });
-            cell.collapsed = true;
-            InstantiateTile(chosenTile, cell.transform.position);
-
-            // Update neighbors
-            UpdateNeighbors(cell);
+            // Instantiate the selected tile at the cell's position
+            GameObject instantiatedTile = Instantiate(selectedTile.gameObject, cellToCollapse.transform.position, selectedTile.transform.rotation);
+            instantiatedTile.transform.localScale = Vector3.one; // Set the scale to (1, 1, 1)
         }
         else
         {
-            Debug.LogError($"Not all neighbors are compatible for cell at {cell.transform.position}. Cell not collapsed.");
+            // Handle the case where no valid tile options are available
+            Tile selectedTile = backupTile;
+            cellToCollapse.tileOptions = new Tile[] { selectedTile };
         }
+
+        UpdateGeneration();
     }
 
-
-    void InstantiateTile(Tile tile, Vector3 position)
+    void UpdateGeneration()
     {
-        Debug.Log($"Instantiating tile at {position}");
-        var tileInstance = Instantiate(tile.gameObject, position, Quaternion.identity);
-        tileInstance.transform.parent = parentObject.transform;
-        tileInstance.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
-    }
+        List<Cell> newGenerationCell = new List<Cell>(gridComponents);
 
-    void UpdateNeighbors(Cell cell)
-    {
-        List<Cell> neighbors = new List<Cell> { cell.upNeighbor, cell.downNeighbor, cell.leftNeighbor, cell.rightNeighbor, cell.frontNeighbor, cell.backNeighbor };
-        foreach (Cell neighbor in neighbors)
+        for (int z = 0; z < dimensions; z++)
         {
-            if (neighbor != null && !neighbor.collapsed)
+            for (int y = 0; y < dimensions; y++)
             {
-                // Check compatibility of each neighbor tile with all candidate tiles of the current cell
-                List<Tile> compatibleTiles = new List<Tile>();
-                foreach (Tile neighborTile in neighbor.tileOptions)
+                for (int x = 0; x < dimensions; x++)
                 {
-                    if (AreTilesCompatible(cell.tileOptions, neighborTile))
+                    var index = x + y * dimensions + z * dimensions * dimensions;
+
+                    if (gridComponents[index].collapsed)
                     {
-                        compatibleTiles.Add(neighborTile);
+                        newGenerationCell[index] = gridComponents[index];
+                    }
+                    else
+                    {
+                        List<Tile> options = new List<Tile>();
+                        foreach (Tile t in tileObjects)
+                        {
+                            options.Add(t);
+                        }
+
+                        // Check the "front" neighbor
+                        if (z < dimensions - 1)
+                        {
+                            Cell front = gridComponents[x + y * dimensions + (z + 1) * dimensions * dimensions];
+                            List<Tile> validOptions = new List<Tile>();
+
+                            foreach (Tile possibleOption in front.tileOptions)
+                            {
+                                var validOption = Array.FindIndex(tileObjects, obj => obj == possibleOption);
+                                var valid = tileObjects[validOption].backNeighbour;
+
+                                validOptions = validOptions.Concat(valid).ToList();
+                            }
+
+                            CheckValidity(options, validOptions);
+                        }
+
+                        // Check the "back" neighbor
+                        if (z > 0)
+                        {
+                            Cell back = gridComponents[x + y * dimensions + (z - 1) * dimensions * dimensions];
+                            List<Tile> validOptions = new List<Tile>();
+
+                            foreach (Tile possibleOption in back.tileOptions)
+                            {
+                                var validOption = Array.FindIndex(tileObjects, obj => obj == possibleOption);
+                                var valid = tileObjects[validOption].frontNeighbour;
+
+                                validOptions = validOptions.Concat(valid).ToList();
+                            }
+
+                            CheckValidity(options, validOptions);
+                        }
+
+                        // Check the "left" neighbor
+                        if (x > 0)
+                        {
+                            Cell left = gridComponents[(x - 1) + y * dimensions + z * dimensions * dimensions];
+                            List<Tile> validOptions = new List<Tile>();
+
+                            foreach (Tile possibleOption in left.tileOptions)
+                            {
+                                var validOption = Array.FindIndex(tileObjects, obj => obj == possibleOption);
+                                var valid = tileObjects[validOption].rightNeighbour;
+
+                                validOptions = validOptions.Concat(valid).ToList();
+                            }
+
+                            CheckValidity(options, validOptions);
+                        }
+
+                        // Check the "right" neighbor
+                        if (x < dimensions - 1)
+                        {
+                            Cell right = gridComponents[(x + 1) + y * dimensions + z * dimensions * dimensions];
+                            List<Tile> validOptions = new List<Tile>();
+
+                            foreach (Tile possibleOption in right.tileOptions)
+                            {
+                                var validOption = Array.FindIndex(tileObjects, obj => obj == possibleOption);
+                                var valid = tileObjects[validOption].leftNeighbour;
+
+                                validOptions = validOptions.Concat(valid).ToList();
+                            }
+
+                            CheckValidity(options, validOptions);
+                        }
+
+                        // Check the "up" neighbor
+                        if (y < dimensions - 1)
+                        {
+                            Cell up = gridComponents[x + (y + 1) * dimensions + z * dimensions * dimensions];
+                            List<Tile> validOptions = new List<Tile>();
+
+                            foreach (Tile possibleOption in up.tileOptions)
+                            {
+                                var validOption = Array.FindIndex(tileObjects, obj => obj == possibleOption);
+                                var valid = tileObjects[validOption].downNeighbour;
+
+                                validOptions = validOptions.Concat(valid).ToList();
+                            }
+
+                            CheckValidity(options, validOptions);
+                        }
+
+                        // Check the "down" neighbor
+                        if (y > 0)
+                        {
+                            Cell down = gridComponents[x + (y - 1) * dimensions + z * dimensions * dimensions];
+                            List<Tile> validOptions = new List<Tile>();
+
+                            foreach (Tile possibleOption in down.tileOptions)
+                            {
+                                var validOption = Array.FindIndex(tileObjects, obj => obj == possibleOption);
+                                var valid = tileObjects[validOption].upNeighbour;
+
+                                validOptions = validOptions.Concat(valid).ToList();
+                            }
+
+                            CheckValidity(options, validOptions);
+                        }
+
+                        Tile[] newTileList = new Tile[options.Count];
+
+                        for (int i = 0; i < options.Count; i++)
+                        {
+                            newTileList[i] = options[i];
+                        }
+
+                        newGenerationCell[index].RecreateCell(newTileList);
                     }
                 }
-
-                if (compatibleTiles.Count > 0)
-                {
-                    neighbor.RecreateCell(compatibleTiles.ToArray());
-                    CollapseCell(neighbor);
-                }
-                else
-                {
-                    Debug.LogError($"No valid tiles found for neighbor at {neighbor.transform.position} based on current tile at {cell.transform.position}. Check tile setup.");
-                }
             }
         }
-    }
 
+        gridComponents = newGenerationCell;
+        iteration++;
 
-    bool AreTilesCompatible(Tile[] currentCellTiles, Tile neighborTile)
-    {
-        foreach (Tile currentTile in currentCellTiles)
+        if (iteration < dimensions * dimensions * dimensions)
         {
-            if (currentTile.upNeighbour.Contains(neighborTile) ||
-                currentTile.downNeighbour.Contains(neighborTile) ||
-                currentTile.leftNeighbour.Contains(neighborTile) ||
-                currentTile.rightNeighbour.Contains(neighborTile) ||
-                currentTile.frontNeighbour.Contains(neighborTile) ||
-                currentTile.backNeighbour.Contains(neighborTile))
-            {
-                return true;
-            }
+            StartCoroutine(CheckEntropy());
         }
-        return false;
     }
 
 
-
-
-
-    IEnumerable<Cell> GetAllNeighbors(Cell cell)
+    void CheckValidity(List<Tile> optionList, List<Tile> validOption)
     {
-        List<Cell> neighbors = new List<Cell>();
-
-        if (cell.upNeighbor != null) neighbors.Add(cell.upNeighbor);
-        if (cell.downNeighbor != null) neighbors.Add(cell.downNeighbor);
-        if (cell.leftNeighbor != null) neighbors.Add(cell.leftNeighbor);
-        if (cell.rightNeighbor != null) neighbors.Add(cell.rightNeighbor);
-        if (cell.frontNeighbor != null) neighbors.Add(cell.frontNeighbor);
-        if (cell.backNeighbor != null) neighbors.Add(cell.backNeighbor);
-
-        return neighbors;
+        for (int x = optionList.Count - 1; x >= 0; x--)
+        {
+            var element = optionList[x];
+            if (!validOption.Contains(element))
+            {
+                optionList.RemoveAt(x);
+            }
+        }
     }
 
 }
