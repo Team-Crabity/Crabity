@@ -12,11 +12,20 @@ public class Cell : MonoBehaviour
     public Cell rightNeighbor;
     public Cell frontNeighbor;
     public Cell backNeighbor;
-
+    public Tile[] fallbackOptions;
     public void CreateCell(bool collapsedState, Tile[] tiles)
     {
         collapsed = collapsedState;
-        tileOptions = tiles;
+
+        if (tiles != null && tiles.Length > 0)
+        {
+            tileOptions = tiles;
+        }
+        else
+        {
+            Debug.LogWarning("Tile options are null or empty.");
+            tileOptions = new Tile[0]; // Assign an empty array if tiles is null or empty
+        }
     }
 
     public void RecreateCell(Tile[] tiles)
@@ -39,7 +48,7 @@ public class Cell : MonoBehaviour
             Gizmos.color = Color.yellow;  // Collapsed cells without a chosen tile (if any) are yellow
         }
 
-        // Draw a cube at the position of the GameObject
-        Gizmos.DrawWireCube(transform.position, new Vector3(1, 1, 1));  // Adjust the size if necessary
+ 
+        Gizmos.DrawWireCube(transform.position, new Vector3(1, 1, 1));  
     }
 }

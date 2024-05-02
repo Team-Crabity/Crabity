@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
     public Tile[] leftNeighbour;
     public Tile[] rightNeighbour;
 
-
+    public float weight = 1.0f;
     private void Awake()
     {
         transform.localScale = Vector3.zero;
