@@ -43,6 +43,7 @@ namespace SlimUI.ModernMenu{
 
 		void Start(){
 			SetThemeColors();
+			Debug.Log(themeIndex);
 			camAnimator = Cam.gameObject.GetComponent<Animator>();
 		}
 

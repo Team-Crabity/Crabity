@@ -27,7 +27,7 @@ namespace SlimUI.ModernMenu{
 
 		// sliders
 		public GameObject musicSlider;
-		private float sliderValue = 0.0f;
+		//private float sliderValue = 0.0f;
 		
 
 		public void  Start (){
