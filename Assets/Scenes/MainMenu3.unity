@@ -381,7 +381,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140518149}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: add57f364ba3c9a4589812715fee80a9, type: 3}
   m_Name: 
@@ -708,9 +708,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1932294861}
+      - m_Target: {fileID: 1768630963}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: PlayCampaign
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: RotatePlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -857,6 +869,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: RotateSettings
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1863,7 +1887,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 574319666}
-  - component: {fileID: 574319665}
+  - component: {fileID: 574319667}
+  - component: {fileID: 574319668}
   m_Layer: 0
   m_Name: RotatingObjects
   m_TagString: Untagged
@@ -1871,22 +1896,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &574319665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574319664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15323c81cf458dc46bd7f2c0be2e4e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnTime: 0.33
-  reverseRotation: 0
-  playerOneCamera: {fileID: 1517470608}
-  playerTwoCamera: {fileID: 335755977}
 --- !u!4 &574319666
 Transform:
   m_ObjectHideFlags: 0
@@ -1905,6 +1914,117 @@ Transform:
   - {fileID: 360634614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &574319667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574319664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b6f699836a8a348ad120ed8e03fdfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnTime: 0.33
+  doorAnimator: {fileID: 2034857253}
+  lastAxis: {x: 0, y: 0, z: 0}
+--- !u!82 &574319668
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574319664}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 429b3ffc032f9d34c9a6e00cd7d59241, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &574464786
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,6 +2455,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: UndoRotation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &652423188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2456,9 +2588,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1932294861}
+      - m_Target: {fileID: 1768630963}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: PlayTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: RotatePlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3468,6 +3612,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: RotateCoop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1036018068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4373,7 +4529,6 @@ GameObject:
   - component: {fileID: 1269478656}
   - component: {fileID: 1269478664}
   - component: {fileID: 1269478663}
-  - component: {fileID: 1269478666}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4560,26 +4715,6 @@ MonoBehaviour:
   TargetPositionOffset: {x: 0, y: 0.25, z: 0}
   FadeSpeed: 5
   ObjectsBlockingView: []
---- !u!114 &1269478666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269478655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb523ad3f5ca6442aeb7c480b3752b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 1269478655}
-  playerOneCamera: {fileID: 1517470601}
-  playerTwoCamera: {fileID: 335755973}
-  isSplitScreen: 0
-  xMin: 0.05
-  xMax: 0.95
-  yMin: 0
-  yMax: 1
 --- !u!1 &1329452553
 GameObject:
   m_ObjectHideFlags: 0
@@ -5149,13 +5284,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1932294859}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1768630963}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: PlayDaily
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: RotatePlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5245,7 +5392,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664349655}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: add57f364ba3c9a4589812715fee80a9, type: 3}
   m_Name: 
@@ -5511,9 +5658,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1932294861}
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: RotateQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1768630963}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5668,6 +5827,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 574319667}
+        m_TargetAssemblyTypeName: RotateCutscenes, Assembly-CSharp
+        m_MethodName: UndoRotation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1724041103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5718,6 +5889,7 @@ GameObject:
   - component: {fileID: 1768630961}
   - component: {fileID: 1768630960}
   - component: {fileID: 1768630959}
+  - component: {fileID: 1768630963}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -5811,6 +5983,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1768630963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768630958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52908373a5516094abb1e88b7fdf463e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1.5
 --- !u!1 &1795532952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2062707266875381771, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
@@ -6172,7 +6357,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1932294860}
-  - component: {fileID: 1932294861}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -6204,19 +6388,6 @@ RectTransform:
   m_AnchoredPosition: {x: -600, y: 126.1}
   m_SizeDelta: {x: 322.1, y: 349}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1932294861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932294859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52908373a5516094abb1e88b7fdf463e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 1.5
 --- !u!1 &1937351884
 GameObject:
   m_ObjectHideFlags: 0
@@ -6335,6 +6506,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!95 &2034857253 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4835264789089718807, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
+  m_PrefabInstance: {fileID: 4738452387871235590}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2052435799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6611,31 +6787,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.616934
+      value: 25.76126
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.6046896
+      value: -2.6075892
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.223572
+      value: 16.223576
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0000010281798
+      value: -0.00000012644041
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1.0373923e-12
+      value: -0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000008493661
+      value: 0.0000013276255
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6647,7 +6823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 730689064634259513, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 1128863334370949120, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6689,9 +6865,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 4835264789084546731, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4835264789084574041, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4835264789084574041, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_Size.z
       value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4835264789084606665, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
+      propertyPath: m_Size.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4835264789084606665, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
       propertyPath: m_Size.z

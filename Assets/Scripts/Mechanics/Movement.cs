@@ -21,6 +21,12 @@ public class Movement : MonoBehaviour
     private KeyCode left;
     private KeyCode right;
 
+    private void Awake()
+    {
+        float scale = gameObject.GetComponent<SwitchGravity>().gravityScale;
+        Physics.gravity = new Vector3(0, -9.81f * scale, 0);
+    }
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

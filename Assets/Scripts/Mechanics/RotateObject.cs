@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateObject : MonoBehaviour
 {
     [Header("Rotation")]
-    public float turnTime = 0.5f;
+    public float turnTime = 0.33f;
 
     [Header("Reverse Rotation")]
     public bool reverseRotation = false;
@@ -42,13 +42,13 @@ public class RotateObject : MonoBehaviour
             {
                 if (Input.GetKeyDown(entry.Key))
                 {
-                    RotationInput(entry.Key, entry.Value);
+                    RotationInput(entry.Value);
                 }
             }
         }
     }
 
-    void RotationInput(KeyCode keyCode, Vector3 axis)
+    void RotationInput(Vector3 axis)
     {
         Vector3 centerPoint = GetCenterPoint();
 
