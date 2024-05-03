@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.06609449, g: 0.061003074, b: 0.22326827, a: 1}
+  m_IndirectSpecularColor: {r: 0.06612105, g: 0.06102059, b: 0.22327533, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12775,7 +12775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46021bd10748e846a93853ac4cb7b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompanionMode: 1
+  CompanionMode: 0
   playerOne: {fileID: 140518149}
   playerTwo: {fileID: 1664349655}
   playerOneSpawnPoint: {fileID: 95645394}
@@ -29211,7 +29211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allPlatesPressed: 0
-  doors: []
+  doors:
+  - {fileID: 5302861462013815839}
 --- !u!4 &1984035192
 Transform:
   m_ObjectHideFlags: 0
@@ -31729,6 +31730,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+--- !u!1 &5302861462013815839 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7446718561424374443, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+  m_PrefabInstance: {fileID: 5302861462013815838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5862741531280214450
 PrefabInstance:
   m_ObjectHideFlags: 0
