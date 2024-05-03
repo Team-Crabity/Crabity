@@ -10,9 +10,10 @@ public class DoorCutscene : MonoBehaviour
     [SerializeField]
     private float duration = 3.0f;
 
-    void LateUpdate()
+    void Update()
     {
-        if (PressurePlateManager.instance.allPlatesPressed && !doorCamera.activeSelf && !finishedCutscene)
+        bool allPlatesPressed = gameObject.GetComponent<PressurePlateManager>().allPlatesPressed;
+        if (allPlatesPressed && !doorCamera.activeSelf && !finishedCutscene)
         {
             FocusOnDoor();
         }

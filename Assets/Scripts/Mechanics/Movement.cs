@@ -35,10 +35,10 @@ public class Movement : MonoBehaviour
         }
         else if (PlayerManager.instance.IsPlayerTwo(gameObject))
         {
-            up = KeyCode.O;
-            left = KeyCode.K;
-            down = KeyCode.L;
-            right = KeyCode.Semicolon;
+            up = KeyCode.UpArrow;
+            left = KeyCode.LeftArrow;
+            down = KeyCode.DownArrow;
+            right = KeyCode.RightArrow;
         }
     }
 

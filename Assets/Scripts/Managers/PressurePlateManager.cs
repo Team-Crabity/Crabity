@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PressurePlateManager : MonoBehaviour
 {
-    public static PressurePlateManager instance;
-
     public static int totalPlates;
     public static int platesPressed;
     public bool allPlatesPressed;
@@ -14,21 +12,10 @@ public class PressurePlateManager : MonoBehaviour
     [SerializeField]
     List<GameObject> doors;
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
     private void Start()
     {
         totalPlates = FindObjectsOfType<PressurePlate>().Length;
+        platesPressed = 0;
     }
 
     public void PlatePressed()

@@ -22,10 +22,10 @@ public class SwitchGravity : MonoBehaviour
     };
     private Dictionary<KeyCode, Vector3> playerTwoKeyMap = new Dictionary<KeyCode, Vector3>
     {
-        { KeyCode.O, Vector3.up },
-        { KeyCode.K, Vector3.left },
-        { KeyCode.L, Vector3.down },
-        { KeyCode.Semicolon, Vector3.right }
+        { KeyCode.UpArrow, Vector3.up },
+        { KeyCode.LeftArrow, Vector3.left },
+        { KeyCode.DownArrow, Vector3.down },
+        { KeyCode.RightArrow, Vector3.right }
     };
 
     private bool playerOne;
@@ -47,15 +47,11 @@ public class SwitchGravity : MonoBehaviour
         bool rightHeld = isOnMac ? Input.GetKey(KeyCode.RightAlt) : Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.RightControl);
         bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
 
-        if (playerOne && leftHeld)
+        if (rightHeld || leftHeld)
         {
             ChangeGravity();
         }
         
-        if (playerTwo && rightHeld)
-        {
-            ChangeGravity();
-        }
     }
 
     private void FixedUpdate()
@@ -72,7 +68,7 @@ public class SwitchGravity : MonoBehaviour
         if (!isGrounded) return;
 
         // Determine which keymap to use based on player selection
-        Dictionary<KeyCode, Vector3> currentKeyMap = playerOne ? playerOneKeyMap : playerTwoKeyMap;
+        Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
 
         // Check key presses and update grav direction
         foreach (var entry in currentKeyMap)

@@ -24,7 +24,7 @@ public class PressurePlate : MonoBehaviour
                 renderer.materials[0] = baseColor;
             }
 
-            PressurePlateManager.instance.PlatePressed();
+            GameObject.FindObjectOfType<PressurePlateManager>().PlatePressed();
         }
     }
 }
