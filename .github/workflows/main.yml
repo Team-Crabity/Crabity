@@ -46,7 +46,6 @@ jobs:
         unityVersion:
           - 2022.3.15f1
         targetPlatform:
-          - StandaloneWindows # Build a Windows 32-bit standalone.
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
     steps:
       # Checkout
