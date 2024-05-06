@@ -97,7 +97,9 @@ public class RotateObject : MonoBehaviour
 
         var startRotation = thisTransform.rotation;
         var startPosition = thisTransform.position;
+
         transform.RotateAround(center, rotateAxis, degrees);
+
         var endRotation = thisTransform.rotation;
         var endPosition = thisTransform.position;
         thisTransform.rotation = startRotation;
@@ -110,8 +112,11 @@ public class RotateObject : MonoBehaviour
             thisTransform.RotateAround(center, rotateAxis, Time.deltaTime * rate);
             if(!reverseRotation)
             {
-                playerOneTransform.RotateAround(playerOneTransform.position, rotateAxis, -Time.deltaTime * rate);
-                playerTwoTransform.RotateAround(playerTwoTransform.position, rotateAxis, -Time.deltaTime * rate);
+                // Billboard effect to keep playerOne and playerTwo facing the camera
+                playerOneTransform.LookAt(Camera.main.transform.position);
+                playerTwoTransform.LookAt(Camera.main.transform.position);
+                playerOneTransform.eulerAngles = new Vector3(0, 0, playerOneTransform.eulerAngles.z);
+                playerTwoTransform.eulerAngles = new Vector3(0, 0, playerTwoTransform.eulerAngles.z);
             }
             yield return null;
         }

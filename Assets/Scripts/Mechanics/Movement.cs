@@ -11,7 +11,9 @@ public class Movement : MonoBehaviour
 
     [Header("Jumping")]
     public int jumpCounter = 1;
-    public float jumpMultiplier = 15.0f;
+    public float jumpMultiplier = 10.0f;
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2.0f;
     public bool isJumping;
     public bool isGrounded;
 
@@ -52,7 +54,7 @@ public class Movement : MonoBehaviour
     {
         Vector3 movementDirection = Vector3.zero;
         float effectiveSpeed = speed * (1 - groundDrag) * Time.deltaTime;
-        if(!isGrounded)
+        if(isJumping)
         {
             effectiveSpeed = speed * (1 - airDrag) * Time.deltaTime;
         }
@@ -70,10 +72,9 @@ public class Movement : MonoBehaviour
         {
             if (Input.GetKey(mapping.Key))
             {
-                // Check if the player is trying to jump
-                if (Physics.gravity.normalized == -mapping.Value && isGrounded)
+                if (Physics.gravity.normalized == -mapping.Value && !isJumping) // Check if the player is trying to jump
                 {
-                    PerformJump();
+                    PerformJump(mapping.Key);
                 }
                 else
                 {
@@ -81,28 +82,52 @@ public class Movement : MonoBehaviour
                     movementDirection += mapping.Value * effectiveSpeed;
                 }
             }
-        }
         // Handle player movement
         rb.MovePosition(transform.position + movementDirection);
+        }
     }
-    
+
     private void FixedUpdate()
     {
         MovePlayer();
     }
 
-    public void PerformJump()
+    public void PerformJump(KeyCode jumpButton)
     {
-        if (!isJumping && jumpCounter > 0) // Check to make sure the player isn't already jumping
+        isJumping = true;
+        Vector3 jumpDirection = -Physics.gravity.normalized;
+        rb.velocity += jumpDirection * jumpMultiplier;
+        StartCoroutine(JumpRoutine(jumpButton, jumpDirection));
+    }
+
+    private IEnumerator JumpRoutine(KeyCode jumpButton, Vector3 jumpDirection)
+    {
+        bool buttonHeld = true;
+        while(buttonHeld)
         {
-            Vector3 jumpDirection = -Physics.gravity.normalized;
-            rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
-            isJumping = true;
+            if(!Input.GetKeyDown(jumpButton))
+            {
+                buttonHeld = false;
+            }
+
+            if(Vector3.Dot(rb.velocity, jumpDirection) > 0 && !buttonHeld) // Apply low jump multiplier if the jump button is released
+            {
+                Debug.Log("Low jump multiplier applied, player is moving in the " + Vector3.Dot(rb.velocity, jumpDirection) + " direction. ");
+                rb.velocity += jumpDirection * Physics.gravity.magnitude * (lowJumpMultiplier - 1) * Time.deltaTime;
+            }
+            yield return null;
+        }
+        while (Vector3.Dot(rb.velocity, jumpDirection) < 0 && !buttonHeld) // Fall faster if the jump button is released
+        {
+            Debug.Log("Fall multiplier applied, player is moving in the " + Vector3.Dot(rb.velocity, jumpDirection) + " direction. ");
+            rb.velocity += jumpDirection * Physics.gravity.magnitude * (fallMultiplier - 1) * Time.deltaTime;
+            yield return null;
         }
     }
 
     /*TODO: Update the way isGrounded is determined
-    Currently allows for funky superjumps to occur when jumping along walls
+    Currently allows for infinite jumps to occur when jumping on walls.
+    Jumping along the corner of an object allows the player to gain unintended velocity.
     */
     void OnCollisionEnter(Collision collision)
     {

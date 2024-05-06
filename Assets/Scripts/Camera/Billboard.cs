@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
+    [Header("Minimap Camera")]
     public Transform cam;
+    [Header("Pressure Plate")]
     public Transform follow;
     
     private void LateUpdate()

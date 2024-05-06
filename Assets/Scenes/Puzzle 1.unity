@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.06609449, g: 0.061003074, b: 0.22326827, a: 1}
+  m_IndirectSpecularColor: {r: 0.06607109, g: 0.06099653, b: 0.22328833, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1804,7 +1804,9 @@ MonoBehaviour:
   groundDrag: 0.5
   airDrag: 0.25
   jumpCounter: 1
-  jumpMultiplier: 15
+  jumpMultiplier: 5
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
   isJumping: 0
   isGrounded: 0
 --- !u!1001 &146834298
@@ -12739,7 +12741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46021bd10748e846a93853ac4cb7b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompanionMode: 1
+  CompanionMode: 0
   playerOne: {fileID: 140518149}
   playerTwo: {fileID: 1664349655}
   playerOneSpawnPoint: {fileID: 95645394}
@@ -17649,8 +17651,8 @@ MonoBehaviour:
   isSplitScreen: 0
   xMin: 0.05
   xMax: 0.95
-  yMin: 0
-  yMax: 1
+  yMin: 0.2
+  yMax: 0.8
 --- !u!114 &1269478667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24671,7 +24673,9 @@ MonoBehaviour:
   groundDrag: 0.5
   airDrag: 0.25
   jumpCounter: 1
-  jumpMultiplier: 15
+  jumpMultiplier: 5
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
   isJumping: 0
   isGrounded: 0
 --- !u!1001 &1666959825

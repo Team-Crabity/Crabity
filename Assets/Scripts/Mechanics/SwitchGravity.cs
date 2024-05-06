@@ -6,7 +6,7 @@ using UnityEngine;
 public class SwitchGravity : MonoBehaviour
 {
     [Header("Gravity")]
-    public float gravityScale = 5.0f;
+    public float gravityScale = 2.5f;
     public float gravity = 9.81f;
 
     private Vector3 gravityDirection = Vector3.zero;
