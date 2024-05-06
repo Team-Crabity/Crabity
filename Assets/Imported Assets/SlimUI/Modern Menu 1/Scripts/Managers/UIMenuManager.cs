@@ -18,12 +18,6 @@ namespace SlimUI.ModernMenu{
         public GameObject PanelVideo;
         [Tooltip("The UI Panel that holds the Audio window tab")]
         public GameObject PanelGame;
-
-		[Tooltip("Door Opener")]
-		public GameObject door;
-		public GameObject SettingsMenu;
-		public GameObject Cam; // The camera object
-		private Animator camAnimator;
         
 
         // highlights in settings screen
@@ -44,7 +38,7 @@ namespace SlimUI.ModernMenu{
 		void Start(){
 			SetThemeColors();
 			Debug.Log(themeIndex);
-			camAnimator = Cam.gameObject.GetComponent<Animator>();
+			//camAnimator = Cam.gameObject.GetComponent<Animator>();
 		}
 
 
@@ -81,15 +75,14 @@ namespace SlimUI.ModernMenu{
 			lineVideo.SetActive(false);
 		}
 
-    	public void TurnOnSettings()
+    	/*public void TurnOnSettings()
     	{
         	SettingsMenu.SetActive(true);
     	}
 		public void Return()
 		{
 			SettingsMenu.SetActive(false);
-			camAnimator.SetBool("SettingsOn", false);
-		}
+		}*/
 		public void GamePanel(){
 			DisablePanels();
 			PanelGame.SetActive(true);
