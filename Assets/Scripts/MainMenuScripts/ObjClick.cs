@@ -8,54 +8,36 @@ using UnityEngine.SceneManagement;
 
 public class ObjClick : MonoBehaviour
 {
-//Play button
+
+/*//Play button
     public GameObject Play;
-    public GameObject Key;
 
 //Exit Button
     public GameObject Exit;
     
-
 //Settings button
     public GameObject Settings;
-    public GameObject SettingsKey;
-
 
 //Camera
-    public GameObject Cam;
-    private Animator camAnimator;
-
-//Door animation
-    [SerializeField] GameObject Door;
-    private Animator doorAnimator;
-
-// Play Door Animation
-    [SerializeField] GameObject PlayDoor;   
-    private Animator PlayDoorAnimator;
-
+    public GameObject Cam;*/
 //Cursor SFX
     [SerializeField] AudioSource HoverSound;
-    bool stepOff = true; // keeps audio from being played repetedly
+    //bool stepOff = true; // keeps audio from being played repetedly
+    
 
     public bool hoveringP = false;
-    public bool hoveringS = false;
-    public bool hoveringC = false;
+    /*public bool hoveringS = false;
+    public bool hoveringC = false;*/
 
-//For Raycasting the buttons
-    private int layerNumber = 9;
-    private int MainMenuOptions;
-
-    private void Start()
+    public void PlayHover()
     {
-        MainMenuOptions = 1 << layerNumber;
-        doorAnimator = Door.gameObject.GetComponent<Animator>();
-        PlayDoorAnimator = PlayDoor.gameObject.GetComponent<Animator>();
-        camAnimator = Cam.gameObject.GetComponent<Animator>();
+        HoverSound.Play();
     }
-    void Update()
+
+    /*void Update()
     {
-        PlayAnim(); //Plays Cursor animations
-        if (Input.GetMouseButtonDown(0)) 
+        //PlayAnim(); //Plays Cursor animations
+        /*if (Input.GetMouseButtonDown(0)) 
         {
             GameObject Name = GetClickedObject(out RaycastHit hit);
             if (Play == Name) // If play is clicked, start game
@@ -86,8 +68,8 @@ public class ObjClick : MonoBehaviour
         {
             //Debug.Log("Mouse Off");
         }
-    }
-    GameObject GetClickedObject(out RaycastHit hit) //Returns the name of the gameObject that has been clicked within the layer "MainMenuOptions"
+    }*/
+    /*GameObject GetClickedObject(out RaycastHit hit) //Returns the name of the gameObject that has been clicked within the layer "MainMenuOptions"
     {
         //Checks if Obj is clicked on tapped on, and returns it if so
         GameObject target = null;
@@ -97,30 +79,29 @@ public class ObjClick : MonoBehaviour
             if (!isPointerOverUIObject()) { target = hit.collider.gameObject; }
         }
         return target;
-    }
-    private bool isPointerOverUIObject() //Checks to make sure it is not over an UI objects just in case
+    }*/
+    /*private bool isPointerOverUIObject() //Checks to make sure it is not over an UI objects just in case
     {
         PointerEventData ped = new PointerEventData(EventSystem.current);
         ped.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(ped, results);
         return results.Count > 0;
-    }
+    }*/
 
-    void PlayAnim() //Plays the animation sound once and bobs obj up and down when hovering over an object
+    /*void PlayAnim() //Plays the animation sound once and bobs obj up and down when hovering over an object
     {
-        GameObject Bot = GetClickedObject(out RaycastHit hit);
+        //GameObject Bot = GetClickedObject(out RaycastHit hit);
         if (stepOff) {
             stepOff = false;
             if (Play == Bot)
                 {
                     hoveringP = true;
-                    HoverSound.Play();  
-                    Key.GetComponent<Bobbing>().enabled = true;       
+                    HoverSound.Play();      
                 }
             else if (Exit == Bot)
                 {
-                    //.GetComponent<Bobbing>().enabled = true;
+
                     hoveringC = true;
                     HoverSound.Play();         
                 }
@@ -166,5 +147,5 @@ public class ObjClick : MonoBehaviour
     public void LoadScene() 
     {
         SceneManager.LoadScene(1);
-    }
+    }*/
 }

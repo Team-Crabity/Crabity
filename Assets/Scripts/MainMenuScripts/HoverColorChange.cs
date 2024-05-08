@@ -7,26 +7,20 @@ using UnityEngine.EventSystems;
 
 public class HoverColorChange : MonoBehaviour
 {
-    private TMP_Text Text; 
-    public GameObject Cam;
-    private ObjClick HoverScript; 
+    private TextMeshProUGUI Text; 
     void Start()
     {
-        Text = GetComponent<TMP_Text>();
-        HoverScript = Cam.GetComponent<ObjClick>();
+        Text = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
-    void Update()
+    public void ChangeColor()
     {
-        if (HoverScript.hoveringP)
-        {
-            Text.faceColor = new Color32(212, 148, 0, 255);
-        }
-        else
-        {
-            Text.faceColor = new Color32(255, 255, 255, 255);
-        }
+        Text.faceColor = new Color32(177, 156, 217, 255);
+    }
+    public void ChangeColorBack()
+    {
+        Text.faceColor = new Color32(255, 255, 255, 255);
     }
 
 }

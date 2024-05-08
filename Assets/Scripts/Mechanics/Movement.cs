@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     public bool isJumping;
     public bool isGrounded;
 
+
     private Rigidbody rb;
     private KeyCode up;
     private KeyCode down;
@@ -50,13 +51,14 @@ public class Movement : MonoBehaviour
 
     private void MovePlayer()
     {
+        isGrounded = IsGrounded();
+        isJumping = !isGrounded;
         Vector3 movementDirection = Vector3.zero;
         float effectiveSpeed = speed * (1 - groundDrag) * Time.deltaTime;
-        if(!isGrounded)
+        if(isJumping)
         {
             effectiveSpeed = speed * (1 - airDrag) * Time.deltaTime;
         }
-
         // Dictionary to map input keys to movement directions
         var directionMappings = new Dictionary<KeyCode, Vector3>
         {
@@ -73,6 +75,8 @@ public class Movement : MonoBehaviour
                 // Check if the player is trying to jump
                 if (Physics.gravity.normalized == -mapping.Value && isGrounded)
                 {
+                    jumpCounter = 1;
+                    Debug.Log("performing jump");
                     PerformJump();
                 }
                 else
@@ -93,25 +97,42 @@ public class Movement : MonoBehaviour
 
     public void PerformJump()
     {
-        if (!isJumping && jumpCounter > 0) // Check to make sure the player isn't already jumping
+        if (isGrounded && jumpCounter == 1) // Check to make sure the player isn't already jumping
         {
+            isGrounded = false;
+            jumpCounter = 0;
+            isJumping = true;
             Vector3 jumpDirection = -Physics.gravity.normalized;
             rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
-            isJumping = true;
         }
     }
 
     /*TODO: Update the way isGrounded is determined
     Currently allows for funky superjumps to occur when jumping along walls
     */
-    void OnCollisionEnter(Collision collision)
+    /*void OnCollisionEnter(Collision collision)
     {
         // Check if the player is grounded
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
         {
-            isGrounded = true;
-            isJumping = false;
+            //isGrounded = true;
+            //isJumping = false;
             jumpCounter = 1;
         }
+    }*/
+
+    public bool IsGrounded() {
+        int layerMask = 1 << 10;
+        layerMask = ~layerMask;
+        RaycastHit hit;
+        Vector3 rayOrigin = transform.position + Vector3.down * 1f;
+        Debug.DrawRay(rayOrigin, Vector3.down * 0.3f, Color.red);
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 0.3f, layerMask)) {
+            Debug.Log("Grounded");
+            return true;
+        }
+        Debug.Log("NOT Grounded!");
+        return false;
     }
+
 }
