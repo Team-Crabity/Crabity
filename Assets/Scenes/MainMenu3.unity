@@ -911,6 +911,7 @@ GameObject:
   - component: {fileID: 167768447}
   - component: {fileID: 167768446}
   - component: {fileID: 167768449}
+  - component: {fileID: 167768450}
   m_Layer: 5
   m_Name: SETTINGS
   m_TagString: Untagged
@@ -1104,6 +1105,35 @@ MonoBehaviour:
         - m_Target: {fileID: 1329452557}
           m_TargetAssemblyTypeName: HoverColorChange, Assembly-CSharp
           m_MethodName: ChangeColorBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &167768450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167768444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3986,6 +4016,7 @@ GameObject:
   - component: {fileID: 1036018068}
   - component: {fileID: 1036018067}
   - component: {fileID: 1036018070}
+  - component: {fileID: 1036018071}
   m_Layer: 5
   m_Name: CO-OP
   m_TagString: Untagged
@@ -4179,6 +4210,35 @@ MonoBehaviour:
         - m_Target: {fileID: 223220944}
           m_TargetAssemblyTypeName: HoverColorChange, Assembly-CSharp
           m_MethodName: ChangeColorBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1036018071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036018065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5058,6 +5118,7 @@ GameObject:
   - component: {fileID: 1269478665}
   - component: {fileID: 1269478666}
   - component: {fileID: 1269478667}
+  - component: {fileID: 1269478668}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5379,6 +5440,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HoverSound: {fileID: 810719970}
   hoveringP: 0
+--- !u!114 &1269478668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269478655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad149d53679afc04782ee02fa3e008d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1329452553
 GameObject:
   m_ObjectHideFlags: 0
@@ -6278,6 +6351,7 @@ GameObject:
   - component: {fileID: 1688848458}
   - component: {fileID: 1688848457}
   - component: {fileID: 1688848460}
+  - component: {fileID: 1688848461}
   m_Layer: 5
   m_Name: QUIT
   m_TagString: Untagged
@@ -6459,6 +6533,35 @@ MonoBehaviour:
         - m_Target: {fileID: 377463064}
           m_TargetAssemblyTypeName: HoverColorChange, Assembly-CSharp
           m_MethodName: ChangeColorBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1688848461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688848455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7522,6 +7625,7 @@ GameObject:
   - component: {fileID: 2090668355}
   - component: {fileID: 2090668354}
   - component: {fileID: 2090668357}
+  - component: {fileID: 2090668358}
   m_Layer: 5
   m_Name: PLAY
   m_TagString: Untagged
@@ -7703,6 +7807,35 @@ MonoBehaviour:
         - m_Target: {fileID: 1448874048}
           m_TargetAssemblyTypeName: HoverColorChange, Assembly-CSharp
           m_MethodName: ChangeColorBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &2090668358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090668352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7976,6 +8109,7 @@ GameObject:
   - component: {fileID: 2158104582625747620}
   - component: {fileID: 2006867249207703676}
   - component: {fileID: 3645549134280143532}
+  - component: {fileID: 9219056727728040393}
   m_Layer: 5
   m_Name: Btn_Audio
   m_TagString: Untagged
@@ -8477,6 +8611,7 @@ GameObject:
   - component: {fileID: 1478452855277529048}
   - component: {fileID: 6749385552012635273}
   - component: {fileID: 956818305968183102}
+  - component: {fileID: 6749385552012635274}
   m_Layer: 5
   m_Name: CameraEffects_Btn
   m_TagString: Untagged
@@ -9770,8 +9905,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+        - m_Target: {fileID: 1269478667}
+          m_TargetAssemblyTypeName: ObjClick, Assembly-CSharp
           m_MethodName: PlayHover
           m_Mode: 1
           m_Arguments:
@@ -9967,6 +10102,7 @@ GameObject:
   - component: {fileID: 7309968871692144042}
   - component: {fileID: 2178849589961732794}
   - component: {fileID: 7666070856702050543}
+  - component: {fileID: 7666070856702050544}
   m_Layer: 5
   m_Name: Btn_Video
   m_TagString: Untagged
@@ -10216,8 +10352,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+        - m_Target: {fileID: 1269478667}
+          m_TargetAssemblyTypeName: ObjClick, Assembly-CSharp
           m_MethodName: PlayHover
           m_Mode: 1
           m_Arguments:
@@ -10351,6 +10487,7 @@ GameObject:
   - component: {fileID: 6268789381293926120}
   - component: {fileID: 1352121622932996939}
   - component: {fileID: 137567659615197050}
+  - component: {fileID: 6268789381293926121}
   m_Layer: 5
   m_Name: TextureMed_Btn
   m_TagString: Untagged
@@ -10753,7 +10890,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -484.3, y: 269.9}
+  m_AnchoredPosition: {x: -402, y: 262}
   m_SizeDelta: {x: 50.98, y: 50.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2708328998720277888
@@ -10926,6 +11063,7 @@ GameObject:
   - component: {fileID: 6530609787047677657}
   - component: {fileID: 8528541373540701081}
   - component: {fileID: 6157421940315453079}
+  - component: {fileID: 8528541373540701082}
   m_Layer: 5
   m_Name: TextureLow_Btn
   m_TagString: Untagged
@@ -11239,6 +11377,7 @@ GameObject:
   - component: {fileID: 5343647329646197526}
   - component: {fileID: 7884938542897182791}
   - component: {fileID: 9087213601125430854}
+  - component: {fileID: 9087213601125430855}
   m_Layer: 5
   m_Name: ShadowLow_Btn
   m_TagString: Untagged
@@ -11750,6 +11889,7 @@ GameObject:
   - component: {fileID: 6086771741823012446}
   - component: {fileID: 2482302727614591607}
   - component: {fileID: 3091740907621539587}
+  - component: {fileID: 6086771741823012447}
   m_Layer: 5
   m_Name: VSync_Btn
   m_TagString: Untagged
@@ -12166,6 +12306,7 @@ GameObject:
   - component: {fileID: 5716310579264038491}
   - component: {fileID: 5076900909147109812}
   - component: {fileID: 8646324297926510462}
+  - component: {fileID: 8646324297926510463}
   m_Layer: 5
   m_Name: MotionBlur_Btn
   m_TagString: Untagged
@@ -12374,6 +12515,7 @@ GameObject:
   - component: {fileID: 5334920443839346946}
   - component: {fileID: 925435218494750150}
   - component: {fileID: 9080051175523911619}
+  - component: {fileID: 9080051175523911620}
   m_Layer: 5
   m_Name: ShadowOff_Btn
   m_TagString: Untagged
@@ -12535,6 +12677,7 @@ GameObject:
   - component: {fileID: 1290195973804416409}
   - component: {fileID: 1748572157108200136}
   - component: {fileID: 1606813850974637933}
+  - component: {fileID: 4521188962373622440}
   m_Layer: 5
   m_Name: Bal_Btn (1)
   m_TagString: Untagged
@@ -12542,6 +12685,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4521188962373622440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521188962373622439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!23 &4539675942739589315
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12943,6 +13115,7 @@ GameObject:
   - component: {fileID: 5215141653982642224}
   - component: {fileID: 6638552612220513417}
   - component: {fileID: 9220794397597227887}
+  - component: {fileID: 9220794397597227888}
   m_Layer: 5
   m_Name: TextureHigh_Btn
   m_TagString: Untagged
@@ -13432,9 +13605,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 1269478668}
           m_TargetAssemblyTypeName: SlimUI.ModernMenu.CheckMusicVolume, Assembly-CSharp
           m_MethodName: UpdateVolume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -13544,6 +13729,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8678773648117208977}
         m_TargetAssemblyTypeName: SlimUI.ModernMenu.UISettingsManager, Assembly-CSharp
         m_MethodName: MusicSlider
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1269478668}
+        m_TargetAssemblyTypeName: SlimUI.ModernMenu.CheckMusicVolume, Assembly-CSharp
+        m_MethodName: UpdateVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14068,6 +14265,7 @@ GameObject:
   - component: {fileID: 8111103924155284658}
   - component: {fileID: 6460968594093898411}
   - component: {fileID: 8862778899591367029}
+  - component: {fileID: 8862778899591367030}
   m_Layer: 5
   m_Name: ShadowHigh_Btn
   m_TagString: Untagged
@@ -14431,6 +14629,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3809080992096981289}
   m_CullTransparentMesh: 0
+--- !u!114 &6086771741823012447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3809080992096981289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!224 &6096541382478206821
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14753,8 +14980,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+        - m_Target: {fileID: 1269478667}
+          m_TargetAssemblyTypeName: ObjClick, Assembly-CSharp
           m_MethodName: PlayHover
           m_Mode: 1
           m_Arguments:
@@ -14811,6 +15038,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2323983535319656197}
   m_CullTransparentMesh: 0
+--- !u!114 &6268789381293926121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323983535319656197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6274480537479554127
 GameObject:
   m_ObjectHideFlags: 0
@@ -14920,6 +15176,7 @@ GameObject:
   - component: {fileID: 7478118625265864498}
   - component: {fileID: 8373018840288470832}
   - component: {fileID: 6412106004085211525}
+  - component: {fileID: 8373018840288470833}
   m_Layer: 5
   m_Name: FullScreen_Btn
   m_TagString: Untagged
@@ -15357,6 +15614,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6749385552012635274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713454314916624711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6756909074304592813
 GameObject:
   m_ObjectHideFlags: 0
@@ -15945,6 +16231,7 @@ GameObject:
   - component: {fileID: 7193965935039941247}
   - component: {fileID: 3187953251910465597}
   - component: {fileID: 3269711145331348944}
+  - component: {fileID: 7315540312090833831}
   m_Layer: 5
   m_Name: Perf_Btn (2)
   m_TagString: Untagged
@@ -15952,6 +16239,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7315540312090833831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7315540312090833830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &7358097117741118764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16309,6 +16625,35 @@ MonoBehaviour:
   themeController: {fileID: 11400000, guid: e00c7d2bc58a2424b8dc09ecdafdb067, type: 2}
   hasImage: 1
   isText: 0
+--- !u!114 &7666070856702050544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127606034336871263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!23 &7701209435932091276
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17012,7 +17357,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -478.1, y: 269.68}
+  m_AnchoredPosition: {x: -490, y: 276}
   m_SizeDelta: {x: 50.55, y: 50.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8221880981031928931
@@ -17027,6 +17372,7 @@ GameObject:
   - component: {fileID: 6009961924250915667}
   - component: {fileID: 6692127267200230595}
   - component: {fileID: 956936227784001882}
+  - component: {fileID: 8221880981031928932}
   m_Layer: 5
   m_Name: HD_Btn
   m_TagString: Untagged
@@ -17034,6 +17380,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8221880981031928932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221880981031928931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &8258455723171437352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17271,6 +17646,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8373018840288470833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375141951462629672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &8437742969642454841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17439,6 +17843,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8528541373540701082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2939507020978450474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!224 &8558211230783561099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17471,6 +17904,7 @@ GameObject:
   - component: {fileID: 3107903146073328454}
   - component: {fileID: 5417388735839124582}
   - component: {fileID: 254524050342661197}
+  - component: {fileID: 8774793353975277426}
   m_Layer: 5
   m_Name: AmbientOcclusion_Btn
   m_TagString: Untagged
@@ -17542,6 +17976,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8646324297926510463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247496239659899730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &8661078537007499618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17605,6 +18068,35 @@ RectTransform:
   m_AnchoredPosition: {x: 379.5, y: 117}
   m_SizeDelta: {x: 401, y: 67}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8774793353975277426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595086857415842558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &8816682557772626419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17807,6 +18299,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8862778899591367030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5668987572266600982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &8894458850493788847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17908,6 +18429,7 @@ GameObject:
   - component: {fileID: 1097234168798203336}
   - component: {fileID: 6214165603678957631}
   - component: {fileID: 8258455723171437352}
+  - component: {fileID: 9022059080523848487}
   m_Layer: 5
   m_Name: Btn_Return
   m_TagString: Untagged
@@ -17915,6 +18437,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9022059080523848487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9022059080523848486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!224 &9038171088018566321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18009,6 +18560,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9080051175523911620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332632336336436497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &9084182762666200444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18154,6 +18734,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9087213601125430855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3206265532425500827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &9094938067515466714
 GameObject:
   m_ObjectHideFlags: 0
@@ -18269,6 +18878,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9219056727728040393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388165241103524278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &9220794397597227887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18325,6 +18963,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9220794397597227888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714511145528872365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1269478665}
+          m_TargetAssemblyTypeName: SlimUI.ModernMenu.UIMenuManager, Assembly-CSharp
+          m_MethodName: PlaySFXHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
