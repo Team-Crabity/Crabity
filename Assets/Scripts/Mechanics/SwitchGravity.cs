@@ -12,6 +12,9 @@ public class SwitchGravity : MonoBehaviour
     private Vector3 gravityDirection = Vector3.zero;
     public Vector3 newGravity { get; private set; }
 
+    // Keep track of number of gravity switches
+    public int gravitySwitchCount = 0;
+
     // Keymaps for players to be able to switch gravity
     private Dictionary<KeyCode, Vector3> playerOneKeyMap = new Dictionary<KeyCode, Vector3>
     {
@@ -81,6 +84,10 @@ public class SwitchGravity : MonoBehaviour
                 RotatePlayer(PlayerManager.instance.playerTwo);
 
                 isGrounded = false;
+
+                // Update gravity switch count
+                gravitySwitchCount += 1;
+
                 break;
             }
         }

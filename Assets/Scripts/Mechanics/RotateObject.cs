@@ -19,6 +19,9 @@ public class RotateObject : MonoBehaviour
     private Transform playerTwoTransform;
     private Dictionary<KeyCode, Vector3> keyRotationMap;
 
+    // Track number of rotations
+    public static int numRotations;
+
     void Start()
     {
         keyRotationMap = new Dictionary<KeyCode, Vector3>
@@ -57,10 +60,12 @@ public class RotateObject : MonoBehaviour
             if(!reverseRotation)
             {
                 StartCoroutine(Rotate(transform, centerPoint, axis, 90, turnTime));
+                numRotations += 1;
             }
             else
             {
                 StartCoroutine(Rotate(transform, centerPoint, axis * -1, 90, turnTime));
+                numRotations += 1;
             }
         }
     }

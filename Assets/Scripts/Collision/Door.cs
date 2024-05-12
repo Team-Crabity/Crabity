@@ -27,13 +27,30 @@ public class Door : MonoBehaviour
         Scene s = SceneManager.GetActiveScene();
         Debug.Log("Going to scene: " + (s.buildIndex + 1));
         
-        // send event
+        // send level complete
         CustomEvent myEvent = new CustomEvent("levelComplete")
         {
             {"levelName", s.name},
         };
         AnalyticsService.Instance.RecordEvent(myEvent);
 
+        // send number of gravity switches
+        CustomEvent gravitySwitchesEvent = new CustomEvent("gravitySwitch") {
+            {"levelName", s.name},
+            {"gravitySwitchCount", PlayerManager.instance.playerOne.GetComponent<SwitchGravity>().gravitySwitchCount},
+            {"playerNum", 1},
+        };
+        AnalyticsService.Instance.RecordEvent(gravitySwitchesEvent);
+
+        // send number of rotations
+        CustomEvent perspectiveSwitchEvent = new CustomEvent("perspectiveSwitch") {
+            {"levelName", s.name},
+            {"switchCount", RotateObject.numRotations},
+            {"playerNum", 1},
+        };
+        AnalyticsService.Instance.RecordEvent(perspectiveSwitchEvent);
+        Debug.Log(RotateObject.numRotations);
+        
         SceneManager.LoadScene(s.buildIndex + 1);
     }
 }
