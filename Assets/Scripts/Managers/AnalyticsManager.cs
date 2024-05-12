@@ -50,13 +50,14 @@ public class AnalyticsManager : MonoBehaviour
 
         // disable canvas
         canvas.enabled = false;
-
-        MainMenu();
     }
 
     void OnDisagree() {
         // disable canvas
         canvas.enabled = false;
+        
+        // Go to main menu
+        MainMenu();
     }
 
 	void ConsentGiven()
