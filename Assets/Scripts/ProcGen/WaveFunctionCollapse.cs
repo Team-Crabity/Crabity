@@ -43,9 +43,8 @@ public class WaveFunctionCollapse : MonoBehaviour
                 }
             }
         }
-
-        StartCoroutine(CheckEntropy());
         SetNeighboringCells();
+        StartCoroutine(CheckEntropy());
     }
 
     void SetNeighboringCells()
@@ -99,17 +98,46 @@ public class WaveFunctionCollapse : MonoBehaviour
 
         cellToCollapse.collapsed = true;
 
-        // Select a random tile from the available options
+        // Select a tile from the available options with weighted random selection
         if (cellToCollapse.tileOptions.Length > 0)
         {
-            int randomTileIndex = UnityEngine.Random.Range(0, cellToCollapse.tileOptions.Length);
-            Tile selectedTile = cellToCollapse.tileOptions[randomTileIndex];
+            // Calculate total weight sum
+            float totalWeight = 0f;
+            foreach (Tile tile in cellToCollapse.tileOptions)
+            {
+                totalWeight += tile.weight;
+            }
 
-            cellToCollapse.tileOptions = new Tile[] { selectedTile };
+            // Generate a random value within the total weight range
+            float randomValue = UnityEngine.Random.Range(0f, totalWeight);
 
-            // Instantiate the selected tile at the cell's position
-            GameObject instantiatedTile = Instantiate(selectedTile.gameObject, cellToCollapse.transform.position, selectedTile.transform.rotation);
-            instantiatedTile.transform.localScale = Vector3.one; // Set the scale to (1, 1, 1)
+            // Find the tile corresponding to the random value
+            float cumulativeWeight = 0f;
+            Tile selectedTile = null;
+            foreach (Tile tile in cellToCollapse.tileOptions)
+            {
+                cumulativeWeight += tile.weight;
+                if (randomValue <= cumulativeWeight)
+                {
+                    selectedTile = tile;
+                    break;
+                }
+            }
+
+            if (selectedTile != null)
+            {
+                cellToCollapse.tileOptions = new Tile[] { selectedTile };
+
+                // Instantiate the selected tile at the cell's position
+                GameObject instantiatedTile = Instantiate(selectedTile.gameObject, cellToCollapse.transform.position, selectedTile.transform.rotation);
+                instantiatedTile.transform.localScale = Vector3.one; // Set the scale to (1, 1, 1)
+            }
+            else
+            {
+                // Handle the case where no valid tile options are available
+                selectedTile = backupTile;
+                cellToCollapse.tileOptions = new Tile[] { selectedTile };
+            }
         }
         else
         {
@@ -120,7 +148,6 @@ public class WaveFunctionCollapse : MonoBehaviour
 
         UpdateGeneration();
     }
-
     void UpdateGeneration()
     {
         List<Cell> newGenerationCell = new List<Cell>(gridComponents);
