@@ -140,6 +140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pressure_plate
       objectReference: {fileID: 0}
+    - target: {fileID: 1317461863096974785, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.3718328
@@ -621,6 +625,10 @@ PrefabInstance:
     - target: {fileID: 1038737907693360665, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_Name
       value: pressure_plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317461863096974785, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3938,7 +3946,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499508242}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &499508246
 Camera:
   m_ObjectHideFlags: 0
@@ -4149,6 +4157,10 @@ PrefabInstance:
     - target: {fileID: 1038737907693360665, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_Name
       value: pressure_plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317461863096974785, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_LocalScale.x
@@ -8745,6 +8757,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 574319666}
     m_Modifications:
+    - target: {fileID: 1080567347427733804, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1080567347435209306, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3552502521487384231, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
       propertyPath: m_Name
       value: ExitBox
@@ -8787,6 +8807,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6732331039581986054, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094798925852320698, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -9283,6 +9307,10 @@ PrefabInstance:
     - target: {fileID: 1038737907693360665, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_Name
       value: pressure_plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317461863096974785, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14204,6 +14232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pressure_plate
       objectReference: {fileID: 0}
+    - target: {fileID: 1317461863096974785, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.6
@@ -14880,6 +14912,11 @@ MonoBehaviour:
         - localeIdentifier:
             m_Code: ar
           value: 308
+--- !u!1 &1626249499 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7446718561424374443, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+  m_PrefabInstance: {fileID: 994181328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1629368862
 GameObject:
   m_ObjectHideFlags: 0
@@ -18088,11 +18125,6 @@ PrefabInstance:
       addedObject: {fileID: 519728491}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2eb17f175564e84c8ad78ac03232e29, type: 3}
---- !u!1 &1923944398 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7446718561424374443, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
-  m_PrefabInstance: {fileID: 5302861462013815838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1931188483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18454,7 +18486,6 @@ GameObject:
   - component: {fileID: 1984035192}
   - component: {fileID: 1984035191}
   - component: {fileID: 1984035194}
-  - component: {fileID: 1984035193}
   m_Layer: 0
   m_Name: PressurePlateManager
   m_TagString: Untagged
@@ -18476,7 +18507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allPlatesPressed: 0
   doors:
-  - {fileID: 1923944398}
+  - {fileID: 1626249499}
 --- !u!4 &1984035192
 Transform:
   m_ObjectHideFlags: 0
@@ -18492,102 +18523,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1267239255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1984035193
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984035190}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 83e09d10ab7e50b4697c36bb6a871497, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.25
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1984035194
 MonoBehaviour:
   m_ObjectHideFlags: 0
