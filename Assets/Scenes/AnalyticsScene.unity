@@ -705,10 +705,6 @@ GameObject:
   - component: {fileID: 1269478660}
   - component: {fileID: 1269478659}
   - component: {fileID: 1269478658}
-  - component: {fileID: 1269478656}
-  - component: {fileID: 1269478664}
-  - component: {fileID: 1269478663}
-  - component: {fileID: 1269478665}
   - component: {fileID: 1269478666}
   - component: {fileID: 1269478667}
   - component: {fileID: 1269478668}
@@ -719,28 +715,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1269478656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269478655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6309eccb4a49644b4f890a3a93b3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  Target: {fileID: 0}
-  Camera: {fileID: 1269478660}
-  FadedAlpha: 0.25
-  RetainShadows: 1
-  TargetPositionOffset: {x: 0, y: 0.25, z: 0}
-  FadeSpeed: 5
-  ObjectsBlockingView: []
 --- !u!114 &1269478658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,66 +837,6 @@ Transform:
   - {fileID: 810719971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1269478663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269478655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5cdd9f9cbe75a34a86a0f62065021f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 0}
-  offset: {x: -4, y: 2.25, z: -60}
-  smoothTime: 0.2
-  mainCamera: {fileID: 1269478660}
---- !u!114 &1269478664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269478655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6309eccb4a49644b4f890a3a93b3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  Target: {fileID: 0}
-  Camera: {fileID: 1269478660}
-  FadedAlpha: 0.25
-  RetainShadows: 1
-  TargetPositionOffset: {x: 0, y: 0.25, z: 0}
-  FadeSpeed: 5
-  ObjectsBlockingView: []
---- !u!114 &1269478665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269478655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81bc16ca95894c34b836ea33671ae46d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theme: 1
-  themeController: {fileID: 11400000, guid: e00c7d2bc58a2424b8dc09ecdafdb067, type: 2}
-  PanelVideo: {fileID: 0}
-  PanelGame: {fileID: 0}
-  lineGame: {fileID: 0}
-  lineVideo: {fileID: 0}
-  hoverSound: {fileID: 810719970}
-  sliderSound: {fileID: 280394619}
-  swooshSound: {fileID: 156029518}
 --- !u!82 &1269478666
 AudioSource:
   m_ObjectHideFlags: 0
