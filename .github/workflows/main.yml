@@ -64,6 +64,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneWindows64
+          chownFilesTo: "user:group"
 
       # Output to build folder
       - uses: actions/upload-artifact@v4
@@ -100,6 +101,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneOSX
+          chownFilesTo: "user:group"
   
       # Output to build folder
       - uses: actions/upload-artifact@v4
