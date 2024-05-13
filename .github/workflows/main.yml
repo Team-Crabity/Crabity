@@ -108,3 +108,6 @@ jobs:
         with:
           name: build-StandaloneOSX
           path: build/StandaloneOSX
+
+      - name: Code Sign Application
+        run: ls -lat && chmod -R a+xr "build/StandaloneOSX/build-StandaloneOSX/StandaloneOSX.app/Contents/MacOS/*"
