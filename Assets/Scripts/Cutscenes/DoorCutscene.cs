@@ -30,6 +30,7 @@ public class DoorCutscene : MonoBehaviour
         // Start cutscene on the door for 3 sec
         doorCamera.SetActive(true);
         GetComponent<AudioSource>().Play();
+        Debug.Log("Door camera sequence started");
 
         yield return new WaitForSeconds(duration);
 
