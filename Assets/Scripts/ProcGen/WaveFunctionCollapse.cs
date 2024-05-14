@@ -65,6 +65,32 @@ public class WaveFunctionCollapse : MonoBehaviour
                     currentCell.rightNeighbor = GetNeighborCell(x + 1, y, z);
                     currentCell.upNeighbor = GetNeighborCell(x, y + 1, z);
                     currentCell.downNeighbor = GetNeighborCell(x, y - 1, z);
+
+                    // Consider neighbors of neighbors
+                    if (currentCell.frontNeighbor != null)
+                    {
+                        currentCell.frontNeighbor.frontNeighbor = GetNeighborCell(x, y, z + 2);
+                    }
+                    if (currentCell.backNeighbor != null)
+                    {
+                        currentCell.backNeighbor.backNeighbor = GetNeighborCell(x, y, z - 2);
+                    }
+                    if (currentCell.leftNeighbor != null)
+                    {
+                        currentCell.leftNeighbor.leftNeighbor = GetNeighborCell(x - 2, y, z);
+                    }
+                    if (currentCell.rightNeighbor != null)
+                    {
+                        currentCell.rightNeighbor.rightNeighbor = GetNeighborCell(x + 2, y, z);
+                    }
+                    if (currentCell.upNeighbor != null)
+                    {
+                        currentCell.upNeighbor.upNeighbor = GetNeighborCell(x, y + 2, z);
+                    }
+                    if (currentCell.downNeighbor != null)
+                    {
+                        currentCell.downNeighbor.downNeighbor = GetNeighborCell(x, y - 2, z);
+                    }
                 }
             }
         }
@@ -87,7 +113,14 @@ public class WaveFunctionCollapse : MonoBehaviour
         tempGrid.Sort((a, b) => a.tileOptions.Length - b.tileOptions.Length);
         tempGrid.RemoveAll(a => a.tileOptions.Length != tempGrid[0].tileOptions.Length);
 
-        yield return new WaitForSeconds(.025f);
+
+
+
+        //THIS IS HOW LONG TO WAIT BEFORE ANOTHER GENERATION (KEEP SLOW FOR TESTING AND FAST FOR COMPLETE)
+        yield return new WaitForSeconds(.0025f);
+
+
+
 
         CollapseCell(tempGrid);
     }
@@ -95,13 +128,9 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         int randIndex = UnityEngine.Random.Range(0, tempGrid.Count);
         Cell cellToCollapse = tempGrid[randIndex];
-
         cellToCollapse.collapsed = true;
-
-        // Select a tile from the available options with weighted random selection
         if (cellToCollapse.tileOptions.Length > 0)
         {
-            // Calculate total weight sum
             float totalWeight = 0f;
             foreach (Tile tile in cellToCollapse.tileOptions)
             {
@@ -110,8 +139,6 @@ public class WaveFunctionCollapse : MonoBehaviour
 
             // Generate a random value within the total weight range
             float randomValue = UnityEngine.Random.Range(0f, totalWeight);
-
-            // Find the tile corresponding to the random value
             float cumulativeWeight = 0f;
             Tile selectedTile = null;
             foreach (Tile tile in cellToCollapse.tileOptions)
@@ -128,20 +155,17 @@ public class WaveFunctionCollapse : MonoBehaviour
             {
                 cellToCollapse.tileOptions = new Tile[] { selectedTile };
 
-                // Instantiate the selected tile at the cell's position
                 GameObject instantiatedTile = Instantiate(selectedTile.gameObject, cellToCollapse.transform.position, selectedTile.transform.rotation);
                 instantiatedTile.transform.localScale = Vector3.one; // Set the scale to (1, 1, 1)
             }
             else
             {
-                // Handle the case where no valid tile options are available
                 selectedTile = backupTile;
                 cellToCollapse.tileOptions = new Tile[] { selectedTile };
             }
         }
         else
         {
-            // Handle the case where no valid tile options are available
             Tile selectedTile = backupTile;
             cellToCollapse.tileOptions = new Tile[] { selectedTile };
         }
