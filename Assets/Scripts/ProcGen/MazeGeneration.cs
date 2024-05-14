@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.AddressableAssets.Build.Layout;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
+using UnityEditor.VersionControl;
 
 public class MazeGeneration : MonoBehaviour
 {
@@ -9,11 +12,28 @@ public class MazeGeneration : MonoBehaviour
     private Vector3 startCellPosition;
     private Vector3 endCellPosition;
 
+    public GameObject startPrefab;
+    public GameObject endPrefab;
+
+    public float width;
+    public float height;
+    public float depth;
+
+    public GameObject XXasset;
+    public GameObject XYasset;
+    public GameObject XZasset;
+    public GameObject YXasset;
+    public GameObject YYasset;
+    public GameObject YZasset;
+    public GameObject ZXasset;
+    public GameObject ZYasset;
+    public GameObject ZZasset;
+
     void Awake()
     {
         GenerateMaze();
         SetNeighboringCells();
-        FindShortestPath();
+        GenerateAssets();
     }
 
     void GenerateMaze()
@@ -24,7 +44,8 @@ public class MazeGeneration : MonoBehaviour
             {
                 for (int x = 0; x < dimensions; x++)
                 {
-                    Vector3 cellPosition = new Vector3(x, y, z);
+                    // Adjust position based on height, width, and depth
+                    Vector3 cellPosition = new Vector3(x * width, y * height, z * depth);
                     GameObject newCellObject = Instantiate(cellPrefab, cellPosition, Quaternion.identity);
                     newCellObject.name = "Cell (" + x + "," + y + "," + z + ")";
                     MazeCell newCell = newCellObject.AddComponent<MazeCell>(); // Add MazeCell component to the GameObject
@@ -48,9 +69,9 @@ public class MazeGeneration : MonoBehaviour
                 }
             }
         }
-
-
     }
+
+
     void SetNeighboringCells()
     {
         for (int z = 0; z < dimensions; z++)
@@ -146,7 +167,6 @@ public class MazeGeneration : MonoBehaviour
         Dictionary<MazeCell, int> distances = new Dictionary<MazeCell, int>();
         Dictionary<MazeCell, MazeCell> previous = new Dictionary<MazeCell, MazeCell>();
 
-        // Initialize distances
         foreach (var cell in gridComponents)
         {
             distances[cell] = int.MaxValue;
@@ -185,8 +205,102 @@ public class MazeGeneration : MonoBehaviour
         {
             if (!shortestPath.Contains(cell))
             {
-                Destroy(cell.gameObject);
+                cell.collapsed = true;
             }
         }
     }
+
+    void GenerateAssets()
+    {
+        FindShortestPath(); // Calculate the shortest path
+        MazeCell currentCell = gridComponents[0];
+        // Instantiate startPrefab for the first cell
+        Instantiate(startPrefab, currentCell.transform.position, Quaternion.identity);
+
+        // Instantiate assets for each cell in the path
+        for (int i = 1; i < gridComponents.Count - 1; i++) // Exclude the first and last cells
+        {
+            MazeCell nextCell = gridComponents[i];
+            if (nextCell.collapsed == false)
+            {
+                for (int x = i; x < gridComponents.Count - 1; x++)
+                {
+                    MazeCell nextnextCell = gridComponents[x + 1]; // Get the next next cell
+                    if (nextnextCell.collapsed == false || nextnextCell == gridComponents[gridComponents.Count - 1])
+                    {
+                        // Get movement directions for the current cell, next cell, and next next cell
+                        Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
+                        Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
+                        currentCell = nextCell; // Move to the next cell
+
+                        // Instantiate appropriate asset based on the movement directions
+                        if (IsXMovement(movementDirection) && IsXMovement(nextMovementDirection))
+                        {
+                            Instantiate(XXasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsXMovement(movementDirection) && IsYMovement(nextMovementDirection))
+                        {
+                            Instantiate(XYasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsXMovement(movementDirection) && IsZMovement(nextMovementDirection))
+                        {
+                            Instantiate(XZasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsYMovement(movementDirection) && IsXMovement(nextMovementDirection))
+                        {
+                            Instantiate(YXasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsYMovement(movementDirection) && IsYMovement(nextMovementDirection))
+                        {
+                            Instantiate(YYasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsYMovement(movementDirection) && IsZMovement(nextMovementDirection))
+                        {
+                            Instantiate(YZasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsZMovement(movementDirection) && IsXMovement(nextMovementDirection))
+                        {
+                            Instantiate(ZXasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsZMovement(movementDirection) && IsYMovement(nextMovementDirection))
+                        {
+                            Instantiate(ZYasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else if (IsZMovement(movementDirection) && IsZMovement(nextMovementDirection))
+                        {
+                            Instantiate(ZZasset, currentCell.transform.position, Quaternion.identity);
+                        }
+                        else
+                        {
+                            Debug.LogError("Unknown movement direction!");
+                        }
+
+                        
+                    }
+                }
+            }
+            else
+            {
+                continue; // Skip collapsed cells
+            }
+        }
+        // Instantiate endPrefab for the last cell
+        Instantiate(endPrefab, gridComponents[gridComponents.Count - 1].transform.position, Quaternion.identity);
+    }
+
+    bool IsXMovement(Vector3 direction)
+    {
+        return Mathf.Abs(direction.x) > Mathf.Abs(direction.y) && Mathf.Abs(direction.x) > Mathf.Abs(direction.z);
+    }
+
+    bool IsYMovement(Vector3 direction)
+    {
+        return Mathf.Abs(direction.y) > Mathf.Abs(direction.x) && Mathf.Abs(direction.y) > Mathf.Abs(direction.z);
+    }
+
+    bool IsZMovement(Vector3 direction)
+    {
+        return Mathf.Abs(direction.z) > Mathf.Abs(direction.x) && Mathf.Abs(direction.z) > Mathf.Abs(direction.y);
+    }
+
 }
