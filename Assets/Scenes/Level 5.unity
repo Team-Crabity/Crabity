@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.06612105, g: 0.06102059, b: 0.22327533, a: 1}
+  m_IndirectSpecularColor: {r: 0.06607109, g: 0.06099653, b: 0.22328833, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1092,6 +1092,7 @@ GameObject:
   - component: {fileID: 140518154}
   - component: {fileID: 140518159}
   - component: {fileID: 140518157}
+  - component: {fileID: 140518160}
   m_Layer: 0
   m_Name: PlayerOne
   m_TagString: Player
@@ -1202,6 +1203,7 @@ MonoBehaviour:
   gravityScale: 5
   gravity: 9.81
   gravitySwitchCount: 0
+  cooldown: {fileID: 140518160}
 --- !u!54 &140518155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1305,6 +1307,19 @@ MonoBehaviour:
   jumpMultiplier: 15
   isJumping: 0
   isGrounded: 0
+--- !u!114 &140518160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140518149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d9f21cc21bef34c9fdd11cbfe94628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 2
 --- !u!1 &155412550
 GameObject:
   m_ObjectHideFlags: 0
@@ -15464,6 +15479,7 @@ MonoBehaviour:
   gravityScale: 5
   gravity: 9.81
   gravitySwitchCount: 0
+  cooldown: {fileID: 0}
 --- !u!54 &1664349659
 Rigidbody:
   m_ObjectHideFlags: 0

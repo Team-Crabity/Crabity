@@ -2,9 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SwitchGravity : MonoBehaviour
 {
+    [Header ("CooldownUI")]
+    [SerializeField] private Image imageCooldown;
+    [SerializeField] private TMP_Text textCooldown;
+
     [Header("Gravity")]
     public float gravityScale = 5.0f;
     public float gravity = 9.81f;
@@ -35,11 +41,16 @@ public class SwitchGravity : MonoBehaviour
     private bool playerTwo;
     private bool isGrounded;
 
+    //Cooldown Script
+    [SerializeField] private CoolDown cooldown;
+
     void Start()
     {
         playerOne = PlayerManager.instance.IsPlayerOne(gameObject);
         playerTwo = PlayerManager.instance.IsPlayerTwo(gameObject);
         UpdateGravity(Vector3.down);
+        textCooldown.gameObject.SetActive(false);
+        imageCooldown.fillAmount = 0.0f;
     }
 
     void Update()
@@ -54,7 +65,19 @@ public class SwitchGravity : MonoBehaviour
         {
             ChangeGravity();
         }
-        
+
+        float timer = cooldown._nextFireTime - Time.time;
+        if (!cooldown.IsCoolingDown) 
+        {
+            textCooldown.gameObject.SetActive(false);
+        }
+        else if (timer > 0)
+        {
+            textCooldown.text = Mathf.RoundToInt(timer).ToString();
+            imageCooldown.fillAmount = timer / cooldown.cooldownTime; 
+        }
+
+        Debug.Log("IsCoolingdown is " + cooldown.IsCoolingDown);
     }
 
     private void FixedUpdate()
@@ -78,12 +101,18 @@ public class SwitchGravity : MonoBehaviour
         {
             if (Input.GetKeyDown(entry.Key))
             {
+                if (cooldown.IsCoolingDown) return;
+
                 gravityDirection = entry.Value;
 
                 RotatePlayer(PlayerManager.instance.playerOne);
                 RotatePlayer(PlayerManager.instance.playerTwo);
 
                 isGrounded = false;
+
+                //Cooldown
+                cooldown.StartCooldown();
+                textCooldown.gameObject.SetActive(true);
 
                 // Update gravity switch count
                 gravitySwitchCount += 1;

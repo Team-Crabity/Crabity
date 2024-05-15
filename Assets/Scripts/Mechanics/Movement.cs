@@ -125,9 +125,9 @@ public class Movement : MonoBehaviour
         int layerMask = 1 << 10;
         layerMask = ~layerMask;
         RaycastHit hit;
-        Vector3 rayOrigin = transform.position + Vector3.down * 1f;
-        Debug.DrawRay(rayOrigin, Vector3.down * 0.3f, Color.red);
-        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 0.3f, layerMask)) {
+        Vector3 rayOrigin = transform.position + transform.TransformDirection (Vector3.down) * 1f;
+        Debug.DrawRay(rayOrigin, transform.TransformDirection (Vector3.down) * 0.3f, Color.red);
+        if (Physics.Raycast(rayOrigin, transform.TransformDirection (Vector3.down), out hit, 0.3f, layerMask)) {
             Debug.Log("Grounded");
             return true;
         }
