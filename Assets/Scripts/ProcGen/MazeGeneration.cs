@@ -228,8 +228,8 @@ public class MazeGeneration : MonoBehaviour
                     MazeCell nextnextCell = gridComponents[x + 1]; // Get the next next cell
                     if (nextnextCell.collapsed == false || nextnextCell == gridComponents[gridComponents.Count - 1])
                     {
-                        // Get movement directions for the current cell, next cell, and next next cell
-                        Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
+                            // Get movement directions for the current cell, next cell, and next next cell
+                            Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
                         Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
                         currentCell = nextCell; // Move to the next cell
 
@@ -269,13 +269,7 @@ public class MazeGeneration : MonoBehaviour
                         else if (IsZMovement(movementDirection) && IsZMovement(nextMovementDirection))
                         {
                             Instantiate(ZZasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else
-                        {
-                            Debug.LogError("Unknown movement direction!");
-                        }
-
-                        
+                        } 
                     }
                 }
             }
