@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using UnityEditor.Build.Pipeline.Tasks;
 
 public class MazeGeneration : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class MazeGeneration : MonoBehaviour
     public float width;
     public float height;
     public float depth;
+    private float MutationRate = .75f; //75 percent chance
+    private int corridorCounter = 0;
 
     public GameObject XXasset;
     public GameObject XYasset;
@@ -27,11 +29,49 @@ public class MazeGeneration : MonoBehaviour
     public GameObject ZYasset;
     public GameObject ZZasset;
 
+    /*
+    public GameObject pXpXasset;
+    public GameObject pXpYasset;
+    public GameObject pXpZasset;
+    public GameObject pXmYasset;
+    public GameObject pXmZasset;
+    public GameObject mXmXasset;
+    public GameObject mXpYasset;
+    public GameObject mXpZasset;
+    public GameObject mXmYasset;
+    public GameObject mXmZasset;
+
+    public GameObject pYpYasset;
+    public GameObject pYpXasset;
+    public GameObject pYpZasset;
+    public GameObject pYmXasset;
+    public GameObject pYmZasset;
+    public GameObject mYmYasset;
+    public GameObject mYpXasset;
+    public GameObject mYpZasset;
+    public GameObject mYmXasset;
+    public GameObject mYmZasset;
+
+    public GameObject pZpZasset;
+    public GameObject pZpXasset;
+    public GameObject pZpYasset;
+    public GameObject pZmXasset;
+    public GameObject pZmYasset;
+    public GameObject mZmZasset;
+    public GameObject mZpXasset;
+    public GameObject mZpYasset;
+    public GameObject mZmXasset;
+    public GameObject mZmYasset;
+    */
+
+    public GameObject Tasset;
+
     void Awake()
     {
         GenerateMaze();
         SetNeighboringCells();
         GenerateAssets();
+        GenerateCorridors();
     }
 
     void GenerateMaze()
@@ -42,19 +82,19 @@ public class MazeGeneration : MonoBehaviour
             {
                 for (int x = 0; x < dimensions; x++)
                 {
-                    // Adjust position based on height, width, and depth
+                    // adjust cells based on height, width, and depth
                     Vector3 cellPosition = new Vector3(x * width, y * height, z * depth);
                     GameObject newCellObject = Instantiate(cellPrefab, cellPosition, Quaternion.identity);
                     newCellObject.name = "Cell (" + x + "," + y + "," + z + ")";
-                    MazeCell newCell = newCellObject.AddComponent<MazeCell>(); // Add MazeCell component to the GameObject
-                    gridComponents.Add(newCell); // Add the MazeCell instance to the list
+                    MazeCell newCell = newCellObject.AddComponent<MazeCell>(); 
+                    gridComponents.Add(newCell); 
 
-                    // Random weight
+                    // Random weight of ceells
                     int weight = Random.Range(1, 101);
                     newCell.SetWeight(weight);
 
-                    // Log the weight of the cell
-                    Debug.Log("Weight of " + newCellObject.name + ": " + weight);
+                    // weight of the cell
+                    //Debug.Log("Weight of " + newCellObject.name + ": " + weight);
 
                     if (x == 0 && y == 0 && z == 0)
                     {
@@ -118,6 +158,8 @@ public class MazeGeneration : MonoBehaviour
             }
         }
     }
+
+
     MazeCell GetNeighborCell(int x, int y, int z)
     {
         if (x >= 0 && x < dimensions && y >= 0 && y < dimensions && z >= 0 && z < dimensions)
@@ -160,7 +202,7 @@ public class MazeGeneration : MonoBehaviour
         return neighbors;
     }
 
-    void FindShortestPath()
+    List<MazeCell> FindShortestPath(MazeCell startCell, MazeCell endCell, bool collapseCells = true)
     {
         Dictionary<MazeCell, int> distances = new Dictionary<MazeCell, int>();
         Dictionary<MazeCell, MazeCell> previous = new Dictionary<MazeCell, MazeCell>();
@@ -170,9 +212,9 @@ public class MazeGeneration : MonoBehaviour
             distances[cell] = int.MaxValue;
             previous[cell] = null;
         }
-        distances[gridComponents[0]] = 0;
+        distances[startCell] = 0;
         PriorityQueue<MazeCell> queue = new PriorityQueue<MazeCell>();
-        queue.Enqueue(gridComponents[0], 0);
+        queue.Enqueue(startCell, 0);
 
         while (queue.Count > 0)
         {
@@ -181,6 +223,12 @@ public class MazeGeneration : MonoBehaviour
 
             foreach (var neighbor in neighbors)
             {
+                // Skip collapsed cells
+                if (neighbor.collapsed || neighbor.incompleteCorridor || neighbor.isCorridor)
+                {
+                    continue;
+                }
+
                 int altDistance = distances[currentCell] + neighbor.GetWeight();
                 if (altDistance < distances[neighbor])
                 {
@@ -190,95 +238,205 @@ public class MazeGeneration : MonoBehaviour
                 }
             }
         }
+
         List<MazeCell> shortestPath = new List<MazeCell>();
-        MazeCell current = gridComponents[gridComponents.Count - 1];
+        MazeCell current = endCell;
         while (current != null)
         {
             shortestPath.Add(current);
             current = previous[current];
         }
 
-        shortestPath.Reverse();
-        foreach (var cell in gridComponents)
+        // Collapse cells on the path or mark them as corridors
+        foreach (var cell in shortestPath)
         {
-            if (!shortestPath.Contains(cell))
+            if (collapseCells)
             {
                 cell.collapsed = true;
             }
+            else
+            {
+                cell.isCorridor = true;
+                cell.collapsed = false;
+            }
         }
+        return shortestPath;
     }
+
 
     void GenerateAssets()
     {
-        FindShortestPath(); // Calculate the shortest path
+        FindShortestPath(gridComponents[0], gridComponents[gridComponents.Count - 1], true); // Calculate the shortest path
+        Instantiate(startPrefab, gridComponents[0].transform.position, Quaternion.identity);
+        Instantiate(endPrefab, gridComponents[gridComponents.Count - 1].transform.position, Quaternion.identity);
         MazeCell currentCell = gridComponents[0];
-        // Instantiate startPrefab for the first cell
-        Instantiate(startPrefab, currentCell.transform.position, Quaternion.identity);
-
-        // Instantiate assets for each cell in the path
+        // Instantiate assets for each cell in the path that is being collapsed
         for (int i = 1; i < gridComponents.Count - 1; i++) // Exclude the first and last cells
         {
             MazeCell nextCell = gridComponents[i];
-            if (nextCell.collapsed == false)
+            if (nextCell.collapsed == true)
             {
                 for (int x = i; x < gridComponents.Count - 1; x++)
                 {
                     MazeCell nextnextCell = gridComponents[x + 1]; // Get the next next cell
-                    if (nextnextCell.collapsed == false || nextnextCell == gridComponents[gridComponents.Count - 1])
+                    if (nextnextCell.collapsed == true)
                     {
-                            // Get movement directions for the current cell, next cell, and next next cell
-                            Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
+                        Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
                         Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
-                        currentCell = nextCell; // Move to the next cell
+                        currentCell = nextCell; // Move to the next cell after taking movement.
+                        MovementGeneration(currentCell, movementDirection, nextMovementDirection, false);
 
-                        // Instantiate appropriate asset based on the movement directions
-                        if (IsXMovement(movementDirection) && IsXMovement(nextMovementDirection))
-                        {
-                            Instantiate(XXasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsXMovement(movementDirection) && IsYMovement(nextMovementDirection))
-                        {
-                            Instantiate(XYasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsXMovement(movementDirection) && IsZMovement(nextMovementDirection))
-                        {
-                            Instantiate(XZasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsYMovement(movementDirection) && IsXMovement(nextMovementDirection))
-                        {
-                            Instantiate(YXasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsYMovement(movementDirection) && IsYMovement(nextMovementDirection))
-                        {
-                            Instantiate(YYasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsYMovement(movementDirection) && IsZMovement(nextMovementDirection))
-                        {
-                            Instantiate(YZasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsZMovement(movementDirection) && IsXMovement(nextMovementDirection))
-                        {
-                            Instantiate(ZXasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsZMovement(movementDirection) && IsYMovement(nextMovementDirection))
-                        {
-                            Instantiate(ZYasset, currentCell.transform.position, Quaternion.identity);
-                        }
-                        else if (IsZMovement(movementDirection) && IsZMovement(nextMovementDirection))
-                        {
-                            Instantiate(ZZasset, currentCell.transform.position, Quaternion.identity);
-                        } 
                     }
                 }
             }
             else
             {
-                continue; // Skip collapsed cells
+                continue; //skip collapsed we do not want to generate assets non collapsed spaces
             }
         }
-        // Instantiate endPrefab for the last cell
-        Instantiate(endPrefab, gridComponents[gridComponents.Count - 1].transform.position, Quaternion.identity);
+
     }
+
+    void MovementGeneration(MazeCell currentCell, Vector3 movementDirection, Vector3 nextMovementDirection, bool corridor = false)
+    {
+        if (IsXMovement(movementDirection) && IsXMovement(nextMovementDirection))
+        {
+            float randomValue = Random.Range(0f, 1f);
+            // Debug.Log($"Random Value: {randomValue}, Mutation Rate: {MutationRate}");
+            if (corridorCounter <= 4 && randomValue < MutationRate && corridor == false)
+            {
+                currentCell.isCorridor = true;
+                corridorCounter++;
+                Debug.Log(corridorCounter);
+            }
+            else
+            {
+                Instantiate(XXasset, currentCell.transform.position, Quaternion.identity);
+                Debug.Log($"Instantiated XXasset at {currentCell.transform.position}");
+            }
+        }
+        else if (IsXMovement(movementDirection) && IsYMovement(nextMovementDirection))
+        {
+            Instantiate(XYasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated XYasset at {currentCell.transform.position}");
+        }
+        else if (IsXMovement(movementDirection) && IsZMovement(nextMovementDirection))
+        {
+            Instantiate(XZasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated XZasset at {currentCell.transform.position}");
+        }
+        else if (IsYMovement(movementDirection) && IsXMovement(nextMovementDirection))
+        {
+            Instantiate(YXasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated YXasset at {currentCell.transform.position}");
+        }
+        else if (IsYMovement(movementDirection) && IsYMovement(nextMovementDirection))
+        {
+            Instantiate(YYasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated YYasset at {currentCell.transform.position}");
+        }
+        else if (IsYMovement(movementDirection) && IsZMovement(nextMovementDirection))
+        {
+            Instantiate(YZasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated YZasset at {currentCell.transform.position}");
+        }
+        else if (IsZMovement(movementDirection) && IsXMovement(nextMovementDirection))
+        {
+            Instantiate(ZXasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated ZXasset at {currentCell.transform.position}");
+        }
+        else if (IsZMovement(movementDirection) && IsYMovement(nextMovementDirection))
+        {
+            Instantiate(ZYasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated ZYasset at {currentCell.transform.position}");
+        }
+        else if (IsZMovement(movementDirection) && IsZMovement(nextMovementDirection))
+        {
+            Instantiate(ZZasset, currentCell.transform.position, Quaternion.identity);
+            Debug.Log($"Instantiated ZZasset at {currentCell.transform.position}");
+        }
+    }
+
+    void GenerateCorridors()
+    {
+        // Keep track of the corridor cells and uncollapsed cells
+        List<MazeCell> corridorCells = new List<MazeCell>();
+        List<MazeCell> uncollapsedCells = new List<MazeCell>();
+
+        // Separate the corridor cells and uncollapsed cells
+        foreach (var cell in gridComponents)
+        {
+            if (cell.isCorridor)
+            {
+                corridorCells.Add(cell);
+                Debug.Log("added to list");
+            }
+            else if (!cell.collapsed)
+            {
+                uncollapsedCells.Add(cell);
+                Debug.Log("added collapsed cell to list");
+            }
+        }
+       
+        for(int i = 0; i < corridorCells.Count-1; i++)
+        {
+            // Choose a random corridor cell
+            MazeCell corridorCell = corridorCells[i];
+
+            // Choose a random uncollapsed cell
+            MazeCell randomUncollapsedCell = uncollapsedCells[Random.Range(0, uncollapsedCells.Count)];
+
+            Debug.Log($"Generating corridor from {corridorCell.gameObject.name} to {randomUncollapsedCell.gameObject.name}");
+
+            // Find the shortest path from corridorCell to randomUncollapsedCell
+            List<MazeCell> path = FindShortestPath(corridorCell, randomUncollapsedCell, false);
+
+            // Collapse cells on the path
+            foreach (var cell in path)
+            {
+                cell.collapsed = true;
+                if (uncollapsedCells.Contains(cell))
+                {
+                    uncollapsedCells.Remove(cell);
+                }
+            }
+
+            // Output the path
+            string pathString = "Path: ";
+            foreach (var cell in path)
+            {
+                pathString += cell.gameObject.name + " -> ";
+            }
+            Debug.Log(pathString.TrimEnd('-', '>', ' ')); // Trim the last arrow and space
+
+            // Generate assets along the collapsed path
+            Debug.Log("Generating Assets for Corridors");
+            GenerateCorridorAssets(path);
+        }
+    }
+    void GenerateCorridorAssets(List<MazeCell> corridorPath)
+    {
+        Instantiate(endPrefab, corridorPath[0].transform.position, Quaternion.identity);
+        Instantiate(startPrefab, corridorPath[corridorPath.Count-1].transform.position, Quaternion.identity);
+        Debug.Log("Generating Corridor Assets...");
+        MazeCell currentCell = corridorPath[corridorPath.Count-1];
+        for (int i = corridorPath.Count-2; i >= 1; i--)
+        {
+            MazeCell nextCell = corridorPath[i];
+            MazeCell nextnextCell = corridorPath[i - 1];
+            Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
+            Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
+            currentCell = nextCell; //move to next cell before gen
+            MovementGeneration(currentCell, movementDirection, nextMovementDirection, true);
+            
+
+            // Debug log for each cell
+            Debug.Log($"Generated asset for cell {nextCell.gameObject.name}");
+        }
+        Debug.Log("Corridor Assets Generated.");
+    }
+
+
 
     bool IsXMovement(Vector3 direction)
     {
