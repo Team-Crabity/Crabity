@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor.Build.Pipeline.Tasks;
+using UnityEditor.ShaderGraph.Internal;
+using Unity.VisualScripting;
 
 public class MazeGeneration : MonoBehaviour
 {
@@ -18,18 +20,9 @@ public class MazeGeneration : MonoBehaviour
     public float depth;
     private float MutationRate = .75f; //75 percent chance
     private int corridorCounter = 0;
+    public int corridorMax = 2;
 
-    public GameObject XXasset;
-    public GameObject XYasset;
-    public GameObject XZasset;
-    public GameObject YXasset;
-    public GameObject YYasset;
-    public GameObject YZasset;
-    public GameObject ZXasset;
-    public GameObject ZYasset;
-    public GameObject ZZasset;
-
-    /*
+    
     public GameObject pXpXasset;
     public GameObject pXpYasset;
     public GameObject pXpZasset;
@@ -62,9 +55,16 @@ public class MazeGeneration : MonoBehaviour
     public GameObject mZpYasset;
     public GameObject mZmXasset;
     public GameObject mZmYasset;
-    */
 
-    public GameObject Tasset;
+
+    public GameObject XFrontT;
+    public GameObject XBackT;
+    public GameObject XUpT;
+    public GameObject XDownT;
+    public GameObject YLeftT;
+    public GameObject YRightT;
+    public GameObject YFrontT;
+    public GameObject YBackT;
 
     void Awake()
     {
@@ -299,63 +299,214 @@ public class MazeGeneration : MonoBehaviour
 
     void MovementGeneration(MazeCell currentCell, Vector3 movementDirection, Vector3 nextMovementDirection, bool corridor = false)
     {
-        if (IsXMovement(movementDirection) && IsXMovement(nextMovementDirection))
+        if (IsXMovement(movementDirection))
         {
-            float randomValue = Random.Range(0f, 1f);
-            // Debug.Log($"Random Value: {randomValue}, Mutation Rate: {MutationRate}");
-            if (corridorCounter <= 4 && randomValue < MutationRate && corridor == false)
+            if (IsXMovement(nextMovementDirection))
             {
-                currentCell.isCorridor = true;
-                corridorCounter++;
-                Debug.Log(corridorCounter);
+                float randomValue = Random.Range(0f, 1f);
+                if (corridorCounter <= corridorMax && randomValue < MutationRate && corridor == false)
+                {
+                    currentCell.isCorridor = true;
+                    corridorCounter++;
+                    Debug.Log(corridorCounter);
+                }
+                else
+                {
+                    if (movementDirection.x > 0 && nextMovementDirection.x > 0)
+                    {
+                        Instantiate(pXpXasset, currentCell.transform.position, Quaternion.identity);
+                        Debug.Log($"Instantiated pXpXasset at {currentCell.transform.position}");
+                    }
+                    else if (movementDirection.x < 0 && nextMovementDirection.x < 0)
+                    {
+                        Instantiate(mXmXasset, currentCell.transform.position, Quaternion.identity);
+                        Debug.Log($"Instantiated mXmXasset at {currentCell.transform.position}");
+                    }
+                }
             }
-            else
+            else if (IsYMovement(nextMovementDirection))
             {
-                Instantiate(XXasset, currentCell.transform.position, Quaternion.identity);
-                Debug.Log($"Instantiated XXasset at {currentCell.transform.position}");
+                if (movementDirection.x > 0 && nextMovementDirection.y > 0)
+                {
+                    Instantiate(pXpYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pXpYasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.x > 0 && nextMovementDirection.y < 0)
+                {
+                    Instantiate(pXmYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pXmYasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.x < 0 && nextMovementDirection.y > 0)
+                {
+                    Instantiate(mXpYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mXpYasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.x < 0 && nextMovementDirection.y < 0)
+                {
+                    Instantiate(mXmYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mXmYasset at {currentCell.transform.position}");
+                }
+            }
+            else if (IsZMovement(nextMovementDirection))
+            {
+                if (movementDirection.x > 0 && nextMovementDirection.z > 0)
+                {
+                    Instantiate(pXpZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pXpZasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.x > 0 && nextMovementDirection.z < 0)
+                {
+                    Instantiate(pXmZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pXmZasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.x < 0 && nextMovementDirection.z > 0)
+                {
+                    Instantiate(mXpZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mXpZasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.x < 0 && nextMovementDirection.z < 0)
+                {
+                    Instantiate(mXmZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mXmZasset at {currentCell.transform.position}");
+                }
             }
         }
-        else if (IsXMovement(movementDirection) && IsYMovement(nextMovementDirection))
+        else if (IsYMovement(movementDirection))
         {
-            Instantiate(XYasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated XYasset at {currentCell.transform.position}");
+            if (IsXMovement(nextMovementDirection))
+            {
+                if (movementDirection.y > 0 && nextMovementDirection.x > 0)
+                {
+                    Instantiate(pYpXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pYpXasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.y > 0 && nextMovementDirection.x < 0)
+                {
+                    Instantiate(pYmXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pYmXasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.y < 0 && nextMovementDirection.x > 0)
+                {
+                    Instantiate(mYpXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mYpXasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.y < 0 && nextMovementDirection.x < 0)
+                {
+                    Instantiate(mYmXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mYmXasset at {currentCell.transform.position}");
+                }
+            }
+            else if (IsYMovement(nextMovementDirection))
+            {
+                float randomValue = Random.Range(0f, 1f);
+                if (corridorCounter <= corridorMax && randomValue < MutationRate && corridor == false)
+                {
+                    currentCell.isCorridor = true;
+                    corridorCounter++;
+                    Debug.Log(corridorCounter);
+                }
+                else
+                {
+                    if (movementDirection.y > 0 && nextMovementDirection.y > 0)
+                    {
+                        Instantiate(pYpYasset, currentCell.transform.position, Quaternion.identity);
+                        Debug.Log($"Instantiated pYpYasset at {currentCell.transform.position}");
+                    }
+                    else if (movementDirection.y < 0 && nextMovementDirection.y < 0)
+                    {
+                        Instantiate(mYmYasset, currentCell.transform.position, Quaternion.identity);
+                        Debug.Log($"Instantiated mYmYasset at {currentCell.transform.position}");
+                    }
+                }
+            }
+            else if (IsZMovement(nextMovementDirection))
+            {
+                if (movementDirection.y > 0 && nextMovementDirection.z > 0)
+                {
+                    Instantiate(pYpZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pYpZasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.y > 0 && nextMovementDirection.z < 0)
+                {
+                    Instantiate(pYmZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pYmZasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.y < 0 && nextMovementDirection.z > 0)
+                {
+                    Instantiate(mYpZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mYpZasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.y < 0 && nextMovementDirection.z < 0)
+                {
+                    Instantiate(mYmZasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mYmZasset at {currentCell.transform.position}");
+                }
+            }
         }
-        else if (IsXMovement(movementDirection) && IsZMovement(nextMovementDirection))
+        else if (IsZMovement(movementDirection))
         {
-            Instantiate(XZasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated XZasset at {currentCell.transform.position}");
-        }
-        else if (IsYMovement(movementDirection) && IsXMovement(nextMovementDirection))
-        {
-            Instantiate(YXasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated YXasset at {currentCell.transform.position}");
-        }
-        else if (IsYMovement(movementDirection) && IsYMovement(nextMovementDirection))
-        {
-            Instantiate(YYasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated YYasset at {currentCell.transform.position}");
-        }
-        else if (IsYMovement(movementDirection) && IsZMovement(nextMovementDirection))
-        {
-            Instantiate(YZasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated YZasset at {currentCell.transform.position}");
-        }
-        else if (IsZMovement(movementDirection) && IsXMovement(nextMovementDirection))
-        {
-            Instantiate(ZXasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated ZXasset at {currentCell.transform.position}");
-        }
-        else if (IsZMovement(movementDirection) && IsYMovement(nextMovementDirection))
-        {
-            Instantiate(ZYasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated ZYasset at {currentCell.transform.position}");
-        }
-        else if (IsZMovement(movementDirection) && IsZMovement(nextMovementDirection))
-        {
-            Instantiate(ZZasset, currentCell.transform.position, Quaternion.identity);
-            Debug.Log($"Instantiated ZZasset at {currentCell.transform.position}");
+            if (IsXMovement(nextMovementDirection))
+            {
+                if (movementDirection.z > 0 && nextMovementDirection.x > 0)
+                {
+                    Instantiate(pZpXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pZpXasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.z > 0 && nextMovementDirection.x < 0)
+                {
+                    Instantiate(pZmXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pZmXasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.z < 0 && nextMovementDirection.x > 0)
+                {
+                    Instantiate(mZpXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mZpXasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.z < 0 && nextMovementDirection.x < 0)
+                {
+                    Instantiate(mZmXasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mZmXasset at {currentCell.transform.position}");
+                }
+            }
+            else if (IsYMovement(nextMovementDirection))
+            {
+                if (movementDirection.z > 0 && nextMovementDirection.y > 0)
+                {
+                    Instantiate(pZpYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pZpYasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.z > 0 && nextMovementDirection.y < 0)
+                {
+                    Instantiate(pZmYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated pZmYasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.z < 0 && nextMovementDirection.y > 0)
+                {
+                    Instantiate(mZpYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mZpYasset at {currentCell.transform.position}");
+                }
+                else if (movementDirection.z < 0 && nextMovementDirection.y < 0)
+                {
+                    Instantiate(mZmYasset, currentCell.transform.position, Quaternion.identity);
+                    Debug.Log($"Instantiated mZmYasset at {currentCell.transform.position}");
+                }
+            }
+            else if (IsZMovement(nextMovementDirection))
+            {
+                    if (movementDirection.z > 0 && nextMovementDirection.z > 0)
+                    {
+                        Instantiate(pZpZasset, currentCell.transform.position, Quaternion.identity);
+                        Debug.Log($"Instantiated pZpZasset at {currentCell.transform.position}");
+                    }
+                    else if (movementDirection.z < 0 && nextMovementDirection.z < 0)
+                    {
+                        Instantiate(mZmZasset, currentCell.transform.position, Quaternion.identity);
+                        Debug.Log($"Instantiated mZmZasset at {currentCell.transform.position}");
+                    }
+            }
         }
     }
+
 
     void GenerateCorridors()
     {
@@ -414,21 +565,51 @@ public class MazeGeneration : MonoBehaviour
             GenerateCorridorAssets(path);
         }
     }
+
+    GameObject CorridorMovement(MazeCell lastCell, MazeCell nextLastCell, Vector3 movementDirection)
+    {
+        if (IsXMovement(movementDirection))
+        {
+            if (movementDirection.x > 0) return XFrontT;
+            if (movementDirection.x < 0) return XBackT;
+        }
+        else if (IsYMovement(movementDirection))
+        {
+            if (movementDirection.y > 0) return YFrontT;
+            if (movementDirection.y < 0) return YBackT;
+        }
+        else if (IsZMovement(movementDirection))
+        {
+            if (movementDirection.z > 0) return XUpT; // Assuming XUpT is for Z-positive movement
+            if (movementDirection.z < 0) return XDownT; // Assuming XDownT is for Z-negative movement
+        }
+        return null;
+    }
+
     void GenerateCorridorAssets(List<MazeCell> corridorPath)
     {
-        Instantiate(endPrefab, corridorPath[0].transform.position, Quaternion.identity);
-        Instantiate(startPrefab, corridorPath[corridorPath.Count-1].transform.position, Quaternion.identity);
+        MazeCell startCell = corridorPath[corridorPath.Count-1];
+        MazeCell endCell = corridorPath[0];
+        MazeCell nextToStartCell = corridorPath[corridorPath.Count - 2];
+
+
+        Vector3 startMovementDirection = nextToStartCell.transform.position - startCell.transform.position;
+
+        GameObject startCellPrefab = CorridorMovement(startCell, nextToStartCell, startMovementDirection);
+
+        Instantiate(endPrefab, endCell.transform.position, Quaternion.identity);
+        Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity);
+
         Debug.Log("Generating Corridor Assets...");
-        MazeCell currentCell = corridorPath[corridorPath.Count-1];
-        for (int i = corridorPath.Count-2; i >= 1; i--)
+        MazeCell currentCell = startCell;
+        for (int i = corridorPath.Count - 2; i >= 1; i--)
         {
             MazeCell nextCell = corridorPath[i];
             MazeCell nextnextCell = corridorPath[i - 1];
             Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
             Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
-            currentCell = nextCell; //move to next cell before gen
+            currentCell = nextCell; // Move to next cell before generating
             MovementGeneration(currentCell, movementDirection, nextMovementDirection, true);
-            
 
             // Debug log for each cell
             Debug.Log($"Generated asset for cell {nextCell.gameObject.name}");

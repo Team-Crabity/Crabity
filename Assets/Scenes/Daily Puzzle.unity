@@ -223,20 +223,49 @@ MonoBehaviour:
   dimensions: 8
   cellPrefab: {fileID: 3522413971667513713, guid: 3bf5ebe6caf21a246b9b24f1f842306c, type: 3}
   startPrefab: {fileID: 1891443648622353857, guid: eeee336c1de2f45489fa1f7c6d3d6509, type: 3}
-  endPrefab: {fileID: 3552502521487384231, guid: 2e5cc58b5c8ddaa448660074f50d3d03, type: 3}
-  width: 10
-  height: 10
-  depth: 10
-  XXasset: {fileID: 8464178257831013430, guid: 1a607167e36d89d42ae9267f3b51d25d, type: 3}
-  XYasset: {fileID: 8848159424916203093, guid: 554248bd36d75f34fa9f25ba37cc6c45, type: 3}
-  XZasset: {fileID: 8848159424916203093, guid: 194138e5d92c42c43932449f92a715da, type: 3}
-  YXasset: {fileID: 8848159424916203093, guid: 6edce0ccbba914f409cab5a5f2ceb420, type: 3}
-  YYasset: {fileID: 3074101568060421916, guid: deb15ad27ed08cb42880d2e66be74ec7, type: 3}
-  YZasset: {fileID: 8848159424916203093, guid: 11de72a00ae36694abfa5facb30c90e4, type: 3}
-  ZXasset: {fileID: 8848159424916203093, guid: 1138c0dd4fbe525498203e70d27b6b3e, type: 3}
-  ZYasset: {fileID: 8848159424916203093, guid: 582049116572a914c9b157fea3f2eca5, type: 3}
-  ZZasset: {fileID: 3074101568060421916, guid: b3051ea526ccec24e8f1e3ccc73fdfa3, type: 3}
-  Tasset: {fileID: 165962, guid: 391c196911c298e4b88a79ce25bc44a4, type: 3}
+  endPrefab: {fileID: 7786869099684965104, guid: f3c971d751b7c0b40929925d1723bd9d, type: 3}
+  width: 8
+  height: 8
+  depth: 8
+  corridorMax: 2
+  pXpXasset: {fileID: 8464178257831013430, guid: 1a607167e36d89d42ae9267f3b51d25d, type: 3}
+  pXpYasset: {fileID: 8848159424916203093, guid: 554248bd36d75f34fa9f25ba37cc6c45, type: 3}
+  pXpZasset: {fileID: 8848159424916203093, guid: 194138e5d92c42c43932449f92a715da, type: 3}
+  pXmYasset: {fileID: 8848159424916203093, guid: afd089aea83741742be77054e3e411b6, type: 3}
+  pXmZasset: {fileID: 8848159424916203093, guid: 163653c807c8b784e96ae4da592c9b2c, type: 3}
+  mXmXasset: {fileID: 8464178257831013430, guid: 492ade88ee324f242b47ec83d8def051, type: 3}
+  mXpYasset: {fileID: 8848159424916203093, guid: 34b71f61938fd3b4993b0e76fa80f751, type: 3}
+  mXpZasset: {fileID: 8848159424916203093, guid: 22fae8bf0f82dd542ab3e8304ad13b1d, type: 3}
+  mXmYasset: {fileID: 8848159424916203093, guid: 24cea96e7354cee4b846f95fd325258e, type: 3}
+  mXmZasset: {fileID: 8848159424916203093, guid: 2aa9a9e04f731f342ab5ca7710bd3a70, type: 3}
+  pYpYasset: {fileID: 3074101568060421916, guid: deb15ad27ed08cb42880d2e66be74ec7, type: 3}
+  pYpXasset: {fileID: 8848159424916203093, guid: 6edce0ccbba914f409cab5a5f2ceb420, type: 3}
+  pYpZasset: {fileID: 8848159424916203093, guid: 11de72a00ae36694abfa5facb30c90e4, type: 3}
+  pYmXasset: {fileID: 8848159424916203093, guid: 437ec64614192ef40be84df816bc6ad9, type: 3}
+  pYmZasset: {fileID: 8848159424916203093, guid: ff7560f9e02fabc4b94b9e53829b2c64, type: 3}
+  mYmYasset: {fileID: 3074101568060421916, guid: 3219999ad5661f44082cd04b8e4dc8fb, type: 3}
+  mYpXasset: {fileID: 8848159424916203093, guid: 1e909168ad812814986b1d14823305e3, type: 3}
+  mYpZasset: {fileID: 8848159424916203093, guid: ad27dc8676c3b354c9fde1bb2165b16a, type: 3}
+  mYmXasset: {fileID: 8848159424916203093, guid: 0af1dffeba07be347a882cf110ad36a8, type: 3}
+  mYmZasset: {fileID: 8848159424916203093, guid: 23cba995d29deac4eb229d64d32f06d8, type: 3}
+  pZpZasset: {fileID: 3074101568060421916, guid: b3051ea526ccec24e8f1e3ccc73fdfa3, type: 3}
+  pZpXasset: {fileID: 8848159424916203093, guid: 1138c0dd4fbe525498203e70d27b6b3e, type: 3}
+  pZpYasset: {fileID: 8848159424916203093, guid: 582049116572a914c9b157fea3f2eca5, type: 3}
+  pZmXasset: {fileID: 8848159424916203093, guid: 70b3ad878050b6d46bc6c0cee15269de, type: 3}
+  pZmYasset: {fileID: 8848159424916203093, guid: 7ef70a083987efc40855cf24241b804e, type: 3}
+  mZmZasset: {fileID: 3074101568060421916, guid: d2941ba563a4c8c49aa04b3719754b4b, type: 3}
+  mZpXasset: {fileID: 8848159424916203093, guid: cbb97933957b2f0488294d0558cb25ae, type: 3}
+  mZpYasset: {fileID: 8848159424916203093, guid: c7ec19b373b81594db6568ba5316918c, type: 3}
+  mZmXasset: {fileID: 8848159424916203093, guid: 084260845f6627a43ac78b0c472d4e00, type: 3}
+  mZmYasset: {fileID: 8848159424916203093, guid: 9113baeb408169343aac95d79fa7f0ac, type: 3}
+  XFrontT: {fileID: 4909661722856650510, guid: a78dd7a09854d274d8f9ee16743f8da0, type: 3}
+  XBackT: {fileID: 4909661722856650510, guid: 9143b24617a820744893ff1d8e19f295, type: 3}
+  XUpT: {fileID: 4909661722856650510, guid: cccf0253f6cab114aa101b5a43570fdd, type: 3}
+  XDownT: {fileID: 4909661722856650510, guid: 8be5bdfffc0dbc9468c250fefe33fa38, type: 3}
+  YLeftT: {fileID: 4909661722856650510, guid: 399896d6b479d1d48b3b7b363f49eb6c, type: 3}
+  YRightT: {fileID: 4909661722856650510, guid: 9053287b5c73cb941aea3a9304b33023, type: 3}
+  YFrontT: {fileID: 4909661722856650510, guid: 6682645f9f218bf4fa4b21119c26284c, type: 3}
+  YBackT: {fileID: 4909661722856650510, guid: ee460c035399f654dbb80b3ec373b3c2, type: 3}
 --- !u!4 &1470001136
 Transform:
   m_ObjectHideFlags: 0
