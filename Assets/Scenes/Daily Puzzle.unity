@@ -123,96 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &249721918
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 249721919}
-  m_Layer: 0
-  m_Name: CellGrid
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &249721919
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249721918}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.96, y: 3, z: -2.8500004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &801779459
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 801779461}
-  - component: {fileID: 801779462}
-  m_Layer: 0
-  m_Name: WaveCollapse
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &801779461
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801779459}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &801779462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801779459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f752a9d6facc140fc8288e8ac6ca1895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellWidth: 12
-  cellHeight: 20
-  cellDepth: 12
-  dimensions: 4
-  tileObjects:
-  - {fileID: 7619985476922530513, guid: 58c65cd456f41e44d92b04cabd23c411, type: 3}
-  - {fileID: 105096037029425840, guid: 1138c0dd4fbe525498203e70d27b6b3e, type: 3}
-  - {fileID: 5163292898844787980, guid: 70b3ad878050b6d46bc6c0cee15269de, type: 3}
-  - {fileID: -1291045008327816069, guid: 194138e5d92c42c43932449f92a715da, type: 3}
-  - {fileID: 7622268336453839589, guid: cbb97933957b2f0488294d0558cb25ae, type: 3}
-  - {fileID: -1954459567546742564, guid: 87d8e54fa018fc445912386843097adf, type: 3}
-  - {fileID: -4634759420540160114, guid: b3051ea526ccec24e8f1e3ccc73fdfa3, type: 3}
-  gridComponents: []
-  cellObj: {fileID: 8758237642971931138, guid: 5c1305e817729624997d494142ccb076, type: 3}
-  backupTile: {fileID: 7619985476922530513, guid: 58c65cd456f41e44d92b04cabd23c411, type: 3}
 --- !u!1 &813397569
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +236,7 @@ MonoBehaviour:
   ZXasset: {fileID: 8848159424916203093, guid: 1138c0dd4fbe525498203e70d27b6b3e, type: 3}
   ZYasset: {fileID: 8848159424916203093, guid: 582049116572a914c9b157fea3f2eca5, type: 3}
   ZZasset: {fileID: 3074101568060421916, guid: b3051ea526ccec24e8f1e3ccc73fdfa3, type: 3}
+  Tasset: {fileID: 165962, guid: 391c196911c298e4b88a79ce25bc44a4, type: 3}
 --- !u!4 &1470001136
 Transform:
   m_ObjectHideFlags: 0
@@ -566,6 +477,4 @@ SceneRoots:
   - {fileID: 1967322361}
   - {fileID: 1877354784}
   - {fileID: 813397572}
-  - {fileID: 249721919}
-  - {fileID: 801779461}
   - {fileID: 1470001136}
