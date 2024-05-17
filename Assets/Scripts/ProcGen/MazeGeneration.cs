@@ -1,8 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Build.Pipeline.Tasks;
-using UnityEditor.ShaderGraph.Internal;
-using Unity.VisualScripting;
 
 public class MazeGeneration : MonoBehaviour
 {
