@@ -11,7 +11,7 @@ public class PressurePlate : MonoBehaviour
     {
         Renderer renderer = GetComponent<Renderer>();
 
-        if (other.gameObject.tag == "Player" && !isPressed)
+        if ((other.gameObject.tag == "Player" || other.gameObject.tag == "Block") && !isPressed)
         {
             Debug.Log("Player stepped on pressure plate");
             GetComponent<AudioSource>().Play();
