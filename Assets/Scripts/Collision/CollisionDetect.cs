@@ -19,7 +19,7 @@ public class CollisionDetect : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "Border") {
+        if (collision.gameObject.tag == "Border" || collision.gameObject.tag == "Laser") {
             transform.position = spawnPoint.transform.position;
         }
     }
