@@ -70,7 +70,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: crabity-win64
-          path: build/crabity-win64
+          path: build/StandaloneWindows64
 
   buildMacOS:
     needs: testRunner
@@ -107,4 +107,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: crabity-macos
-          path: build/crabity-macos
+          path: build/StandaloneOSX
