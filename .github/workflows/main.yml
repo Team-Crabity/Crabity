@@ -69,8 +69,8 @@ jobs:
       # Output to build folder
       - uses: actions/upload-artifact@v4
         with:
-          name: build-StandaloneWindows64
-          path: build/StandaloneWindows64
+          name: crabity-win64
+          path: build/crabity-win64
 
   buildMacOS:
     needs: testRunner
@@ -106,5 +106,5 @@ jobs:
       # Output to build folder
       - uses: actions/upload-artifact@v4
         with:
-          name: build-StandaloneOSX
-          path: build/StandaloneOSX
+          name: crabity-macos
+          path: build/crabity-macos
