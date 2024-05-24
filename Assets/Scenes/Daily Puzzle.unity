@@ -123,6 +123,59 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &783909332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783909334}
+  - component: {fileID: 783909333}
+  m_Layer: 0
+  m_Name: AssetTesting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &783909333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783909332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c5cb1a2f7e8c0428a0c088061de361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assets:
+  - {fileID: 6950710697204702411, guid: e0a3897378c98054e9d4c3b178b5948a, type: 3}
+  - {fileID: 6950710697204702411, guid: b5f051e8653c8694a918ab6fd8b1ba0e, type: 3}
+  - {fileID: 3399982709588651966, guid: 4d0e1e9af4b5e6c4db166971bcf419b8, type: 3}
+  - {fileID: 6950710697204702411, guid: a708cb5da4dd5824ebab74e50e1d1f32, type: 3}
+  - {fileID: 6950710697204702411, guid: 23a6d6e8305ae354dbd5365f034c3dd4, type: 3}
+  cellPrefab: {fileID: 3522413971667513713, guid: 3bf5ebe6caf21a246b9b24f1f842306c, type: 3}
+  spacing: 10
+  numberOfCells: 30
+--- !u!4 &783909334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783909332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &813397569
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1470001135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,3 +560,4 @@ SceneRoots:
   - {fileID: 1877354784}
   - {fileID: 813397572}
   - {fileID: 1470001136}
+  - {fileID: 783909334}
