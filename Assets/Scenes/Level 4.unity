@@ -979,7 +979,7 @@ MonoBehaviour:
   gravityScale: 5
   gravity: 9.81
   gravitySwitchCount: 0
-  cooldown: {fileID: 0}
+  cooldown: {fileID: 140518160}
 --- !u!54 &140518155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13643,7 +13643,7 @@ MonoBehaviour:
   gravityScale: 5
   gravity: 9.81
   gravitySwitchCount: 0
-  cooldown: {fileID: 0}
+  cooldown: {fileID: 1664349667}
 --- !u!54 &1664349659
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14533,6 +14533,10 @@ PrefabInstance:
       value: pressure_plate
       objectReference: {fileID: 0}
     - target: {fileID: 4882856229071388177, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882856229071388177, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
@@ -14991,6 +14995,10 @@ PrefabInstance:
     - target: {fileID: 1038737907693360665, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_Name
       value: pressure_plate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882856229071388177, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4882856229071388177, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_TagString
@@ -16589,6 +16597,10 @@ PrefabInstance:
     - target: {fileID: 1038737907693360665, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_Name
       value: pressure_plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882856229071388177, guid: 208bb77875823084cae564a2dd33f884, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
       propertyPath: m_LocalPosition.x
