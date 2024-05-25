@@ -263,11 +263,27 @@ public class MazeGeneration : MonoBehaviour
 
     void GenerateAssets()
     {
-        FindShortestPath(gridComponents[0], gridComponents[gridComponents.Count - 1], true); // Calculate the shortest path
-        Instantiate(startPrefab, gridComponents[0].transform.position, Quaternion.identity);
-        Instantiate(endPrefab, gridComponents[gridComponents.Count - 1].transform.position, Quaternion.identity);
+        // Calculate the shortest path
+        List<MazeCell> shortestPath = FindShortestPath(gridComponents[0], gridComponents[gridComponents.Count - 1], true);
+
+        // Instantiate start and end prefabs
+        GameObject startInstance = Instantiate(startPrefab, gridComponents[0].transform.position, Quaternion.identity);
+        GameObject endInstance = Instantiate(endPrefab, gridComponents[gridComponents.Count - 1].transform.position, Quaternion.identity);
+
+        // Rotate end prefab
+        Vector3 lastCellPosition = shortestPath[0].transform.position;
+        Vector3 secondToLastCellPosition = shortestPath[1].transform.position;
+        Vector3 lastMovementDirection = lastCellPosition - secondToLastCellPosition;
+        RotateEnd(endInstance, lastMovementDirection);
+
+        // Rotate start prefab
+        Vector3 firstCellPosition = shortestPath[shortestPath.Count - 1].transform.position;
+        Vector3 secondCellPosition = shortestPath[shortestPath.Count - 2].transform.position;
+        Vector3 firstMovementDirection = secondCellPosition - firstCellPosition;
+        RotateStart(startInstance, firstMovementDirection);
+
+
         MazeCell currentCell = gridComponents[0];
-        // Instantiate assets for each cell in the path that is being collapsed
         for (int i = 1; i < gridComponents.Count - 1; i++) // Exclude the first and last cells
         {
             MazeCell nextCell = gridComponents[i];
@@ -282,7 +298,6 @@ public class MazeGeneration : MonoBehaviour
                         Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
                         currentCell = nextCell; // Move to the next cell after taking movement.
                         MovementGeneration(currentCell, movementDirection, nextMovementDirection, false);
-
                     }
                 }
             }
@@ -291,8 +306,69 @@ public class MazeGeneration : MonoBehaviour
                 continue; //skip collapsed we do not want to generate assets non collapsed spaces
             }
         }
-
     }
+
+    void RotateStart(GameObject asset, Vector3 movementDirection)
+    {
+        if (IsXMovement(movementDirection))
+        {
+                asset.transform.rotation = Quaternion.Euler(0f, 90f, 0f); 
+                Debug.Log($"{asset} rotated: No rotation needed (positive X movement)");
+        }
+        else if (IsYMovement(movementDirection))
+        {
+                asset.transform.rotation = Quaternion.Euler(-90f, 0f, 0f); 
+                Debug.Log($"{asset} rotated: Rotated 90 degrees around Y-axis (positive Y movement)");
+        }
+        else if (IsZMovement(movementDirection))
+        {
+                Debug.Log($"{asset} rotated: No rotation needed (positive Z movement)");
+        }
+    }
+
+    void RotateEnd(GameObject asset, Vector3 movementDirection)
+    {
+        if (IsXMovement(movementDirection))
+        {
+            if (movementDirection.x > 0)
+            {
+                asset.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                Debug.Log($"{asset} rotated: No rotation needed (positive X movement)");
+            }
+            else if (movementDirection.x < 0)
+            {
+                asset.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+                Debug.Log($"{asset} rotated: Rotated 180 degrees around Y-axis (negative X movement)");
+            }
+        }
+        else if (IsYMovement(movementDirection))
+        {
+            if (movementDirection.y > 0)
+            {
+                asset.transform.rotation = Quaternion.Euler(-90f, 00f, 0f);
+                Debug.Log($"{asset} rotated: Rotated 90 degrees around Y-axis (positive Y movement)");
+            }
+            else if (movementDirection.y < 0)
+            {
+                asset.transform.rotation = Quaternion.Euler(90f, 00f, 0f);
+                Debug.Log($"{asset} rotated: Rotated -90 degrees around Y-axis (negative Y movement)");
+            }
+        }
+        else if (IsZMovement(movementDirection))
+        {
+            if (movementDirection.z > 0)
+            {
+                asset.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                Debug.Log($"{asset} rotated: No rotation needed (positive Z movement)");
+            }
+            else if (movementDirection.z < 0)
+            {
+                asset.transform.rotation = Quaternion.Euler(0f, -180f, 0f);
+                Debug.Log($"{asset} rotated: Rotated 90 degrees around Y-axis (negative Z movement)");
+            }
+        }
+    }
+
 
     void MovementGeneration(MazeCell currentCell, Vector3 movementDirection, Vector3 nextMovementDirection, bool corridor = false)
     {
@@ -530,18 +606,11 @@ public class MazeGeneration : MonoBehaviour
        
         for(int i = 0; i < corridorCells.Count; i++)
         {
-            // Choose a corridor cell
             MazeCell corridorCell = corridorCells[i];
-
-            // Choose a random uncollapsed cell
             MazeCell randomUncollapsedCell = uncollapsedCells[Random.Range(0, uncollapsedCells.Count)];
-
             Debug.Log($"Generating corridor from {corridorCell.gameObject.name} to {randomUncollapsedCell.gameObject.name}");
 
-            // Find the shortest path from corridorCell to randomUncollapsedCell
             List<MazeCell> path = FindShortestPath(corridorCell, randomUncollapsedCell, false);
-
-            // Collapse cells on the path
             foreach (var cell in path)
             {
                 cell.collapsed = true;
@@ -551,7 +620,6 @@ public class MazeGeneration : MonoBehaviour
                 }
             }
 
-            // Output the path
             string pathString = "Path: ";
             foreach (var cell in path)
             {
@@ -559,7 +627,6 @@ public class MazeGeneration : MonoBehaviour
             }
             Debug.Log(pathString.TrimEnd('-', '>', ' ')); // Trim the last arrow and space
 
-            // Generate assets along the collapsed path
             Debug.Log("Generating Assets for Corridors");
             GenerateCorridorAssets(path);
         }
@@ -606,6 +673,8 @@ public class MazeGeneration : MonoBehaviour
 
         Vector3 startMovementDirection = nextToStartCell.transform.position - startCell.transform.position;
         Debug.Log($"MOVEMENT DIRECTION FOR   {nextToStartCell.transform.position} - {startCell.transform.position} =  {startMovementDirection}");
+
+        //start cell
         if (startCell.xCorridor == true)
         {
            startCellPrefab = xCorridorMovement(startMovementDirection);
@@ -614,10 +683,15 @@ public class MazeGeneration : MonoBehaviour
         {
             startCellPrefab = yCorridorMovement(startMovementDirection);
         }
-
-
-        Instantiate(endPrefab, endCell.transform.position, Quaternion.identity);
         Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity);
+
+        //end cell
+        GameObject endInstance = Instantiate(endPrefab, endCell.transform.position, Quaternion.identity);
+        Vector3 lastCellPosition = corridorPath[0].transform.position;
+        Vector3 secondToLastCellPosition = corridorPath[1].transform.position;
+        Vector3 lastMovementDirection = lastCellPosition - secondToLastCellPosition;
+        RotateEnd(endInstance, lastMovementDirection);
+
 
         Debug.Log("Generating Corridor Assets...");
         MazeCell currentCell = startCell;
