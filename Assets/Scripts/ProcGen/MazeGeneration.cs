@@ -17,7 +17,7 @@ public class MazeGeneration : MonoBehaviour
     public float depth;
     private float MutationRate = .75f; //75 percent chance
     private int corridorCounter = 0;
-    public int corridorMax = 2;
+    public int corridorMax = 0;
 
     
     public GameObject pXpXasset;
@@ -301,9 +301,10 @@ public class MazeGeneration : MonoBehaviour
             if (IsXMovement(nextMovementDirection))
             {
                 float randomValue = Random.Range(0f, 1f);
-                if (corridorCounter <= corridorMax && randomValue < MutationRate && corridor == false)
+                if (corridorCounter < corridorMax && randomValue < MutationRate && corridor == false)
                 {
                     currentCell.isCorridor = true;
+                    currentCell.xCorridor = true;
                     corridorCounter++;
                     Debug.Log(corridorCounter);
                 }
@@ -396,9 +397,10 @@ public class MazeGeneration : MonoBehaviour
             else if (IsYMovement(nextMovementDirection))
             {
                 float randomValue = Random.Range(0f, 1f);
-                if (corridorCounter <= corridorMax && randomValue < MutationRate && corridor == false)
+                if (corridorCounter < corridorMax && randomValue < MutationRate && corridor == false)
                 {
                     currentCell.isCorridor = true;
+                    currentCell.yCorridor = true;
                     corridorCounter++;
                     Debug.Log(corridorCounter);
                 }
@@ -526,9 +528,9 @@ public class MazeGeneration : MonoBehaviour
             }
         }
        
-        for(int i = 0; i < corridorCells.Count-1; i++)
+        for(int i = 0; i < corridorCells.Count; i++)
         {
-            // Choose a random corridor cell
+            // Choose a corridor cell
             MazeCell corridorCell = corridorCells[i];
 
             // Choose a random uncollapsed cell
@@ -563,36 +565,56 @@ public class MazeGeneration : MonoBehaviour
         }
     }
 
-    GameObject CorridorMovement(MazeCell lastCell, MazeCell nextLastCell, Vector3 movementDirection)
+    GameObject xCorridorMovement(Vector3 movementDirection)
+    {
+
+        if (IsYMovement(movementDirection))
+        {
+            if (movementDirection.y > 0) return XUpT;
+            if (movementDirection.y < 0) return XDownT;
+        }
+        else if(IsZMovement(movementDirection))
+        {
+            if (movementDirection.z > 0) return XFrontT; 
+            if (movementDirection.z < 0) return XBackT;
+        }
+        return null;
+    }
+    GameObject yCorridorMovement(Vector3 movementDirection)
     {
         if (IsXMovement(movementDirection))
         {
-            if (movementDirection.x > 0) return XFrontT;
-            if (movementDirection.x < 0) return XBackT;
+            if (movementDirection.x > 0) return YRightT;
+            if (movementDirection.x < 0) return YLeftT;
         }
-        else if (IsYMovement(movementDirection))
+        if(IsZMovement(movementDirection))
         {
-            if (movementDirection.y > 0) return YFrontT;
-            if (movementDirection.y < 0) return YBackT;
-        }
-        else if (IsZMovement(movementDirection))
-        {
-            if (movementDirection.z > 0) return XUpT; // Assuming XUpT is for Z-positive movement
-            if (movementDirection.z < 0) return XDownT; // Assuming XDownT is for Z-negative movement
+            if (movementDirection.z > 0) return YFrontT;
+            if (movementDirection.z < 0) return YBackT;
         }
         return null;
     }
 
     void GenerateCorridorAssets(List<MazeCell> corridorPath)
     {
+        GameObject startCellPrefab;
         MazeCell startCell = corridorPath[corridorPath.Count-1];
         MazeCell endCell = corridorPath[0];
         MazeCell nextToStartCell = corridorPath[corridorPath.Count - 2];
+        Debug.Log($" starting cell: {startCell}, next cell: {nextToStartCell}, end cell: {endCell} ");
 
 
         Vector3 startMovementDirection = nextToStartCell.transform.position - startCell.transform.position;
+        Debug.Log($"MOVEMENT DIRECTION FOR   {nextToStartCell.transform.position} - {startCell.transform.position} =  {startMovementDirection}");
+        if (startCell.xCorridor == true)
+        {
+           startCellPrefab = xCorridorMovement(startMovementDirection);
+        }
+        else //yCorridor
+        {
+            startCellPrefab = yCorridorMovement(startMovementDirection);
+        }
 
-        GameObject startCellPrefab = CorridorMovement(startCell, nextToStartCell, startMovementDirection);
 
         Instantiate(endPrefab, endCell.transform.position, Quaternion.identity);
         Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity);
