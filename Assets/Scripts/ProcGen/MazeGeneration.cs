@@ -11,6 +11,8 @@ public class MazeGeneration : MonoBehaviour
 
     public GameObject startPrefab;
     public GameObject endPrefab;
+    public GameObject corridorEnd;
+    public GameObject pressurePlate;
 
     public float width;
     public float height;
@@ -370,6 +372,7 @@ public class MazeGeneration : MonoBehaviour
     }
 
 
+
     void MovementGeneration(MazeCell currentCell, Vector3 movementDirection, Vector3 nextMovementDirection, bool corridor = false)
     {
         if (IsXMovement(movementDirection))
@@ -683,14 +686,16 @@ public class MazeGeneration : MonoBehaviour
         {
             startCellPrefab = yCorridorMovement(startMovementDirection);
         }
-        Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity);
 
+        Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity);
         //end cell
-        GameObject endInstance = Instantiate(endPrefab, endCell.transform.position, Quaternion.identity);
+        GameObject endInstance = Instantiate(corridorEnd, endCell.transform.position, Quaternion.identity);
+        GameObject endPlate = Instantiate(pressurePlate, endCell.transform.position, Quaternion.identity);
         Vector3 lastCellPosition = corridorPath[0].transform.position;
         Vector3 secondToLastCellPosition = corridorPath[1].transform.position;
         Vector3 lastMovementDirection = lastCellPosition - secondToLastCellPosition;
         RotateEnd(endInstance, lastMovementDirection);
+        RotateEnd(endPlate, lastMovementDirection);
 
 
         Debug.Log("Generating Corridor Assets...");
