@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 public class MazeGeneration : MonoBehaviour
 {
@@ -265,48 +266,34 @@ public class MazeGeneration : MonoBehaviour
 
     void GenerateAssets()
     {
-        // Calculate the shortest path
         List<MazeCell> shortestPath = FindShortestPath(gridComponents[0], gridComponents[gridComponents.Count - 1], true);
-
-        // Instantiate start and end prefabs
-        GameObject startInstance = Instantiate(startPrefab, gridComponents[0].transform.position, Quaternion.identity);
-        GameObject endInstance = Instantiate(endPrefab, gridComponents[gridComponents.Count - 1].transform.position, Quaternion.identity);
-
-        // Rotate end prefab
-        Vector3 lastCellPosition = shortestPath[0].transform.position;
-        Vector3 secondToLastCellPosition = shortestPath[1].transform.position;
-        Vector3 lastMovementDirection = lastCellPosition - secondToLastCellPosition;
-        RotateEnd(endInstance, lastMovementDirection);
-
-        // Rotate start prefab
-        Vector3 firstCellPosition = shortestPath[shortestPath.Count - 1].transform.position;
-        Vector3 secondCellPosition = shortestPath[shortestPath.Count - 2].transform.position;
-        Vector3 firstMovementDirection = secondCellPosition - firstCellPosition;
-        RotateStart(startInstance, firstMovementDirection);
-
-
-        MazeCell currentCell = gridComponents[0];
-        for (int i = 1; i < gridComponents.Count - 1; i++) // Exclude the first and last cells
+        GameObject exit = Instantiate(endPrefab, shortestPath[0].transform.position, Quaternion.identity);
+        GameObject spawn = Instantiate(startPrefab, shortestPath[shortestPath.Count - 1].transform.position, Quaternion.identity);
+        for (int i = 0; i < shortestPath.Count - 1; i++)
         {
-            MazeCell nextCell = gridComponents[i];
-            if (nextCell.collapsed == true)
+
+            MazeCell currentCell = shortestPath[i];
+            MazeCell nextCell = shortestPath[i + 1];
+
+            Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
+            Vector3 nextMovementDirection = Vector3.zero;
+            if (i == 0)
             {
-                for (int x = i; x < gridComponents.Count - 1; x++)
-                {
-                    MazeCell nextnextCell = gridComponents[x + 1]; // Get the next next cell
-                    if (nextnextCell.collapsed == true)
-                    {
-                        Vector3 movementDirection = nextCell.transform.position - currentCell.transform.position;
-                        Vector3 nextMovementDirection = nextnextCell.transform.position - nextCell.transform.position;
-                        currentCell = nextCell; // Move to the next cell after taking movement.
-                        MovementGeneration(currentCell, movementDirection, nextMovementDirection, false);
-                    }
-                }
+                RotateEnd(exit, -movementDirection);
             }
-            else
+
+            if(i == shortestPath.Count - 2)
             {
-                continue; //skip collapsed we do not want to generate assets non collapsed spaces
+                RotateStart(spawn, movementDirection);
             }
+
+            if (i < shortestPath.Count - 2)
+            {
+                MazeCell nextNextCell = shortestPath[i + 2];
+                nextMovementDirection = nextNextCell.transform.position - nextCell.transform.position;
+            }
+
+            MovementGeneration(nextCell, movementDirection, nextMovementDirection, false);
         }
     }
 
@@ -315,16 +302,13 @@ public class MazeGeneration : MonoBehaviour
         if (IsXMovement(movementDirection))
         {
                 asset.transform.rotation = Quaternion.Euler(0f, 90f, 0f); 
-                Debug.Log($"{asset} rotated: No rotation needed (positive X movement)");
         }
         else if (IsYMovement(movementDirection))
         {
                 asset.transform.rotation = Quaternion.Euler(-90f, 0f, 0f); 
-                Debug.Log($"{asset} rotated: Rotated 90 degrees around Y-axis (positive Y movement)");
         }
         else if (IsZMovement(movementDirection))
         {
-                Debug.Log($"{asset} rotated: No rotation needed (positive Z movement)");
         }
     }
 
@@ -335,12 +319,10 @@ public class MazeGeneration : MonoBehaviour
             if (movementDirection.x > 0)
             {
                 asset.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-                Debug.Log($"{asset} rotated: No rotation needed (positive X movement)");
             }
             else if (movementDirection.x < 0)
             {
                 asset.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
-                Debug.Log($"{asset} rotated: Rotated 180 degrees around Y-axis (negative X movement)");
             }
         }
         else if (IsYMovement(movementDirection))
@@ -348,12 +330,10 @@ public class MazeGeneration : MonoBehaviour
             if (movementDirection.y > 0)
             {
                 asset.transform.rotation = Quaternion.Euler(-90f, 00f, 0f);
-                Debug.Log($"{asset} rotated: Rotated 90 degrees around Y-axis (positive Y movement)");
             }
             else if (movementDirection.y < 0)
             {
                 asset.transform.rotation = Quaternion.Euler(90f, 00f, 0f);
-                Debug.Log($"{asset} rotated: Rotated -90 degrees around Y-axis (negative Y movement)");
             }
         }
         else if (IsZMovement(movementDirection))
@@ -361,12 +341,10 @@ public class MazeGeneration : MonoBehaviour
             if (movementDirection.z > 0)
             {
                 asset.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                Debug.Log($"{asset} rotated: No rotation needed (positive Z movement)");
             }
             else if (movementDirection.z < 0)
             {
                 asset.transform.rotation = Quaternion.Euler(0f, -180f, 0f);
-                Debug.Log($"{asset} rotated: Rotated 90 degrees around Y-axis (negative Z movement)");
             }
         }
     }
@@ -375,6 +353,7 @@ public class MazeGeneration : MonoBehaviour
 
     void MovementGeneration(MazeCell currentCell, Vector3 movementDirection, Vector3 nextMovementDirection, bool corridor = false)
     {
+        //instantiates asset depending on movement direction and next movement direction's movement at the current cell.
         if (IsXMovement(movementDirection))
         {
             if (IsXMovement(nextMovementDirection))
@@ -392,12 +371,10 @@ public class MazeGeneration : MonoBehaviour
                     if (movementDirection.x > 0 && nextMovementDirection.x > 0)
                     {
                         Instantiate(pXpXasset, currentCell.transform.position, Quaternion.identity);
-                        Debug.Log($"Instantiated pXpXasset at {currentCell.transform.position}");
                     }
                     else if (movementDirection.x < 0 && nextMovementDirection.x < 0)
                     {
                         Instantiate(mXmXasset, currentCell.transform.position, Quaternion.identity);
-                        Debug.Log($"Instantiated mXmXasset at {currentCell.transform.position}");
                     }
                 }
             }
@@ -406,22 +383,18 @@ public class MazeGeneration : MonoBehaviour
                 if (movementDirection.x > 0 && nextMovementDirection.y > 0)
                 {
                     Instantiate(pXpYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pXpYasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.x > 0 && nextMovementDirection.y < 0)
                 {
                     Instantiate(pXmYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pXmYasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.y > 0)
                 {
                     Instantiate(mXpYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mXpYasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.y < 0)
                 {
                     Instantiate(mXmYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mXmYasset at {currentCell.transform.position}");
                 }
             }
             else if (IsZMovement(nextMovementDirection))
@@ -429,22 +402,18 @@ public class MazeGeneration : MonoBehaviour
                 if (movementDirection.x > 0 && nextMovementDirection.z > 0)
                 {
                     Instantiate(pXpZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pXpZasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.x > 0 && nextMovementDirection.z < 0)
                 {
                     Instantiate(pXmZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pXmZasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.z > 0)
                 {
                     Instantiate(mXpZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mXpZasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.z < 0)
                 {
                     Instantiate(mXmZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mXmZasset at {currentCell.transform.position}");
                 }
             }
         }
@@ -455,22 +424,18 @@ public class MazeGeneration : MonoBehaviour
                 if (movementDirection.y > 0 && nextMovementDirection.x > 0)
                 {
                     Instantiate(pYpXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pYpXasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.y > 0 && nextMovementDirection.x < 0)
                 {
                     Instantiate(pYmXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pYmXasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.x > 0)
                 {
                     Instantiate(mYpXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mYpXasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.x < 0)
                 {
                     Instantiate(mYmXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mYmXasset at {currentCell.transform.position}");
                 }
             }
             else if (IsYMovement(nextMovementDirection))
@@ -488,12 +453,10 @@ public class MazeGeneration : MonoBehaviour
                     if (movementDirection.y > 0 && nextMovementDirection.y > 0)
                     {
                         Instantiate(pYpYasset, currentCell.transform.position, Quaternion.identity);
-                        Debug.Log($"Instantiated pYpYasset at {currentCell.transform.position}");
                     }
                     else if (movementDirection.y < 0 && nextMovementDirection.y < 0)
                     {
                         Instantiate(mYmYasset, currentCell.transform.position, Quaternion.identity);
-                        Debug.Log($"Instantiated mYmYasset at {currentCell.transform.position}");
                     }
                 }
             }
@@ -502,22 +465,18 @@ public class MazeGeneration : MonoBehaviour
                 if (movementDirection.y > 0 && nextMovementDirection.z > 0)
                 {
                     Instantiate(pYpZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pYpZasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.y > 0 && nextMovementDirection.z < 0)
                 {
                     Instantiate(pYmZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pYmZasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.z > 0)
                 {
                     Instantiate(mYpZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mYpZasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.z < 0)
                 {
                     Instantiate(mYmZasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mYmZasset at {currentCell.transform.position}");
                 }
             }
         }
@@ -528,22 +487,18 @@ public class MazeGeneration : MonoBehaviour
                 if (movementDirection.z > 0 && nextMovementDirection.x > 0)
                 {
                     Instantiate(pZpXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pZpXasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.z > 0 && nextMovementDirection.x < 0)
                 {
                     Instantiate(pZmXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pZmXasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.x > 0)
                 {
                     Instantiate(mZpXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mZpXasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.x < 0)
                 {
                     Instantiate(mZmXasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mZmXasset at {currentCell.transform.position}");
                 }
             }
             else if (IsYMovement(nextMovementDirection))
@@ -551,22 +506,18 @@ public class MazeGeneration : MonoBehaviour
                 if (movementDirection.z > 0 && nextMovementDirection.y > 0)
                 {
                     Instantiate(pZpYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pZpYasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.z > 0 && nextMovementDirection.y < 0)
                 {
                     Instantiate(pZmYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated pZmYasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.y > 0)
                 {
                     Instantiate(mZpYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mZpYasset at {currentCell.transform.position}");
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.y < 0)
                 {
                     Instantiate(mZmYasset, currentCell.transform.position, Quaternion.identity);
-                    Debug.Log($"Instantiated mZmYasset at {currentCell.transform.position}");
                 }
             }
             else if (IsZMovement(nextMovementDirection))
@@ -574,12 +525,10 @@ public class MazeGeneration : MonoBehaviour
                     if (movementDirection.z > 0 && nextMovementDirection.z > 0)
                     {
                         Instantiate(pZpZasset, currentCell.transform.position, Quaternion.identity);
-                        Debug.Log($"Instantiated pZpZasset at {currentCell.transform.position}");
                     }
                     else if (movementDirection.z < 0 && nextMovementDirection.z < 0)
                     {
                         Instantiate(mZmZasset, currentCell.transform.position, Quaternion.identity);
-                        Debug.Log($"Instantiated mZmZasset at {currentCell.transform.position}");
                     }
             }
         }
@@ -598,12 +547,10 @@ public class MazeGeneration : MonoBehaviour
             if (cell.isCorridor)
             {
                 corridorCells.Add(cell);
-                Debug.Log("added to list");
             }
             else if (!cell.collapsed)
             {
                 uncollapsedCells.Add(cell);
-                Debug.Log("added collapsed cell to list");
             }
         }
        
@@ -671,11 +618,8 @@ public class MazeGeneration : MonoBehaviour
         MazeCell startCell = corridorPath[corridorPath.Count-1];
         MazeCell endCell = corridorPath[0];
         MazeCell nextToStartCell = corridorPath[corridorPath.Count - 2];
-        Debug.Log($" starting cell: {startCell}, next cell: {nextToStartCell}, end cell: {endCell} ");
-
 
         Vector3 startMovementDirection = nextToStartCell.transform.position - startCell.transform.position;
-        Debug.Log($"MOVEMENT DIRECTION FOR   {nextToStartCell.transform.position} - {startCell.transform.position} =  {startMovementDirection}");
 
         //start cell
         if (startCell.xCorridor == true)
@@ -697,8 +641,6 @@ public class MazeGeneration : MonoBehaviour
         RotateEnd(endInstance, lastMovementDirection);
         RotateEnd(endPlate, lastMovementDirection);
 
-
-        Debug.Log("Generating Corridor Assets...");
         MazeCell currentCell = startCell;
         for (int i = corridorPath.Count - 2; i >= 1; i--)
         {
@@ -709,13 +651,9 @@ public class MazeGeneration : MonoBehaviour
             currentCell = nextCell; // Move to next cell before generating
             MovementGeneration(currentCell, movementDirection, nextMovementDirection, true);
 
-            // Debug log for each cell
-            Debug.Log($"Generated asset for cell {nextCell.gameObject.name}");
         }
         Debug.Log("Corridor Assets Generated.");
     }
-
-
 
     bool IsXMovement(Vector3 direction)
     {
