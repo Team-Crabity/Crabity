@@ -15,8 +15,25 @@ public class AnalyticsManager : MonoBehaviour
     // buttons
     Button[] buttons;
 
+    public static AnalyticsManager instance {get; private set;}
+
+    void Awake() {
+        DontDestroyOnLoad(gameObject);
+
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+
+        if (PlayerPrefs.HasKey("playerConsent")) {
+            MainMenu();
+        }
+    }
+
     async void Start()
     {
+
         // disable canvas element
         canvas = GetComponentInChildren<Canvas>();
         canvas.enabled = false;
@@ -33,7 +50,12 @@ public class AnalyticsManager : MonoBehaviour
 
 		await UnityServices.InitializeAsync();
 
-		AskForConsent();
+        int consent = PlayerPrefs.GetInt("playerConsent", -1);
+        if (consent == -1) {
+            AskForConsent();
+        } else if (consent == 1) {
+            StartDataCollection();
+        }
     }
 
 	void AskForConsent()
@@ -43,32 +65,37 @@ public class AnalyticsManager : MonoBehaviour
 	}
 
     void OnAgree() {
-        Debug.Log("User agreed to share data");
-
-        // start collecting data
-        ConsentGiven();
-
         // disable canvas
         canvas.enabled = false;
+        
+        Debug.Log("User agreed to share data");
+        StartDataCollection();
+        MainMenu();
     }
 
     void OnDisagree() {
         // disable canvas
         canvas.enabled = false;
-        
-        // Go to main menu
+
+        StopDataCollection();
         MainMenu();
     }
 
-	void ConsentGiven()
-	{
-		AnalyticsService.Instance.StartDataCollection();
-        Debug.Log("Collecting Data from User");
-        
-        MainMenu();
-	}
-
     void MainMenu() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void StopDataCollection() {
+        AnalyticsService.Instance.StopDataCollection();
+        Debug.Log("Stopped collecting Data from User");
+        PlayerPrefs.SetInt("playerConsent", 0);
+        Debug.Log("PLAYER CONSENT: " + PlayerPrefs.GetInt("playerConsent"));
+    }
+
+    public void StartDataCollection() {
+        AnalyticsService.Instance.StartDataCollection();
+        Debug.Log("Started collecting Data from User");
+        PlayerPrefs.SetInt("playerConsent", 1);
+        Debug.Log("PLAYER CONSENT: " + PlayerPrefs.GetInt("playerConsent"));
     }
 }

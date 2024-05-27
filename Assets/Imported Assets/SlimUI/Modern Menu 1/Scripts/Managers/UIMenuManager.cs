@@ -18,6 +18,7 @@ namespace SlimUI.ModernMenu{
         public GameObject PanelVideo;
         [Tooltip("The UI Panel that holds the Audio window tab")]
         public GameObject PanelGame;
+		public GameObject PanelPrivacy;
         
 
         // highlights in settings screen
@@ -26,6 +27,7 @@ namespace SlimUI.ModernMenu{
         public GameObject lineGame;
         [Tooltip("Highlight Image for when VIDEO Tab is selected in Settings")]
         public GameObject lineVideo;
+		public GameObject linePrivacy;
 
 		[Header("SFX")]
         [Tooltip("The GameObject holding the Audio Source component for the HOVER SOUND")]
@@ -70,9 +72,11 @@ namespace SlimUI.ModernMenu{
 		void DisablePanels(){
 			PanelVideo.SetActive(false);
 			PanelGame.SetActive(false);
+			PanelPrivacy.SetActive(false);
 
 			lineGame.SetActive(false);
 			lineVideo.SetActive(false);
+			linePrivacy.SetActive(false);
 		}
 
     	/*public void TurnOnSettings()
@@ -93,6 +97,12 @@ namespace SlimUI.ModernMenu{
 			DisablePanels();
 			PanelVideo.SetActive(true);
 			lineVideo.SetActive(true);
+		}
+
+		public void PrivacyPanel() {
+			DisablePanels();
+			PanelPrivacy.SetActive(true);
+			linePrivacy.SetActive(true);
 		}
 
 
