@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
-using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -35,21 +33,25 @@ public class LevelSelection : MonoBehaviour
                 x = 90;
                 y -= 100;
             }
-            
+
+            // Compute level number
+            int levelInt = i + 1;
+
             // Instantiate level selection
             Vector3 pos = new Vector3(x, y, 0);
             GameObject level = Instantiate(levelNumPrefab, transform);
             level.SetActive(true);
-            level.GetComponentInChildren<TMP_Text>().text = (i + 1).ToString();
             level.GetComponent<RectTransform>().anchoredPosition3D = pos;
             x += 100;
+
+            // Add level selection number
+            level.GetComponentInChildren<TMP_Text>().text = levelInt.ToString();
             
             // Add to list
-            int levelInt = i + 1;
             levelsOnScreen.Add(level);
             levelsOnScreen[i].GetComponent<Button>().onClick.RemoveAllListeners();
             levelsOnScreen[i].GetComponent<Button>().onClick.AddListener(delegate {StartLevel(levelInt);} );
-        }
+        } 
     }
 
 
@@ -107,7 +109,14 @@ public class LevelSelection : MonoBehaviour
 
     // Start level
     public void StartLevel(int level) {
-        Debug.Log("Starting Level " + level);
-        SceneManager.LoadScene("Level " + level);
+        int previousLevelInt = level - 1;
+        string previousLevel = "Level " + (level - 1).ToString();
+        // Check if the previous level was completed
+        if (previousLevelInt == 0 || PlayerPrefs.GetInt(previousLevel, 0) == 1) {
+            Debug.Log("Starting Level " + level);
+            SceneManager.LoadScene("Level " + level);
+        } else {
+            Debug.Log("Level " + previousLevel + " is not complete, cannot start");
+        }
     }
 }

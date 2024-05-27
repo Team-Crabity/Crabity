@@ -26,6 +26,9 @@ public class Door : MonoBehaviour
         yield return new WaitForSeconds(delay);
         Scene s = SceneManager.GetActiveScene();
         Debug.Log("Going to scene: " + (s.buildIndex + 1));
+
+        // Set level as complete in player preferences
+        PlayerPrefs.SetInt(s.name, 1);
         
         // send level complete
         CustomEvent myEvent = new CustomEvent("levelComplete")
@@ -51,6 +54,7 @@ public class Door : MonoBehaviour
         AnalyticsService.Instance.RecordEvent(perspectiveSwitchEvent);
         Debug.Log(RotateObject.numRotations);
         
+        // Go to next level
         SceneManager.LoadScene(s.buildIndex + 1);
     }
 }
