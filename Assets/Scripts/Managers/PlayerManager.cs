@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
-
     public bool CompanionMode;
     public GameObject playerOne;
     public GameObject playerTwo;

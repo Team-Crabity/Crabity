@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
+
+    [Header ("Audio")]
+    [SerializeField] private List<AudioClip> RotationSounds;
+    private AudioSource Source;
+
+
     [Header("Rotation")]
     public float turnTime = 0.33f;
 
+
     [Header("Reverse Rotation")]
     public bool reverseRotation = false;
+
 
     [Header("PlayerOne and PlayerTwo Cameras")]
     public Camera playerOneCamera;
@@ -24,6 +32,8 @@ public class RotateObject : MonoBehaviour
 
     void Start()
     {
+        Source = GetComponent<AudioSource>();
+
         keyRotationMap = new Dictionary<KeyCode, Vector3>
         {
             { KeyCode.W, Vector3.right * -1 },
@@ -93,6 +103,12 @@ public class RotateObject : MonoBehaviour
 
     IEnumerator Rotate(Transform thisTransform, Vector3 center, Vector3 rotateAxis, float degrees, float totalTime)
     {
+        AudioClip clip = null;
+        clip = RotationSounds[Random.Range(0,RotationSounds.Count)];
+        Source.clip = clip;
+        Source.volume = (0.7f);
+        Source.Play();
+
         rotating = true;
 
         // Set smooth time for playerOneCamera and playerTwoCamera to 0 to prevent camera from moving during rotation

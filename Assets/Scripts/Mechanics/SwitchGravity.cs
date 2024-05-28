@@ -7,9 +7,15 @@ using TMPro;
 
 public class SwitchGravity : MonoBehaviour
 {
+    [Header ("Audio")]
+    [SerializeField] private List<AudioClip> GravitySounds;
+    private AudioSource Source;
+
+
     [Header ("CooldownUI")]
     [SerializeField] private Image imageCooldown;
     [SerializeField] private TMP_Text textCooldown;
+
 
     [Header("Gravity")]
     public float gravityScale = 5.0f;
@@ -46,9 +52,12 @@ public class SwitchGravity : MonoBehaviour
 
     void Start()
     {
+        Source = GetComponent<AudioSource>();
+
         playerOne = PlayerManager.instance.IsPlayerOne(gameObject);
         playerTwo = PlayerManager.instance.IsPlayerTwo(gameObject);
         UpdateGravity(Vector3.down);
+
         textCooldown.gameObject.SetActive(false);
         imageCooldown.fillAmount = 0.0f;
     }
@@ -116,6 +125,13 @@ public class SwitchGravity : MonoBehaviour
 
                 // Update gravity switch count
                 gravitySwitchCount += 1;
+
+                //Play Random Grav sound
+                AudioClip clip = null;
+                clip = GravitySounds[UnityEngine.Random.Range(0,GravitySounds.Count)];
+                Source.clip = clip;
+                Source.volume = (0.7f);
+                Source.Play();
 
                 break;
             }

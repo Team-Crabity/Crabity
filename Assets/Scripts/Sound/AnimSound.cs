@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class AnimSound : MonoBehaviour
 {
-    public GameObject Player;
-    private PlatformSound platformSound;
+    private AudioSource Source;
+    public List<AudioClip> WalkingSounds;
 
     void Start() 
     {
-        platformSound = Player.GetComponent<PlatformSound>();
+        Source = GetComponent<AudioSource>();
     }
 
-    void playSound()
+    public void playSound()
     {
-        platformSound.PlayFootStep();
+        AudioClip clip = null;
+        clip = WalkingSounds[Random.Range(0,WalkingSounds.Count)];
+        Source.clip = clip;
+        Source.volume = Random.Range(0.4f, 0.5f);
+        Source.pitch = Random.Range(0.95f, 1.05f);
+        Source.Play();
     }
 }

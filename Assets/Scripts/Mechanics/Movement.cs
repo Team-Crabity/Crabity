@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [Header ("Audio")]
+    [SerializeField] private AudioClip JumpSound;
+    private AudioSource Source;
+
     [Header("Movement")]
     [Range(5f, 20f)] public float speed = 15.0f;
     [Range(0f, 1f)] public float groundDrag = 0.5f;
@@ -30,6 +34,8 @@ public class Movement : MonoBehaviour
     
     private void Start()
     {
+        Source = GetComponent<AudioSource>();
+
         rb = GetComponent<Rigidbody>();
 
         //Set keybinds based on player selection
@@ -104,6 +110,9 @@ public class Movement : MonoBehaviour
             isJumping = true;
             Vector3 jumpDirection = -Physics.gravity.normalized;
             rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
+            Source.clip = JumpSound;
+            Source.volume = (0.5f);
+            Source.Play();
         }
     }
 
