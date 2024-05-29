@@ -2923,7 +2923,7 @@ GameObject:
   - component: {fileID: 442234775}
   - component: {fileID: 442234780}
   - component: {fileID: 442234779}
-  - component: {fileID: 442234778}
+  - component: {fileID: 442234781}
   - component: {fileID: 442234777}
   - component: {fileID: 442234776}
   m_Layer: 5
@@ -3070,22 +3070,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &442234778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442234774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c158ab7250373774b8e40c61a01e9616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textComponent: {fileID: 111963451}
-  textSpeed: 0.03
-  source: {fileID: 442234777}
-  clip: {fileID: 8300000, guid: cb974ede4c22a9c4e8279c3d4276d4e9, type: 3}
 --- !u!114 &442234779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3124,6 +3108,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442234774}
   m_CullTransparentMesh: 1
+--- !u!114 &442234781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442234774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73b5808e3a6b2546b126a3eeee912a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 111963451}
+  textSpeed: 0.03
+  source: {fileID: 442234777}
+  clip: {fileID: 8300000, guid: cb974ede4c22a9c4e8279c3d4276d4e9, type: 3}
 --- !u!1001 &452939136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6848,6 +6848,10 @@ PrefabInstance:
       propertyPath: playerTwo
       value: 
       objectReference: {fileID: 1059109635}
+    - target: {fileID: 5485134807629980205, guid: 7f6107ba09da4c840af4529a390278af, type: 3}
+      propertyPath: CompanionMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5485134807629980205, guid: 7f6107ba09da4c840af4529a390278af, type: 3}
       propertyPath: playerOneSpawnPoint
       value: 
@@ -20444,7 +20448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2018959544
 MonoBehaviour:
   m_ObjectHideFlags: 0

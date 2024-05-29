@@ -73,7 +73,7 @@ public class M_Dialogue : MonoBehaviour
                 "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
                 "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
                 "CRB 1: Use the W, A, S and D keys to navigate the environment.",
-                "CRB 2: Use the LEFT, RIGHT, UP, AND DOWN arrow keys to navigate the environment.",
+                "CRB 2: Use the LEFT, RIGHT, UP, and DOWN arrow keys to navigate the environment.",
             };
         }
 
