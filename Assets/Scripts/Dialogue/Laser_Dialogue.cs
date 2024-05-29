@@ -21,7 +21,8 @@ public class Laser_Dialogue : MonoBehaviour
     {
         lines = new string[]
         {
-            "WARNING: Unauthorized sector access; initiating laser security prototols."
+            "WARNING: Unauthorized sector access; initiating laser security prototols.",
+            "Severe structural damage detected. Be wary of damaged components, especially glass."
         };
         textComponent.text = string.Empty;
         StartDialogue();
