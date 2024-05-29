@@ -9,15 +9,14 @@ public class RespawnCheck : MonoBehaviour
     private AudioSource Source;
     void Start()
     {
-        AudioClip clip = null;
         Source = GetComponent<AudioSource>();
-        if (PMScript.CompanionMode) 
+        if (!PMScript.CompanionMode) 
         {
-            clip = respawnSounds[0];
+            Source.clip = respawnSounds[0];
         }
         else 
         {
-            clip = respawnSounds[1];
+            Source.clip = respawnSounds[1];
         }
         Source.volume = (1f);
         Source.Play();

@@ -106,7 +106,7 @@ public class RotateObject : MonoBehaviour
         AudioClip clip = null;
         clip = RotationSounds[Random.Range(0,RotationSounds.Count)];
         Source.clip = clip;
-        Source.volume = (0.7f);
+        Source.volume = (1f);
         Source.Play();
 
         rotating = true;
