@@ -21,7 +21,7 @@ public class G_Dialogue : MonoBehaviour
     {
         lines = new string[]
         {
-            "Loading training module 3/3... done."
+            "Loading training module 2/3... done."
 
         };
         textComponent.text = string.Empty;
@@ -67,7 +67,8 @@ public class G_Dialogue : MonoBehaviour
         {
             lines = new string[]
             {
-                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " + ARROW KEYS.",
+                "CRB 1: Await further instructions.",
+                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " LEFT, RIGHT, UP, or DOWN arrow keys.",
             };
         }
 

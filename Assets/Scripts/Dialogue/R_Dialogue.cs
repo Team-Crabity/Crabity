@@ -21,7 +21,7 @@ public class R_Dialogue : MonoBehaviour
     {
         lines = new string[]
         {
-            "Loading training module 2/3... done."
+            "Loading training module 3/3... done."
         };
         textComponent.text = string.Empty;
         StartDialogue();
@@ -67,7 +67,7 @@ public class R_Dialogue : MonoBehaviour
             lines = new string[]
             {
                "CRB 1: Utilize the rotation drive with L SHIFT + WASD or L SHIFT + Q or E.",
-               "CRB 2: Await further instructions.",
+              
             };
         }
 
