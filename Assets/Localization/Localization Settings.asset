@@ -15,7 +15,6 @@ MonoBehaviour:
   m_StartupSelectors:
   - rid: 3774380696274993181
   - rid: 3774380696274993182
-  - rid: 3774380696274993183
   m_AvailableLocales:
     rid: 3774380696274993184
   m_AssetDatabase:
@@ -40,11 +39,6 @@ MonoBehaviour:
     - rid: 3774380696274993182
       type: {class: SystemLocaleSelector, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}
       data: 
-    - rid: 3774380696274993183
-      type: {class: SpecificLocaleSelector, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}
-      data:
-        m_LocaleId:
-          m_Code: en
     - rid: 3774380696274993184
       type: {class: LocalesProvider, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}
       data: 
