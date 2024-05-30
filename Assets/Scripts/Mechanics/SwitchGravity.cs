@@ -85,8 +85,6 @@ public class SwitchGravity : MonoBehaviour
             textCooldown.text = Mathf.RoundToInt(timer).ToString();
             imageCooldown.fillAmount = timer / cooldown.cooldownTime; 
         }
-
-        Debug.Log("IsCoolingdown is " + cooldown.IsCoolingDown);
     }
 
     private void FixedUpdate()

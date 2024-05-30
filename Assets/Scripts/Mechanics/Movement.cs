@@ -137,7 +137,6 @@ public class Movement : MonoBehaviour
         Vector3 rayOrigin = transform.position + transform.TransformDirection (Vector3.down) * 1f;
         Debug.DrawRay(rayOrigin, transform.TransformDirection (Vector3.down) * 0.3f, Color.red);
         if (Physics.Raycast(rayOrigin, transform.TransformDirection (Vector3.down), out hit, 0.3f, layerMask)) {
-            Debug.Log("Grounded");
             return true;
         }
         Debug.Log("NOT Grounded!");

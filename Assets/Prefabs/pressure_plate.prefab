@@ -122,6 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseColor: {fileID: 2100000, guid: 10de6384af0c3b54e8166f9c3f936e88, type: 2}
+  SoundList:
+  - {fileID: 8300000, guid: 8d1d5230d9c1ce44093abbc715995ee2, type: 3}
+  - {fileID: 8300000, guid: acd540fa29d01d949a63662b7acf4c52, type: 3}
 --- !u!82 &1597160896736491000
 AudioSource:
   m_ObjectHideFlags: 0
@@ -132,7 +135,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: be3fd74cb27d40a4aafcee9395449cc5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8d1d5230d9c1ce44093abbc715995ee2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

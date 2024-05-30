@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LaserTrap : MonoBehaviour
 {
     [Header ("Audio")]
-    [SerializeField] private AudioClip IdleSound;
-
+    [SerializeField] private List<AudioClip> IdleSound;
     private AudioSource Source;
+    private EDAudio EDAudioScript;
 
     [SerializeField] public GameObject laser; // Reference to the existing laser GameObject
     public float laserLifetime = 2.0f; // Duration for which the laser stays active
@@ -19,6 +20,7 @@ public class LaserTrap : MonoBehaviour
     void Start()
     {
         Source = GetComponent<AudioSource>();
+        EDAudioScript = GetComponent<EDAudio>();
         if (laser != null)
         {
             //un comment position variables if things break later
@@ -39,11 +41,12 @@ public class LaserTrap : MonoBehaviour
             // Activate laser
             // laser.SetActive(true);
             StartCoroutine(AnimateLaser(Vector3.zero, Vector3.one, animationDuration));
-
-            Source.clip = IdleSound;
-            Source.volume = (0.7f);
-            Source.Play();
-            Source.loop = true;
+            if (Source.volume >= 0.35)
+            {
+                Source.clip = IdleSound[Random.Range(0,IdleSound.Count)];
+                Source.Play();
+                Source.loop = true;
+            }
 
             // Wait for the laser lifetime duration
             yield return new WaitForSeconds(laserLifetime);
