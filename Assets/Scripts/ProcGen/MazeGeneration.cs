@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 public class MazeGeneration : MonoBehaviour
 {
