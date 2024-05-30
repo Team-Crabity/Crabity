@@ -20,8 +20,13 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
+    }
+
+    void Start() {
+        // Set companion mode to player pref setting
+        CompanionMode = PlayerPrefs.GetInt("companionMode", 0) == 1;
     }
 
     void Update()
@@ -29,7 +34,7 @@ public class PlayerManager : MonoBehaviour
         // Secret hotkey for companion mode
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            CompanionMode = !CompanionMode;
+            ToggleCompanionMode();
         }
 
         if (CompanionMode)
@@ -45,6 +50,7 @@ public class PlayerManager : MonoBehaviour
     public void ToggleCompanionMode()
     {
         CompanionMode = !CompanionMode;
+        PlayerPrefs.SetInt("companionMode", CompanionMode == true ? 1 : 0);
     }
 
     public bool IsPlayerOne(GameObject player)
