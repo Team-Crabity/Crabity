@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    public static PauseMenu instance { get; private set; }
+
     public GameObject pauseMenuUI;
     public GameObject nonDestroyablePauseMenu;
     public Button resumeButton;
@@ -20,6 +22,16 @@ public class PauseMenu : MonoBehaviour
     public Sprite pausedButtonImage;
 
     private AudioSlider audioSlider; // Reference to the AudioSlider script
+
+    void Awake() {
+        if (instance == null) 
+        {
+            instance = this;
+        } else 
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
