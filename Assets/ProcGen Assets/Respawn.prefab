@@ -13,9 +13,6 @@ GameObject:
   - component: {fileID: 2924970399133844802}
   - component: {fileID: 3311960845694671838}
   - component: {fileID: 7028183104460688365}
-  - component: {fileID: 8302029985194911002}
-  - component: {fileID: 4572582796078342323}
-  - component: {fileID: 6079246275397888547}
   - component: {fileID: 3191166599024241247}
   m_Layer: 0
   m_Name: DoorTrigger (4)
@@ -121,71 +118,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2850158, y: 1, z: 1}
-  m_Center: {x: -0.0387234, y: 0, z: -6.024167e-15}
---- !u!65 &8302029985194911002
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009093202707195832}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.28662458, y: 7.6852994, z: 1}
-  m_Center: {x: -0.5389316, y: 3.3426502, z: 0.00000024796518}
---- !u!65 &4572582796078342323
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009093202707195832}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.22706376, y: 7.764714, z: 1}
-  m_Center: {x: 0.4929658, y: 3.3823574, z: 0.00000024796532}
---- !u!65 &6079246275397888547
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009093202707195832}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9999999, y: 1.5296209, z: 1}
-  m_Center: {x: 0.00000012250655, y: 6.407603, z: 0.00000024796526}
+  m_Size: {x: 1.2850158, y: 7.6669574, z: 1}
+  m_Center: {x: -0.03872342, y: 3.3334782, z: 4.123404e-15}
 --- !u!82 &3191166599024241247
 AudioSource:
   m_ObjectHideFlags: 0

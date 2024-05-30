@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class UnlockableDoor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private int lockCounter = 0;
+    public bool unlocked = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

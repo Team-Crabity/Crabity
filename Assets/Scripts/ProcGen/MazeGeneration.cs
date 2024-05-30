@@ -635,7 +635,10 @@ public class MazeGeneration : MonoBehaviour
         Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity, parentObject.transform);
         //end cell
         GameObject endInstance = Instantiate(corridorEnd, endCell.transform.position, Quaternion.identity, parentObject.transform);
+        //plate
         GameObject endPlate = Instantiate(pressurePlate, endCell.transform.position, Quaternion.identity, parentObject.transform);
+
+
         Vector3 lastCellPosition = corridorPath[0].transform.position;
         Vector3 secondToLastCellPosition = corridorPath[1].transform.position;
         Vector3 lastMovementDirection = lastCellPosition - secondToLastCellPosition;
