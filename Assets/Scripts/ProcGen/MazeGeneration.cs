@@ -66,12 +66,14 @@ public class MazeGeneration : MonoBehaviour
     public GameObject YFrontT;
     public GameObject YBackT;
 
+    public GameObject parentObject;
     void Awake()
     {
         GenerateMaze();
         SetNeighboringCells();
         GenerateAssets();
         GenerateCorridors();
+        DeleteAllCells();
     }
 
     void GenerateMaze()
@@ -267,8 +269,8 @@ public class MazeGeneration : MonoBehaviour
     void GenerateAssets()
     {
         List<MazeCell> shortestPath = FindShortestPath(gridComponents[0], gridComponents[gridComponents.Count - 1], true);
-        GameObject exit = Instantiate(endPrefab, shortestPath[0].transform.position, Quaternion.identity);
-        GameObject spawn = Instantiate(startPrefab, shortestPath[shortestPath.Count - 1].transform.position, Quaternion.identity);
+        GameObject exit = Instantiate(endPrefab, shortestPath[0].transform.position, Quaternion.identity, parentObject.transform);
+        GameObject spawn = Instantiate(startPrefab, shortestPath[shortestPath.Count - 1].transform.position, Quaternion.identity, parentObject.transform);
         for (int i = 0; i < shortestPath.Count - 1; i++)
         {
 
@@ -370,11 +372,11 @@ public class MazeGeneration : MonoBehaviour
                 {
                     if (movementDirection.x > 0 && nextMovementDirection.x > 0)
                     {
-                        Instantiate(pXpXasset, currentCell.transform.position, Quaternion.identity);
+                        Instantiate(pXpXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                     }
                     else if (movementDirection.x < 0 && nextMovementDirection.x < 0)
                     {
-                        Instantiate(mXmXasset, currentCell.transform.position, Quaternion.identity);
+                        Instantiate(mXmXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                     }
                 }
             }
@@ -382,38 +384,38 @@ public class MazeGeneration : MonoBehaviour
             {
                 if (movementDirection.x > 0 && nextMovementDirection.y > 0)
                 {
-                    Instantiate(pXpYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pXpYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.x > 0 && nextMovementDirection.y < 0)
                 {
-                    Instantiate(pXmYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pXmYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.y > 0)
                 {
-                    Instantiate(mXpYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mXpYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.y < 0)
                 {
-                    Instantiate(mXmYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mXmYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
             }
             else if (IsZMovement(nextMovementDirection))
             {
                 if (movementDirection.x > 0 && nextMovementDirection.z > 0)
                 {
-                    Instantiate(pXpZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pXpZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.x > 0 && nextMovementDirection.z < 0)
                 {
-                    Instantiate(pXmZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pXmZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.z > 0)
                 {
-                    Instantiate(mXpZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mXpZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.x < 0 && nextMovementDirection.z < 0)
                 {
-                    Instantiate(mXmZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mXmZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
             }
         }
@@ -423,19 +425,19 @@ public class MazeGeneration : MonoBehaviour
             {
                 if (movementDirection.y > 0 && nextMovementDirection.x > 0)
                 {
-                    Instantiate(pYpXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pYpXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.y > 0 && nextMovementDirection.x < 0)
                 {
-                    Instantiate(pYmXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pYmXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.x > 0)
                 {
-                    Instantiate(mYpXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mYpXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.x < 0)
                 {
-                    Instantiate(mYmXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mYmXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
             }
             else if (IsYMovement(nextMovementDirection))
@@ -452,11 +454,11 @@ public class MazeGeneration : MonoBehaviour
                 {
                     if (movementDirection.y > 0 && nextMovementDirection.y > 0)
                     {
-                        Instantiate(pYpYasset, currentCell.transform.position, Quaternion.identity);
+                        Instantiate(pYpYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                     }
                     else if (movementDirection.y < 0 && nextMovementDirection.y < 0)
                     {
-                        Instantiate(mYmYasset, currentCell.transform.position, Quaternion.identity);
+                        Instantiate(mYmYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                     }
                 }
             }
@@ -464,19 +466,19 @@ public class MazeGeneration : MonoBehaviour
             {
                 if (movementDirection.y > 0 && nextMovementDirection.z > 0)
                 {
-                    Instantiate(pYpZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pYpZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.y > 0 && nextMovementDirection.z < 0)
                 {
-                    Instantiate(pYmZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pYmZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.z > 0)
                 {
-                    Instantiate(mYpZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mYpZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.y < 0 && nextMovementDirection.z < 0)
                 {
-                    Instantiate(mYmZasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mYmZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
             }
         }
@@ -486,49 +488,49 @@ public class MazeGeneration : MonoBehaviour
             {
                 if (movementDirection.z > 0 && nextMovementDirection.x > 0)
                 {
-                    Instantiate(pZpXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pZpXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.z > 0 && nextMovementDirection.x < 0)
                 {
-                    Instantiate(pZmXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pZmXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.x > 0)
                 {
-                    Instantiate(mZpXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mZpXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.x < 0)
                 {
-                    Instantiate(mZmXasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mZmXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
             }
             else if (IsYMovement(nextMovementDirection))
             {
                 if (movementDirection.z > 0 && nextMovementDirection.y > 0)
                 {
-                    Instantiate(pZpYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pZpYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.z > 0 && nextMovementDirection.y < 0)
                 {
-                    Instantiate(pZmYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(pZmYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.y > 0)
                 {
-                    Instantiate(mZpYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mZpYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
                 else if (movementDirection.z < 0 && nextMovementDirection.y < 0)
                 {
-                    Instantiate(mZmYasset, currentCell.transform.position, Quaternion.identity);
+                    Instantiate(mZmYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                 }
             }
             else if (IsZMovement(nextMovementDirection))
             {
                     if (movementDirection.z > 0 && nextMovementDirection.z > 0)
                     {
-                        Instantiate(pZpZasset, currentCell.transform.position, Quaternion.identity);
+                        Instantiate(pZpZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                     }
                     else if (movementDirection.z < 0 && nextMovementDirection.z < 0)
                     {
-                        Instantiate(mZmZasset, currentCell.transform.position, Quaternion.identity);
+                        Instantiate(mZmZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
                     }
             }
         }
@@ -631,10 +633,10 @@ public class MazeGeneration : MonoBehaviour
             startCellPrefab = yCorridorMovement(startMovementDirection);
         }
 
-        Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity);
+        Instantiate(startCellPrefab, startCell.transform.position, Quaternion.identity, parentObject.transform);
         //end cell
-        GameObject endInstance = Instantiate(corridorEnd, endCell.transform.position, Quaternion.identity);
-        GameObject endPlate = Instantiate(pressurePlate, endCell.transform.position, Quaternion.identity);
+        GameObject endInstance = Instantiate(corridorEnd, endCell.transform.position, Quaternion.identity, parentObject.transform);
+        GameObject endPlate = Instantiate(pressurePlate, endCell.transform.position, Quaternion.identity, parentObject.transform);
         Vector3 lastCellPosition = corridorPath[0].transform.position;
         Vector3 secondToLastCellPosition = corridorPath[1].transform.position;
         Vector3 lastMovementDirection = lastCellPosition - secondToLastCellPosition;
@@ -668,6 +670,16 @@ public class MazeGeneration : MonoBehaviour
     bool IsZMovement(Vector3 direction)
     {
         return Mathf.Abs(direction.z) > Mathf.Abs(direction.x) && Mathf.Abs(direction.z) > Mathf.Abs(direction.y);
+    }
+
+    //cleanup
+    void DeleteAllCells()
+    {
+        foreach (var cell in gridComponents)
+        {
+            Destroy(cell.gameObject);
+        }
+        gridComponents.Clear();
     }
 
 }

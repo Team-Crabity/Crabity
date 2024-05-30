@@ -299,6 +299,7 @@ MonoBehaviour:
   YRightT: {fileID: 589240357427276208, guid: 859f6e71ddf59c141ade9fbc51a5567b, type: 3}
   YFrontT: {fileID: 589240357427276208, guid: 81a94f1fb45e96349a82d267e1f00305, type: 3}
   YBackT: {fileID: 589240357427276208, guid: 24bb2215f1e79084eb09b55c5b23d17f, type: 3}
+  parentObject: {fileID: 1885027057}
 --- !u!4 &1470001136
 Transform:
   m_ObjectHideFlags: 0
@@ -358,6 +359,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.556848, y: -1.167219, z: 10.754425}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1885027057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1885027058}
+  m_Layer: 0
+  m_Name: Rotating Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1885027058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885027057}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.240065, y: 53.212166, z: -98.644905}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -540,4 +572,5 @@ SceneRoots:
   - {fileID: 1877354784}
   - {fileID: 813397572}
   - {fileID: 1470001136}
+  - {fileID: 1885027058}
   - {fileID: 783909334}
