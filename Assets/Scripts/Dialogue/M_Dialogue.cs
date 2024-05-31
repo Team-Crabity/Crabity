@@ -22,6 +22,7 @@ public class M_Dialogue : MonoBehaviour
         lines = new string[]
         {
             "Tip: advance this dialogue by using SPACE.",
+            "Access the pause menu by pressing ESCAPE.",
             "Initiating contact...done.",
         };
         textComponent.text = string.Empty;
