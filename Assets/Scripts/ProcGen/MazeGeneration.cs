@@ -68,11 +68,18 @@ public class MazeGeneration : MonoBehaviour
     public GameObject parentObject;
     void Awake()
     {
+        DailySeed();
         GenerateMaze();
         SetNeighboringCells();
         GenerateAssets();
         GenerateCorridors();
         DeleteAllCells();
+    }
+
+    void DailySeed()
+    {
+        int seed = System.DateTime.UtcNow.Date.GetHashCode();
+        Random.InitState(seed);
     }
 
     void GenerateMaze()
