@@ -33,7 +33,7 @@ public class TogglePressurePlate : MonoBehaviour
 
     void OnCollisionStay(Collision other)
     {
-        if ((other.gameObject.tag == "Player" || other.gameObject.tag == "Block") && !onPlate) {
+        if ((other.gameObject.tag == "Player" || other.gameObject.tag == "Block" || other.gameObject.tag == "Box") && !onPlate) {
             Debug.Log(other.gameObject.tag + " is on toggle plate");
             onPlate = true;
             audioSource.Play();

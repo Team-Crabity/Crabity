@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1644374818554720669}
   - component: {fileID: 6439166701675764660}
   - component: {fileID: 1597160896736491000}
+  - component: {fileID: 5686781556409083032}
   m_Layer: 0
   m_Name: TogglePressurePlate
   m_TagString: Ground
@@ -102,7 +103,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -204,6 +205,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5686781556409083032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038737907693360665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb3ee6a955174ad3b6190851008d21f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseColor: {fileID: 0}
 --- !u!1 &4882856229071388177
 GameObject:
   m_ObjectHideFlags: 0
