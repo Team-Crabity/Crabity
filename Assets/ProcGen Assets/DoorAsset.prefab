@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2707082477435407895}
-  - component: {fileID: -1407290717040307090}
   m_Layer: 0
   m_Name: DoorAsset
   m_TagString: Untagged
@@ -34,19 +33,6 @@ Transform:
   - {fileID: 4611743130711121886}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1407290717040307090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7786869099684965104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29cd8a87a56d17d4897f73f5b08c9444, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
 --- !u!1 &7915421941838803364
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +53,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1209405062504355093
 Transform:
   m_ObjectHideFlags: 0
@@ -273,7 +259,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 115324, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
       propertyPath: m_Name
-      value: RespawnDoor
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 115324, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
       propertyPath: m_TagString
@@ -339,10 +325,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9546954, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4195026f5c9772c40a9e4ebd5d4c6e08, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 115324, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 5181470134554608226}
     - targetCorrespondingSourceObject: {fileID: 187554, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4828316787803681443}
@@ -360,6 +353,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 115324, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}
   m_PrefabInstance: {fileID: 4611743130711231050}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5181470134554608226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4611743130711345206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cd8a87a56d17d4897f73f5b08c9444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterNearby: 0
 --- !u!1 &4611743130711371236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 141230, guid: 820591594dcfa124d8a9c5d016d6c22c, type: 3}

@@ -8161,8 +8161,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1283598263}
-  - component: {fileID: 1283598266}
-  - component: {fileID: 1283598265}
   - component: {fileID: 1283598264}
   m_Layer: 0
   m_Name: PressurePlateManager
@@ -8282,35 +8280,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1283598265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283598262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878977240121c9e4081fb08ad28d1e5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doorCamera: {fileID: 1898220934}
-  duration: 3
---- !u!114 &1283598266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283598262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26a9929053aebf6499f6d67bdeb2b64a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allPlatesPressed: 0
-  doors:
-  - {fileID: 0}
 --- !u!1 &1285240004
 GameObject:
   m_ObjectHideFlags: 0
@@ -14773,7 +14742,7 @@ MonoBehaviour:
   cellPrefab: {fileID: 3522413971667513713, guid: 3bf5ebe6caf21a246b9b24f1f842306c, type: 3}
   startPrefab: {fileID: 1891443648622353857, guid: eeee336c1de2f45489fa1f7c6d3d6509, type: 3}
   endPrefab: {fileID: 7786869099684965104, guid: f3c971d751b7c0b40929925d1723bd9d, type: 3}
-  corridorEnd: {fileID: 7786869099684965104, guid: 8850ec827e0abbb48ad1645102c32d52, type: 3}
+  corridorEnd: {fileID: 7786869099684965104, guid: 259912173d3208a4a96a7cd2cfec1934, type: 3}
   pressurePlate: {fileID: 4837573198915227879, guid: 537d56b19c5d3674c8ef3e91e78455e2, type: 3}
   width: 10
   height: 10
