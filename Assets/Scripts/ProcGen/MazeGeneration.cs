@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class MazeGeneration : MonoBehaviour
 {
@@ -13,11 +14,16 @@ public class MazeGeneration : MonoBehaviour
     public GameObject endPrefab;
     public GameObject corridorEnd;
     public GameObject pressurePlate;
+    public GameObject LaserAssetX;
+    public GameObject LaserAssetY;
+    public GameObject LaserAssetZ;
 
     public float width;
     public float height;
     public float depth;
     private float MutationRate = .75f; //75 percent chance
+    private float LaserRate = .75f; //710 percent chance
+    
     private int corridorCounter = 0;
     public int corridorMax = 0;
 
@@ -75,11 +81,14 @@ public class MazeGeneration : MonoBehaviour
         GenerateCorridors();
         DeleteAllCells();
     }
-
     void DailySeed()
     {
-        int seed = System.DateTime.UtcNow.Date.GetHashCode();
-        Random.InitState(seed);
+        // UTC time
+        DateTime currentTime = DateTime.UtcNow;
+
+        // Set the seed based on the current date
+        int seed = currentTime.Year * 1010101 + currentTime.Month * 101 + currentTime.Day;
+        UnityEngine.Random.InitState(seed);
     }
 
     void GenerateMaze()
@@ -98,7 +107,7 @@ public class MazeGeneration : MonoBehaviour
                     gridComponents.Add(newCell); 
 
                     // Random weight of ceells
-                    int weight = Random.Range(1, 101);
+                    int weight = UnityEngine.Random.Range(1, 101);
                     newCell.SetWeight(weight);
 
                     // weight of the cell
@@ -357,7 +366,30 @@ public class MazeGeneration : MonoBehaviour
         }
     }
 
-
+    void LaserGenerationX(MazeCell cell)
+    {
+        float randomValue = UnityEngine.Random.Range(0f, 1f);
+        if(randomValue < LaserRate)
+        {
+            Instantiate(LaserAssetX, cell.transform.position, Quaternion.identity, parentObject.transform);
+        }
+    }
+    void LaserGenerationY(MazeCell cell)
+    {
+        float randomValue = UnityEngine.Random.Range(0f, 1f);
+        if (randomValue < LaserRate)
+        {
+            Instantiate(LaserAssetY, cell.transform.position, Quaternion.identity, parentObject.transform);
+        }
+    }
+    void LaserGenerationZ(MazeCell cell)
+    {
+        float randomValue = UnityEngine.Random.Range(0f, 1f);
+        if (randomValue < LaserRate)
+        {
+            Instantiate(LaserAssetZ, cell.transform.position, Quaternion.identity, parentObject.transform);
+        }
+    }
 
     void MovementGeneration(MazeCell currentCell, Vector3 movementDirection, Vector3 nextMovementDirection, bool corridor = false)
     {
@@ -366,7 +398,7 @@ public class MazeGeneration : MonoBehaviour
         {
             if (IsXMovement(nextMovementDirection))
             {
-                float randomValue = Random.Range(0f, 1f);
+                float randomValue = UnityEngine.Random.Range(0f, 1f);
                 if (corridorCounter < corridorMax && randomValue < MutationRate && corridor == false)
                 {
                     currentCell.isCorridor = true;
@@ -379,10 +411,12 @@ public class MazeGeneration : MonoBehaviour
                     if (movementDirection.x > 0 && nextMovementDirection.x > 0)
                     {
                         Instantiate(pXpXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
+                        LaserGenerationX(currentCell);
                     }
                     else if (movementDirection.x < 0 && nextMovementDirection.x < 0)
                     {
                         Instantiate(mXmXasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
+                        LaserGenerationX(currentCell);
                     }
                 }
             }
@@ -448,7 +482,7 @@ public class MazeGeneration : MonoBehaviour
             }
             else if (IsYMovement(nextMovementDirection))
             {
-                float randomValue = Random.Range(0f, 1f);
+                float randomValue = UnityEngine.Random.Range(0f, 1f);
                 if (corridorCounter < corridorMax && randomValue < MutationRate && corridor == false)
                 {
                     currentCell.isCorridor = true;
@@ -461,10 +495,12 @@ public class MazeGeneration : MonoBehaviour
                     if (movementDirection.y > 0 && nextMovementDirection.y > 0)
                     {
                         Instantiate(pYpYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
+                        LaserGenerationY(currentCell);
                     }
                     else if (movementDirection.y < 0 && nextMovementDirection.y < 0)
                     {
                         Instantiate(mYmYasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
+                        LaserGenerationY(currentCell);
                     }
                 }
             }
@@ -533,10 +569,13 @@ public class MazeGeneration : MonoBehaviour
                     if (movementDirection.z > 0 && nextMovementDirection.z > 0)
                     {
                         Instantiate(pZpZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
+                        LaserGenerationZ(currentCell);
+
                     }
                     else if (movementDirection.z < 0 && nextMovementDirection.z < 0)
                     {
                         Instantiate(mZmZasset, currentCell.transform.position, Quaternion.identity, parentObject.transform);
+                        LaserGenerationZ(currentCell);
                     }
             }
         }
@@ -565,7 +604,7 @@ public class MazeGeneration : MonoBehaviour
         for(int i = 0; i < corridorCells.Count; i++)
         {
             MazeCell corridorCell = corridorCells[i];
-            MazeCell randomUncollapsedCell = uncollapsedCells[Random.Range(0, uncollapsedCells.Count)];
+            MazeCell randomUncollapsedCell = uncollapsedCells[UnityEngine.Random.Range(0, uncollapsedCells.Count)];
             Debug.Log($"Generating corridor from {corridorCell.gameObject.name} to {randomUncollapsedCell.gameObject.name}");
 
             List<MazeCell> path = FindShortestPath(corridorCell, randomUncollapsedCell, false);
