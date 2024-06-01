@@ -69,6 +69,7 @@ public class AnalyticsManager : MonoBehaviour
         canvas.enabled = false;
         
         Debug.Log("User agreed to share data");
+
         StartDataCollection();
         MainMenu();
     }
@@ -86,8 +87,10 @@ public class AnalyticsManager : MonoBehaviour
     }
 
     public void StopDataCollection() {
-        AnalyticsService.Instance.StopDataCollection();
-        Debug.Log("Stopped collecting Data from User");
+        if (PlayerPrefs.GetInt("playerConsent") == 1) {
+            AnalyticsService.Instance.StopDataCollection();
+            Debug.Log("Stopped collecting Data from User");
+        }
         PlayerPrefs.SetInt("playerConsent", 0);
         Debug.Log("PLAYER CONSENT: " + PlayerPrefs.GetInt("playerConsent"));
     }
