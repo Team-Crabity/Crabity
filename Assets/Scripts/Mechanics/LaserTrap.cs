@@ -45,7 +45,6 @@ public class LaserTrap : MonoBehaviour
             {
                 Source.clip = IdleSound[Random.Range(0,IdleSound.Count)];
                 Source.Play();
-                Source.loop = true;
             }
 
             // Wait for the laser lifetime duration
@@ -54,8 +53,7 @@ public class LaserTrap : MonoBehaviour
             // Deactivate the laser + moves it to hidden
             // laser.SetActive(false);
             StartCoroutine(AnimateLaser(new Vector3(0, -3.2f, 0), new Vector3(1, 0, 1), animationDuration));
-            Source.Stop();
-            Source.loop = false;
+
 
             // Wait for the respawn interval
             yield return new WaitForSeconds(respawnInterval);
