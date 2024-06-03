@@ -344,7 +344,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ShadowsOff
         m_Mode: 1
@@ -1255,7 +1255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesLow
         m_Mode: 1
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesLow
         m_Mode: 1
@@ -2351,7 +2351,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesLow
         m_Mode: 1
@@ -3071,7 +3071,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ShadowsLow
         m_Mode: 1
@@ -4050,7 +4050,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: CameraEffects
         m_Mode: 1
@@ -4526,7 +4526,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: AmbientOcclusion
         m_Mode: 1
@@ -4912,7 +4912,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: MotionBlur
         m_Mode: 1
@@ -5222,7 +5222,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesMed
         m_Mode: 1
@@ -6357,7 +6357,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: FullScreen
         m_Mode: 1
@@ -6878,7 +6878,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ShadowsHigh
         m_Mode: 1
@@ -7456,7 +7456,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: vsync
         m_Mode: 1
@@ -7948,7 +7948,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesHigh
         m_Mode: 1
@@ -8702,7 +8702,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesLow
         m_Mode: 1
@@ -9080,7 +9080,6 @@ GameObject:
   - component: {fileID: 1106037093889651684}
   - component: {fileID: 1425442098756844248}
   - component: {fileID: 2027659282868210860}
-  - component: {fileID: 2483773407723815788}
   m_Layer: 5
   m_Name: Canv_Options
   m_TagString: Untagged
@@ -9172,34 +9171,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2483773407723815788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7768333613461152062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8f6aa6586f77764fab668a0a62d8f7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platform: 0
-  fullscreentext: {fileID: 7616638165456312062}
-  ambientocclusiontext: {fileID: 986981734877009335}
-  shadowofftextLINE: {fileID: 2467792480460129921}
-  shadowlowtextLINE: {fileID: 7928784766937623212}
-  shadowhightextLINE: {fileID: 8136238946962461617}
-  vsynctext: {fileID: 7546800252715054268}
-  motionblurtext: {fileID: 5589014940253171932}
-  texturelowtextLINE: {fileID: 3946798004498659580}
-  texturemedtextLINE: {fileID: 1316693144112691074}
-  texturehightextLINE: {fileID: 1968469150787090125}
-  HDLINE: {fileID: 0}
-  BALLINE: {fileID: 0}
-  PERFLINE: {fileID: 0}
-  cameraeffectstext: {fileID: 3183512357051917842}
-  musicSlider: {fileID: 7973533030195163072}
 --- !u!1 &7792196736714861896
 GameObject:
   m_ObjectHideFlags: 0
@@ -9321,7 +9292,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: TexturesLow
         m_Mode: 1
@@ -9518,7 +9489,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2483773407723815788}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SlimUI.ModernMenu.UISettingsManager, Assembly-CSharp
         m_MethodName: MusicSlider
         m_Mode: 1
@@ -9559,7 +9530,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2483773407723815788}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: 
           m_MethodName: MusicSlider
           m_Mode: 1

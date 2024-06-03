@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayDaily()
     {
-        StartCoroutine(LoadGame("Daily Puzzle"));
+        StartCoroutine(LoadGame("Daily Level"));
     }
     
     IEnumerator LoadGame(string sceneName)

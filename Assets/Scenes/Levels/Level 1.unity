@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.06612105, g: 0.06102059, b: 0.22327533, a: 1}
+  m_IndirectSpecularColor: {r: 0.06607109, g: 0.06099653, b: 0.22328833, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -485,6 +485,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3614956292253047906, guid: 4bbbde8d9b860402cbc9903c80a53dbb, type: 3}
+      propertyPath: musicSource
+      value: 
+      objectReference: {fileID: 1043329082049671477}
     - target: {fileID: 5446373504327520443, guid: 4bbbde8d9b860402cbc9903c80a53dbb, type: 3}
       propertyPath: m_Name
       value: PauseMenu
@@ -26817,6 +26821,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dd1632012506554d9f37a44c971da2e, type: 3}
+--- !u!82 &1043329082049671477 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6155521700571851962, guid: 8dd1632012506554d9f37a44c971da2e, type: 3}
+  m_PrefabInstance: {fileID: 1043329082049671476}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2664989615341237955
 PrefabInstance:
   m_ObjectHideFlags: 0
