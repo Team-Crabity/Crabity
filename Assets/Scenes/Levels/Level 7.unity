@@ -10185,7 +10185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allPlatesPressed: 0
   doors:
-  - {fileID: 0}
+  - {fileID: 1780763559}
 --- !u!1 &1285240004
 GameObject:
   m_ObjectHideFlags: 0
@@ -14076,6 +14076,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5cd29a93d7ae2d488fa0376d0d08462, type: 3}
+--- !u!1 &1780763559 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7446718561424374443, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+  m_PrefabInstance: {fileID: 1390854860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1803926810
 GameObject:
   m_ObjectHideFlags: 0
@@ -14879,7 +14884,7 @@ Camera:
     height: 1
   near clip plane: 5
   far clip plane: 1000
-  field of view: 15
+  field of view: 30
   orthographic: 0
   orthographic size: 12
   m_Depth: -1
@@ -14906,7 +14911,7 @@ Transform:
   m_GameObject: {fileID: 1898220934}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: -10, y: -20, z: 36.89}
+  m_LocalPosition: {x: -26.71, y: -4.2, z: 14.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
