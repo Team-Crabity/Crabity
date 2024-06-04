@@ -66,6 +66,7 @@ jobs:
           targetPlatform: StandaloneWindows64
           chownFilesTo: "user:group"
           buildName: Crabity
+          buildsPath: build
 
       # Output to build folder
       - uses: actions/upload-artifact@v4
@@ -104,6 +105,7 @@ jobs:
           targetPlatform: StandaloneOSX
           chownFilesTo: "user:group"
           buildName: Crabity
+          buildsPath: build
   
       # Output to build folder
       - uses: actions/upload-artifact@v4
