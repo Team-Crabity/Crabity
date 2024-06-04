@@ -1071,8 +1071,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1ede0e201117c40b5d5315644c5733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
   volumeSlider: {fileID: 1005652886}
-  musicSource: {fileID: 936836860}
   muteButton: {fileID: 237639164}
   normalButtonImage: {fileID: -4086525950626956869, guid: a1b1758dd2955234783b01afa7fe3f5a, type: 3}
   mutedButtonImage: {fileID: 7121681975922686079, guid: a1b1758dd2955234783b01afa7fe3f5a, type: 3}
@@ -3943,9 +3943,9 @@ AudioSource:
   m_GameObject: {fileID: 574319664}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7128067719386893152, guid: 204ae77320b536d459d12c2126255a73, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

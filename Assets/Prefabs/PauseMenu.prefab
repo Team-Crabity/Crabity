@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6677432, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5666,7 +5666,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3614956292253047906}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AudioSlider, Assembly-CSharp
         m_MethodName: ToggleMute
         m_Mode: 1
@@ -6379,7 +6379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2062171084801733914}
   - component: {fileID: 2304548419570967199}
-  - component: {fileID: 3614956292253047906}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -6428,24 +6427,6 @@ MonoBehaviour:
   isPaused: 0
   normalButtonImage: {fileID: 21300000, guid: a4fde6e0b21dc224d813ee493157874f, type: 3}
   pausedButtonImage: {fileID: 21300000, guid: e5a390d359542f845bd18b3970c5eff3, type: 3}
---- !u!114 &3614956292253047906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5446373504327520443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a1ede0e201117c40b5d5315644c5733, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 2903825508536734028}
-  musicSource: {fileID: 0}
-  muteButton: {fileID: 6751735394265218941}
-  normalButtonImage: {fileID: 21300000, guid: e5a390d359542f845bd18b3970c5eff3, type: 3}
-  mutedButtonImage: {fileID: 21300000, guid: a4fde6e0b21dc224d813ee493157874f, type: 3}
-  isMuted: 0
 --- !u!1 &5584767229902409526
 GameObject:
   m_ObjectHideFlags: 0
@@ -7618,7 +7599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6677432, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9405,7 +9386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4280942273497680750}
   - component: {fileID: 2903825508536734028}
-  - component: {fileID: 5344219884127570619}
+  - component: {fileID: 1769363706328452042}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -9482,17 +9463,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 371555243445080387}
   m_HandleRect: {fileID: 3153968682793253203}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SlimUI.ModernMenu.UISettingsManager, Assembly-CSharp
-        m_MethodName: MusicSlider
-        m_Mode: 1
+      - m_Target: {fileID: 1769363706328452042}
+        m_TargetAssemblyTypeName: AudioSlider, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9501,19 +9482,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SlimUI.ModernMenu.CheckMusicVolume, Assembly-CSharp
-        m_MethodName: UpdateVolume
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5344219884127570619
+--- !u!114 &1769363706328452042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9522,38 +9491,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7973533030195163072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a1ede0e201117c40b5d5315644c5733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 5
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: MusicSlider
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: UpdateVolume
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  audioMixer: {fileID: 24100000, guid: 204ae77320b536d459d12c2126255a73, type: 2}
+  volumeSlider: {fileID: 2903825508536734028}
+  musicSource: {fileID: 0}
+  muteButton: {fileID: 6751735394265218941}
+  normalButtonImage: {fileID: 21300000, guid: e5a390d359542f845bd18b3970c5eff3, type: 3}
+  mutedButtonImage: {fileID: 21300000, guid: a4fde6e0b21dc224d813ee493157874f, type: 3}
+  isMuted: 0
 --- !u!1 &8021178693438571776
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class AudioSlider : MonoBehaviour
 {
+    [SerializeField] private AudioMixer audioMixer;
     public Slider volumeSlider;
-    public AudioSource musicSource;
+    //public AudioSource musicSource;
 
     public Button muteButton;
     public Sprite normalButtonImage;
@@ -16,27 +18,27 @@ public class AudioSlider : MonoBehaviour
 
     private void Start()
     {
-        volumeSlider.value = musicSource.volume;
+        //volumeSlider.value = musicSource.volume;
     }
 
-    public void SetVolume()
+    public void SetVolume(float value)
     {
-        musicSource.volume = volumeSlider.value;
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
     }
 
     public void DecreaseVolume()
     {
         volumeSlider.value -= 0.001f;
-        SetVolume(); // Update the volume immediately
+        SetVolume(volumeSlider.value); // Update the volume immediately
     }
 
     public void IncreaseVolume()
     {
         volumeSlider.value += 0.001f;
-        SetVolume(); // Update the volume immediately
+        SetVolume(volumeSlider.value); // Update the volume immediately
     }
 
-    public void ToggleMute()
+    /*public void ToggleMute()
     {
         if (musicSource != null)
         {
@@ -49,7 +51,7 @@ public class AudioSlider : MonoBehaviour
         {
             Debug.LogError("No audiosource.");
         }
-    }
+    }*/
 
     private void ChangeButtonImage(Sprite newImage)
     {
