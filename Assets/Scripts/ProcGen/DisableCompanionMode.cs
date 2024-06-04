@@ -2,18 +2,14 @@ using UnityEngine;
 
 public class DisableCompanionMode : MonoBehaviour
 {
-    private PlayerManager playerManager;
+    public PlayerManager playerManager;
 
-    private void Start()
+     void Update()
     {
-        playerManager = PlayerManager.instance;
-        if (playerManager != null)
-        {
-            playerManager.CompanionMode = false;
-        }
-        else
-        {
-            Debug.LogError("PlayerManager instance not found.");
-        }
+            if(playerManager.CompanionMode == true)
+            {
+                playerManager.CompanionMode = false;
+                Debug.Log("Companion Mode not allowed in time trial.");
+            }
     }
 }
