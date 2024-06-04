@@ -65,13 +65,12 @@ jobs:
           targetPlatform: StandaloneWindows64
           chownFilesTo: "user:group"
           buildName: Crabity
-          buildsPath: build
 
       # Output to build folder
       - uses: actions/upload-artifact@v4
         with:
           name: crabity-win64
-          path: build/Crabity
+          path: build/StandaloneWindows64
 
   buildMacOS:
     name: Build for MacOS 🍎
@@ -103,10 +102,9 @@ jobs:
           targetPlatform: StandaloneOSX
           chownFilesTo: "user:group"
           buildName: Crabity
-          buildsPath: build
   
       # Output to build folder
       - uses: actions/upload-artifact@v4
         with:
           name: crabity-macos
-          path: build/Crabity
+          path: build/StandaloneOSX
