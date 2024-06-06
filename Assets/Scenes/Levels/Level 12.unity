@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.06612105, g: 0.06102059, b: 0.22327533, a: 1}
+  m_IndirectSpecularColor: {r: 0.06609449, g: 0.061003074, b: 0.22326827, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2706,7 +2706,7 @@ Camera:
     height: 1
   near clip plane: 24
   far clip plane: 1000
-  field of view: 15
+  field of view: 30
   orthographic: 0
   orthographic size: 15
   m_Depth: -1
@@ -2752,8 +2752,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1664349656}
-  offset: {x: 0, y: 0, z: -75}
-  smoothTime: 0.2
+  offset: {x: 0, y: 0, z: -50}
+  smoothTime: 0.25
 --- !u!1 &352132032
 GameObject:
   m_ObjectHideFlags: 0
@@ -10354,8 +10354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets:
   - {fileID: 140518151}
-  offset: {x: 0, y: 0, z: -75}
-  smoothTime: 0.2
+  offset: {x: 0, y: 0, z: -50}
+  smoothTime: 0.25
   mainCamera: {fileID: 1269478660}
 --- !u!114 &1269478664
 MonoBehaviour:
@@ -13094,7 +13094,7 @@ Camera:
     height: 1
   near clip plane: 24
   far clip plane: 1000
-  field of view: 15
+  field of view: 30
   orthographic: 0
   orthographic size: 15
   m_Depth: -1
@@ -13125,8 +13125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 140518151}
-  offset: {x: 0, y: 0, z: -75}
-  smoothTime: 0.2
+  offset: {x: 0, y: 0, z: -50}
+  smoothTime: 0.25
 --- !u!1 &1519486900
 GameObject:
   m_ObjectHideFlags: 0

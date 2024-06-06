@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.06612105, g: 0.06102059, b: 0.22327533, a: 1}
+  m_IndirectSpecularColor: {r: 0.06609449, g: 0.061003074, b: 0.22326827, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8683,7 +8683,7 @@ Camera:
     height: 1
   near clip plane: 24
   far clip plane: 1000
-  field of view: 15
+  field of view: 30
   orthographic: 0
   orthographic size: 15
   m_Depth: -1
@@ -8714,8 +8714,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1907568114}
-  offset: {x: 0, y: 0, z: -75}
-  smoothTime: 0.2
+  offset: {x: 0, y: 0, z: -50}
+  smoothTime: 0.25
 --- !u!114 &1843045384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9529,7 +9529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets:
   - {fileID: 1907568114}
-  offset: {x: 0, y: 0, z: -75}
+  offset: {x: 0, y: 0, z: -50}
   smoothTime: 0.2
   mainCamera: {fileID: 1933518615}
 --- !u!114 &1933518611
@@ -10827,7 +10827,7 @@ Camera:
     height: 1
   near clip plane: 24
   far clip plane: 1000
-  field of view: 15
+  field of view: 30
   orthographic: 0
   orthographic size: 15
   m_Depth: -1
@@ -10858,8 +10858,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2049194208}
-  offset: {x: 0, y: 0, z: -75}
-  smoothTime: 0.2
+  offset: {x: 0, y: 0, z: -50}
+  smoothTime: 0.25
 --- !u!114 &2114699172
 MonoBehaviour:
   m_ObjectHideFlags: 0

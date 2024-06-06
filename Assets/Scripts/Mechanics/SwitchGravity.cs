@@ -11,15 +11,16 @@ public class SwitchGravity : MonoBehaviour
     [SerializeField] private List<AudioClip> GravitySounds;
     private AudioSource Source;
 
-
     [Header ("CooldownUI")]
     [SerializeField] private Image imageCooldown;
     [SerializeField] private TMP_Text textCooldown;
 
-
     [Header("Gravity")]
     public float gravityScale = 5.0f;
     public float gravity = 9.81f;
+
+    [Header("Movement Script")]
+    [SerializeField] private Movement movement;
 
     private Vector3 gravityDirection = Vector3.zero;
     public Vector3 newGravity { get; private set; }
@@ -46,9 +47,10 @@ public class SwitchGravity : MonoBehaviour
     private bool playerOne;
     private bool playerTwo;
     private bool isGrounded;
+    private bool gravityOnCooldown;
 
-    //Cooldown Script
-    [SerializeField] private CoolDown cooldown;
+    //Cooldown UI Script
+    // [SerializeField] private CoolDown cooldown;
 
     void Start()
     {
@@ -64,42 +66,33 @@ public class SwitchGravity : MonoBehaviour
 
     void Update()
     {
-        isGrounded = gameObject.GetComponent<Movement>().isGrounded;
-        // Check if player is on mac
-        bool isOnMac = SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX;
-        bool rightHeld = isOnMac ? Input.GetKey(KeyCode.RightAlt) : Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.RightControl);
-        bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
-
-        if (rightHeld || leftHeld)
-        {
-            ChangeGravity();
-        }
-
-        float timer = cooldown._nextFireTime - Time.time;
-        if (!cooldown.IsCoolingDown) 
-        {
-            textCooldown.gameObject.SetActive(false);
-        }
-        else if (timer > 0)
-        {
-            textCooldown.text = Mathf.RoundToInt(timer).ToString();
-            imageCooldown.fillAmount = timer / cooldown.cooldownTime; 
-        }
+        // float timer = cooldown._nextFireTime - Time.time;
+        // if (!cooldown.IsCoolingDown) 
+        // {
+        //     textCooldown.gameObject.SetActive(false);
+        // }
+        // else if (timer > 0)
+        // {
+        //     textCooldown.text = Mathf.RoundToInt(timer).ToString();
+        //     imageCooldown.fillAmount = timer / cooldown.cooldownTime; 
+        // }
     }
 
     private void FixedUpdate()
     {
+        isGrounded = movement.IsGrounded();
+        gravityOnCooldown = movement.gravityOnCooldown;
         if (gravityDirection != Vector3.zero)
         {
             UpdateGravity(gravityDirection);
             gravityDirection = Vector3.zero;
         }
+
     }
 
-    private void ChangeGravity()
+    public void ChangeGravity()
     {
-        if (!isGrounded) return;
-
+        if (gravityOnCooldown) return;
         // Determine which keymap to use based on player selection
         Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
 
@@ -108,7 +101,8 @@ public class SwitchGravity : MonoBehaviour
         {
             if (Input.GetKeyDown(entry.Key))
             {
-                if (cooldown.IsCoolingDown) return;
+                gravityOnCooldown = true;
+                // if (cooldown.IsCoolingDown) return;
 
                 gravityDirection = entry.Value;
 
@@ -117,9 +111,9 @@ public class SwitchGravity : MonoBehaviour
 
                 isGrounded = false;
 
-                //Cooldown
-                cooldown.StartCooldown();
-                textCooldown.gameObject.SetActive(true);
+                //Cooldown UI
+                // cooldown.StartCooldown();
+                // textCooldown.gameObject.SetActive(true);
 
                 // Update gravity switch count
                 gravitySwitchCount += 1;

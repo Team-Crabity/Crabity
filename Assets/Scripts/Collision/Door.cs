@@ -40,7 +40,7 @@ public class Door : MonoBehaviour
         // send number of gravity switches
         CustomEvent gravitySwitchesEvent = new CustomEvent("gravitySwitch") {
             {"levelName", s.name},
-            {"gravitySwitchCount", PlayerManager.instance.playerOne.GetComponent<SwitchGravity>().gravitySwitchCount},
+            {"gravitySwitchCount", PlayerManager.instance.playerOne.GetComponent<Movement>().gravitySwitchCount},
             {"playerNum", 1},
         };
         AnalyticsService.Instance.RecordEvent(gravitySwitchesEvent);
