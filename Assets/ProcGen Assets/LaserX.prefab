@@ -40,9 +40,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8264301553289787901}
     m_Modifications:
+    - target: {fileID: 1520610245710486234, guid: 41a28d816d529a74eb6ff431a3b28504, type: 3}
+      propertyPath: laserLifetime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3168835667587842167, guid: 41a28d816d529a74eb6ff431a3b28504, type: 3}
       propertyPath: m_Name
       value: LaserTrapX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4648696492615228722, guid: 41a28d816d529a74eb6ff431a3b28504, type: 3}
+      propertyPath: maxDist
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4648696492615228722, guid: 41a28d816d529a74eb6ff431a3b28504, type: 3}
+      propertyPath: VolumeAmplifier
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6738858342782726246, guid: 41a28d816d529a74eb6ff431a3b28504, type: 3}
       propertyPath: m_LocalPosition.x

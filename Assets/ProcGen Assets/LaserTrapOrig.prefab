@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6738858342782726246}
-  - component: {fileID: 1520610245710486234}
+  - component: {fileID: 2028927781988583320}
   - component: {fileID: 4648696492615228722}
   - component: {fileID: 2502295267480803645}
   m_Layer: 0
@@ -142,7 +142,7 @@ Transform:
   - {fileID: 757329032237572670}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &1520610245710486234
+--- !u!114 &2028927781988583320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,16 +151,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3168835667587842167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9052db62e2454a4e9169690ba586267, type: 3}
+  m_Script: {fileID: 11500000, guid: ac094aaf6040b46428321a93acdc9ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IdleSound:
-  - {fileID: 8300000, guid: 03c46a32657eb3a4daecc1a316312c24, type: 3}
-  - {fileID: 8300000, guid: e91da8556db345a48a67c0b9a31bb001, type: 3}
-  - {fileID: 8300000, guid: d6281fa2c45515b458f354a82f2936ed, type: 3}
+  - {fileID: 8300000, guid: 4f91a0e3369493e4d811dcb93383bfef, type: 3}
   laser: {fileID: 5770418035098333814}
-  laserLifetime: 2
-  respawnInterval: 3
+  minLaserLifetime: 1
+  maxLaserLifetime: 5
+  minRespawnInterval: 1
+  maxRespawnInterval: 5
   animationDuration: 0.15
 --- !u!114 &4648696492615228722
 MonoBehaviour:
@@ -180,7 +180,7 @@ MonoBehaviour:
   TargetObject: {fileID: 8673761503654335504}
   VolumeAmplifier: 5
   maxDist: 20
-  finalVol: 0
+  finalVol: 1
 --- !u!82 &2502295267480803645
 AudioSource:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ AudioSource:
   m_GameObject: {fileID: 3168835667587842167}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7128067719386893152, guid: 204ae77320b536d459d12c2126255a73, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
