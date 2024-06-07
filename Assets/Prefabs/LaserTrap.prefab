@@ -177,9 +177,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   TargetObject: {fileID: 8673761503654335504}
-  VolumeAmplifier: 0
-  maxDist: 20
-  finalVol: 1
+  finalVol: 0
+  EnteredElse: 0
 --- !u!82 &2502295267480803645
 AudioSource:
   m_ObjectHideFlags: 0
@@ -192,7 +191,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -7128067719386893152, guid: 204ae77320b536d459d12c2126255a73, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -22,6 +22,7 @@ public class CollisionDetect : MonoBehaviour
             }
             else {
                 Source.clip = RespawnSound;
+                Source.pitch = (1f);
                 Source.volume = (1f);
                 Source.Play();
             }
@@ -31,6 +32,7 @@ public class CollisionDetect : MonoBehaviour
     IEnumerator playDeathSound()
         {
             Source.clip = DeathSound;
+            Source.pitch = (1f);
             Source.volume = (0.6f);
             Source.Play();
             yield return new WaitForSeconds(0.2f);

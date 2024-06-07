@@ -8,15 +8,21 @@ public class EDAudio : MonoBehaviour //Its called ED bc I cant use 3d
     [SerializeField] private List<GameObject> ObjList;
     [SerializeField] private GameObject TargetObject;
     private AudioSource Source;
-    [SerializeField] private float VolumeAmplifier;
-    [SerializeField] private float maxDist;
-    public float finalVol;
-
+    private float maxDist = 20f;
+    [SerializeField] private float finalVol;
+    
     void Start()    
     {
         Source = GetComponent<AudioSource>();
     }
     void Update()
+    {
+        if (!inRange(ObjList[0], TargetObject) || !inRange(ObjList[1], TargetObject))
+        {
+            finalVol = 0;
+        }
+    }
+    void FixedUpdate()
     {
         float Vol1 = AdjustVolume(ObjList[0], TargetObject);
         float Vol2 = AdjustVolume(ObjList[1], TargetObject);
@@ -35,6 +41,7 @@ public class EDAudio : MonoBehaviour //Its called ED bc I cant use 3d
         }
         else
         {
+            finalVol = 0;
             Source.volume = 0;
             Source.Stop();
         }
@@ -50,11 +57,16 @@ public class EDAudio : MonoBehaviour //Its called ED bc I cant use 3d
     {
         float volume = 0;
         float curDistance = CheckDistance(MovingObj.transform.position, StillObj.transform.position);
-        Debug.Log("Current Distance is " + curDistance);
         if (curDistance < maxDist) 
         {
-            volume = VolumeAmplifier * Mathf.Clamp(1f / curDistance, 0f, 1f); 
+            //Debug.Log("Current distance is " + curDistance);
+            volume = 5 * Mathf.Clamp(1f / curDistance, 0f, 1f); //5 IS A MAGIC NUMBER
         }
         return volume;
+    }
+    private bool inRange(GameObject MovingObj, GameObject StillObj)
+    {
+        float curDistance = CheckDistance(MovingObj.transform.position, StillObj.transform.position);
+        return curDistance < maxDist;
     }
 }
