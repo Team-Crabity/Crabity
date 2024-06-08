@@ -71,7 +71,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 24
+  near clip plane: 15
   far clip plane: 1000
   field of view: 30
   orthographic: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets:
   - {fileID: 0}
-  offset: {x: 0, y: 0, z: -75}
+  offset: {x: 0, y: 0, z: -50}
   smoothTime: 0.2
   mainCamera: {fileID: 3356290035432691620}
 --- !u!82 &4544047717365840890
@@ -333,6 +333,8 @@ MonoBehaviour:
   xMax: 0.95
   yMin: 0
   yMax: 1
+  zMin: 0.1
+  zMax: 0.9
 --- !u!1 &950553495739967784
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +435,7 @@ Camera:
     y: 0
     width: 0.5
     height: 1
-  near clip plane: 24
+  near clip plane: 15
   far clip plane: 1000
   field of view: 30
   orthographic: 0
@@ -600,7 +602,7 @@ Camera:
     y: 0
     width: 0.5
     height: 1
-  near clip plane: 24
+  near clip plane: 15
   far clip plane: 1000
   field of view: 30
   orthographic: 0

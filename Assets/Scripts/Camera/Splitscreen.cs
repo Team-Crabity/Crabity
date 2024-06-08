@@ -17,8 +17,19 @@ public class Splitscreen : MonoBehaviour
     public float xMax = 0.95f;
     public float yMin = 0.2f;
     public float yMax = 0.8f;
+    public float zMin = 0.1f;
+    public float zMax = 0.9f;
 
-    // Update is called once per frame
+    private Transform playerOneTransform;
+    private Transform playerTwoTransform;
+    private Quaternion originalRotation;
+
+    void Start()
+    {
+        playerOneTransform = PlayerManager.instance.playerOne.transform;
+        playerTwoTransform = PlayerManager.instance.playerTwo.transform;
+    }
+
     void LateUpdate()
     {
         if (PlayerManager.instance.CompanionMode)

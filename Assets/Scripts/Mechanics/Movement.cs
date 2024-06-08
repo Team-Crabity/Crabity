@@ -63,7 +63,6 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
-
         Source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         Physics.gravity = new Vector3(0, -9.81f * gravityScale, 0);
@@ -171,7 +170,6 @@ public class Movement : MonoBehaviour
         player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 1.0f);
     }
 
-
     public void MovePlayer()
     {
         Vector3 movementDirection = Vector3.zero;
@@ -230,22 +228,15 @@ public class Movement : MonoBehaviour
     {
         if (!isJumping && jumpCounter == 1) // Check to make sure the player isn't already jumping
         {
-            Debug.Log("Jumping");
             jumpCounter = 0;
             isJumping = true;
             Vector3 jumpDirection = -Physics.gravity.normalized;
-            Debug.Log("Jumping normally");
             if (localGravityZone)
             {
-                Debug.Log("Jumping in local gravity zone");
                 jumpDirection = Vector3.up;
             }
             // rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
             rb.velocity = jumpDirection * jumpMultiplier;
-
-            //Q: what other ways can we implement the jump besides AddForce
-            //A: We can use rb.velocity = jumpDirection * jumpMultiplier
-
 
             // Stop the walking sound + play the jump sound
             Source.clip = JumpSound;
@@ -261,9 +252,23 @@ public class Movement : MonoBehaviour
         layerMask = ~layerMask;
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + transform.TransformDirection(Vector3.down) * 1f;
+
+        // Allow players to stand on top of each other and carry each other around, currently WIP
+        // if (Physics.Raycast(rayOrigin, transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) && hit.collider.CompareTag("Player"))
+        // {
+        //     // Temporarily attach the player the object until it moves off
+        //     transform.parent = hit.collider.transform;
+        //     Debug.Log("Player is on top of another player");
+        // }
+        // else
+        // {
+        //     transform.parent = RotatingObjects.transform;
+        // }
+
         Debug.DrawRay(rayOrigin, transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
         Debug.DrawRay(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
         Debug.DrawRay(rayOrigin - new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
+
         if (Physics.Raycast(rayOrigin, transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
          Physics.Raycast(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
          Physics.Raycast(rayOrigin - new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask))
@@ -276,32 +281,11 @@ public class Movement : MonoBehaviour
         return false;
     }
 
+    // Adjust the collider bounds to prevent the player from falling through the floor by adding a skin width
     void AdjustColliderBounds()
     {
         Bounds bounds;
         bounds = collider.bounds;
         bounds.Expand(-2 * skinWidth);
     }
-
-    // Allow crabs to carry each other when on top of each other
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Player"))
-    //     {
-    //         // Set the player as a parent of the player obj
-    //         transform.parent = collision.transform;
-    //     }
-    // }
-
-    // private void OnCollisionExit(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Player"))
-    //     {
-    //         if(GameObject.Find("RotatingObjects") != null)
-    //         {
-    //             // Remove the player as a parent of the player obj and set it to the RotatingObjects game obj
-    //             transform.parent = RotatingObjects.transform;
-    //         }
-    //     }
-    // }
 }
