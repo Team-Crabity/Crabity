@@ -9882,7 +9882,7 @@ MonoBehaviour:
   jumpCounter: 1
   isJumping: 0
   isGrounded: 0
-  jumpForce: 7.071068
+  jumpForce: 15
   collider: {fileID: 1907568121}
   skinWidth: 0.02
   JumpSound: {fileID: 8300000, guid: 621e397777d71144f8e1ba38c69c013f, type: 3}
@@ -10817,13 +10817,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4176160362956618840, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4234509124564691466, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
       propertyPath: m_Name
       value: PlayerTwo
       objectReference: {fileID: 0}
     - target: {fileID: 4234509124564691466, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5289475256296511263, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
       propertyPath: textCooldown
@@ -10836,7 +10840,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4234509124564691466, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 2049194220}
   m_SourcePrefab: {fileID: 100100000, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
 --- !u!4 &2049194208 stripped
 Transform:
@@ -10848,6 +10855,38 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4234509124564691466, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
   m_PrefabInstance: {fileID: 2049194207}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &2049194215 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3470659437728897808, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
+  m_PrefabInstance: {fileID: 2049194207}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049194220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049194209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4528c2898c234cb67c2a3e398b2b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 15
+  groundDrag: 0.5
+  airDrag: 0.25
+  gravityOnCooldown: 0
+  localGravityZone: 0
+  gravitySwitchCount: 0
+  RotatingObjects: {fileID: 2036994913}
+  jumpCounter: 1
+  isJumping: 0
+  isGrounded: 0
+  jumpForce: 15
+  collider: {fileID: 2049194215}
+  skinWidth: 0.02
+  JumpSound: {fileID: 8300000, guid: 621e397777d71144f8e1ba38c69c013f, type: 3}
+  WalkingSounds: []
 --- !u!1 &2078819138
 GameObject:
   m_ObjectHideFlags: 0

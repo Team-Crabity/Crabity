@@ -39,6 +39,12 @@ public class NewMove : MonoBehaviour
     private KeyCode right;
     private KeyCode jumpKey;
 
+    private KeyCode upPlayerTwo;
+    private KeyCode downPlayerTwo;
+    private KeyCode leftPlayerTwo;
+    private KeyCode rightPlayerTwo;
+    private KeyCode jumpKeyPlayerTwo;
+
     private bool upGravity = false;
     private bool downGravity = true;
     private bool leftGravity = false;
@@ -71,17 +77,18 @@ public class NewMove : MonoBehaviour
             left = KeyCode.A;
             down = KeyCode.S;
             right = KeyCode.D;
+            jumpKey = KeyCode.W;
         }
         else if (PlayerManager.instance.IsPlayerTwo(gameObject))
         {
-            up = KeyCode.UpArrow;
-            left = KeyCode.LeftArrow;
-            down = KeyCode.DownArrow;
-            right = KeyCode.RightArrow;
+            upPlayerTwo = KeyCode.UpArrow;
+            leftPlayerTwo = KeyCode.LeftArrow;
+            downPlayerTwo = KeyCode.DownArrow;
+            rightPlayerTwo = KeyCode.RightArrow;
+            jumpKeyPlayerTwo = KeyCode.UpArrow;
         }
-
-        jumpKey = up; // Set initial jump key
     }
+
 
     private void FixedUpdate()
     {
@@ -124,7 +131,7 @@ public class NewMove : MonoBehaviour
         {
             ChangeGravity();
         }
-        else if (Input.GetKeyDown(jumpKey))
+        else if (Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpKeyPlayerTwo))
         {
             PerformJump();
         }
@@ -146,7 +153,6 @@ public class NewMove : MonoBehaviour
             {
                 gravityOnCooldown = true;
 
-                // Handle gravity direction flags
                 if (entry.Value == Vector3.up)
                 {
                     upGravity = true;
@@ -191,7 +197,6 @@ public class NewMove : MonoBehaviour
 
     private void UpdateKeyMappings(Vector3 newGravityDirection)
     {
-        // Clear the existing key mappings
         playerOneKeyMap.Clear();
         playerTwoKeyMap.Clear();
 
@@ -205,6 +210,15 @@ public class NewMove : MonoBehaviour
             playerOneKeyMap.Add(jumpKey, -Vector3.up);
             playerOneKeyMap.Add(left, -Vector3.right);
             playerOneKeyMap.Add(right, Vector3.right);
+
+            upPlayerTwo = KeyCode.UpArrow;
+            leftPlayerTwo = KeyCode.LeftArrow;
+            rightPlayerTwo = KeyCode.RightArrow;
+            jumpKeyPlayerTwo = KeyCode.DownArrow;
+            playerTwoKeyMap.Add(upPlayerTwo, Vector3.up);
+            playerTwoKeyMap.Add(leftPlayerTwo, -Vector3.right);
+            playerTwoKeyMap.Add(rightPlayerTwo, Vector3.right);
+            playerTwoKeyMap.Add(jumpKeyPlayerTwo, -Vector3.up);
         }
         else if (newGravityDirection == Vector3.down)
         {
@@ -216,6 +230,15 @@ public class NewMove : MonoBehaviour
             playerOneKeyMap.Add(down, -Vector3.up);
             playerOneKeyMap.Add(left, -Vector3.right);
             playerOneKeyMap.Add(right, Vector3.right);
+
+            downPlayerTwo = KeyCode.DownArrow;
+            leftPlayerTwo = KeyCode.LeftArrow;
+            rightPlayerTwo = KeyCode.RightArrow;
+            jumpKeyPlayerTwo = KeyCode.UpArrow;
+            playerTwoKeyMap.Add(jumpKeyPlayerTwo, Vector3.up);
+            playerTwoKeyMap.Add(downPlayerTwo, -Vector3.up);
+            playerTwoKeyMap.Add(leftPlayerTwo, -Vector3.right);
+            playerTwoKeyMap.Add(rightPlayerTwo, Vector3.right);
         }
         else if (newGravityDirection == Vector3.right)
         {
@@ -227,6 +250,15 @@ public class NewMove : MonoBehaviour
             playerOneKeyMap.Add(down, -Vector3.up);
             playerOneKeyMap.Add(jumpKey, -Vector3.right);
             playerOneKeyMap.Add(right, Vector3.right);
+
+            upPlayerTwo = KeyCode.UpArrow;
+            downPlayerTwo = KeyCode.DownArrow;
+            rightPlayerTwo = KeyCode.RightArrow;
+            jumpKeyPlayerTwo = KeyCode.LeftArrow;
+            playerTwoKeyMap.Add(upPlayerTwo, Vector3.up);
+            playerTwoKeyMap.Add(downPlayerTwo, -Vector3.up);
+            playerTwoKeyMap.Add(jumpKeyPlayerTwo, -Vector3.right);
+            playerTwoKeyMap.Add(rightPlayerTwo, Vector3.right);
         }
         else if (newGravityDirection == Vector3.left)
         {
@@ -238,34 +270,39 @@ public class NewMove : MonoBehaviour
             playerOneKeyMap.Add(down, -Vector3.up);
             playerOneKeyMap.Add(left, -Vector3.right);
             playerOneKeyMap.Add(jumpKey, Vector3.right);
+
+            upPlayerTwo = KeyCode.UpArrow;
+            downPlayerTwo = KeyCode.DownArrow;
+            leftPlayerTwo = KeyCode.LeftArrow;
+            jumpKeyPlayerTwo = KeyCode.RightArrow;
+            playerTwoKeyMap.Add(upPlayerTwo, Vector3.up);
+            playerTwoKeyMap.Add(downPlayerTwo, -Vector3.up);
+            playerTwoKeyMap.Add(leftPlayerTwo, -Vector3.right);
+            playerTwoKeyMap.Add(jumpKeyPlayerTwo, Vector3.right);
         }
 
-        playerTwoKeyMap.Add(up, Vector3.up);
-        playerTwoKeyMap.Add(down, -Vector3.up);
-        playerTwoKeyMap.Add(left, -Vector3.right);
-        playerTwoKeyMap.Add(right, Vector3.right);
     }
+
 
     private void UpdateGravity(Vector3 direction)
     {
-        // Calculate new gravity vector based on direction
         Vector3 newGravity = Vector3.zero;
 
         if (direction == Vector3.up)
         {
-            newGravity = new Vector3(0, 9.81f, 0); // Gravity along negative Y-axis
+            newGravity = new Vector3(0, 9.81f, 0);
         }
         else if (direction == Vector3.down)
         {
-            newGravity = new Vector3(0, -9.81f, 0); // Gravity along positive Y-axis
+            newGravity = new Vector3(0, -9.81f, 0);
         }
         else if (direction == Vector3.left)
         {
-            newGravity = new Vector3(-9.81f, 0, 0); // Gravity along positive X-axis
+            newGravity = new Vector3(-9.81f, 0, 0);
         }
         else if (direction == Vector3.right)
         {
-            newGravity = new Vector3(9.81f, 0, 0); // Gravity along negative X-axis
+            newGravity = new Vector3(9.81f, 0, 0);
         }
 
         Physics.gravity = newGravity;
@@ -276,42 +313,36 @@ public class NewMove : MonoBehaviour
         Quaternion targetRotation = Quaternion.FromToRotation(player.transform.up, -gravityDirection) * player.transform.rotation;
         player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 1.0f);
     }
+
     public void MovePlayer()
     {
         Vector3 movementDirection = Vector3.zero;
         float effectiveSpeed = speed * (isGrounded ? (1 - groundDrag) : (1 - airDrag));
 
-        // Adjust movement direction based on the current gravity direction
-        foreach (var mapping in playerOneKeyMap)
+        if (PlayerManager.instance.IsPlayerOne(gameObject))
         {
-            if (Input.GetKey(mapping.Key) && mapping.Key != jumpKey)
+            foreach (var mapping in playerOneKeyMap)
             {
-                // For up/down gravity, just add the mapped direction
-                if (upGravity || downGravity)
+                if (Input.GetKey(mapping.Key) && mapping.Key != jumpKey)
                 {
                     movementDirection += mapping.Value;
                 }
-                else if (leftGravity || rightGravity)
+            }
+        }
+        else if (PlayerManager.instance.IsPlayerTwo(gameObject))
+        {
+            foreach (var mapping in playerTwoKeyMap)
+            {
+                if (Input.GetKey(mapping.Key) && mapping.Key != jumpKeyPlayerTwo)
                 {
-                    // For left/right gravity, adjust movement along x-axis or gravity direction
-                    if (mapping.Value == Vector3.left || mapping.Value == Vector3.right)
-                    {
-                        movementDirection += gravityDirection * mapping.Value.magnitude;
-
-                    }
-                    else
-                    {
-                        movementDirection += mapping.Value;
-                    }
+                    movementDirection += mapping.Value;
                 }
             }
         }
 
-        // Normalize movement direction and apply speed
         movementDirection.Normalize();
         movementDirection *= effectiveSpeed;
 
-        // Apply movement to the rigidbody based on gravity direction
         if (upGravity || downGravity)
         {
             rb.velocity = new Vector3(movementDirection.x, rb.velocity.y, movementDirection.z);
@@ -326,21 +357,21 @@ public class NewMove : MonoBehaviour
     {
         if (isGrounded)
         {
-            if (upGravity == true)
+            if (upGravity)
             {
                 rb.velocity += Vector3.down * jumpForce;
             }
-            else if (rightGravity == true)
+            else if (rightGravity)
             {
                 rb.velocity += Vector3.left * jumpForce;
             }
-            else if (leftGravity == true)
+            else if (leftGravity)
             {
                 rb.velocity += Vector3.right * jumpForce;
             }
-            else if(downGravity == true) // downGravity
+            else if (downGravity)
             {
-                if(gravitySwitchCount == 0)
+                if (gravitySwitchCount == 0)
                 {
                     rb.velocity += Vector3.up * 16f;
                 }
@@ -348,7 +379,6 @@ public class NewMove : MonoBehaviour
                 {
                     rb.velocity += Vector3.up * jumpForce;
                 }
-
             }
             Source.PlayOneShot(JumpSound);
         }
@@ -375,3 +405,5 @@ public class NewMove : MonoBehaviour
         return false;
     }
 }
+
+
