@@ -1,31 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class Movement : MonoBehaviour
 {
     [Header("Movement")]
-    [Range(5f, 20f)] public float speed = 15.0f; // Default speed value
-    [Range(0f, 1f)] public float groundDrag = 0.5f; // Ground drag is more than air drag
-    [Range(0f, 0.5f)] public float airDrag = 0.25f; // Air drag is less than ground drag
+    [Range(5f, 20f)] public float speed = 15.0f;
+    [Range(0f, 1f)] public float groundDrag = 0.5f;
+    [Range(0f, 0.5f)] public float airDrag = 0.25f;
 
     [Header("Gravity")]
-    public float gravityScale = 5.0f; // Default gravity scale value
-    public float gravity = 9.81f; // Default gravity value
-    public bool gravityOnCooldown = false; // Check if gravity switch is on cooldown
-    public bool localGravityZone; // Check if player is in a local gravity zone
-    public int gravitySwitchCount = 0; // Keep track of number of gravity switches
+    public bool gravityOnCooldown = false;
+    public bool localGravityZone;
+    public int gravitySwitchCount = 0;
 
     [Header("RotatingObjects Parent")]
-    public GameObject RotatingObjects; // This would be used to reset the parent of the player back to the RotatingObjects game object
+    public GameObject RotatingObjects;
 
     [Header("Jumping")]
-    public int jumpCounter = 1; // Number of jumps allowed
-    public float jumpMultiplier = 10.0f; // Jump force multiplier
-    public bool isJumping; // Check if player is jumping
-    public bool isGrounded; // Check if player is grounded
+    public int jumpCounter = 1;
+    public float jumpMultiplier = 1.0f;
+    public bool isJumping;
+    public bool isGrounded;
 
     [Header("Colliders")]
     public Collider collider;
@@ -37,15 +32,18 @@ public class Movement : MonoBehaviour
     private AudioSource Source;
 
     private Rigidbody rb;
-    private Vector3 gravityDirection = Vector3.zero;
-    private Vector3 jumpDirection = Vector3.zero;
+    private Vector3 gravityDirection = Vector3.down;
     private KeyCode up;
     private KeyCode down;
     private KeyCode left;
     private KeyCode right;
+    private KeyCode jumpKey;
 
+    private bool upGravity = false;
+    private bool downGravity = true;
+    private bool leftGravity = false;
+    private bool rightGravity = false;
 
-    // Keymaps for players to be able to switch gravity
     private Dictionary<KeyCode, Vector3> playerOneKeyMap = new Dictionary<KeyCode, Vector3>
     {
         { KeyCode.W, Vector3.up },
@@ -65,18 +63,8 @@ public class Movement : MonoBehaviour
     {
         Source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, -9.81f * gravityScale, 0);
+        Physics.gravity = new Vector3(0, -9.81f, 0); // Default gravity
 
-        // textCooldown.gameObject.SetActive(false);
-        // imageCooldown.fillAmount = 0.0f;
-
-        // Default keybinds if player is not assigned
-        up = KeyCode.W;
-        left = KeyCode.A;
-        down = KeyCode.S;
-        right = KeyCode.D;
-
-        //Set keybinds based on player selection
         if (PlayerManager.instance.IsPlayerOne(gameObject))
         {
             up = KeyCode.W;
@@ -91,16 +79,43 @@ public class Movement : MonoBehaviour
             down = KeyCode.DownArrow;
             right = KeyCode.RightArrow;
         }
+
+        jumpKey = up; // Set initial jump key
     }
 
     private void FixedUpdate()
     {
         isGrounded = IsGrounded();
         HandleInput();
-        // if (!IsOwner) return;
+
+        if (!isGrounded && !isJumping)
+        {
+            rb.AddForce(Physics.gravity, ForceMode.Acceleration);
+        }
     }
 
-    private void HandleInput()
+    void Update()
+    {
+        RoundRotationToNearest90Degrees();
+    }
+
+    private void RoundRotationToNearest90Degrees()
+    {
+        Vector3 euler = transform.rotation.eulerAngles;
+
+        euler.x = RoundToNearest90(euler.x);
+        euler.y = RoundToNearest90(euler.y);
+        euler.z = RoundToNearest90(euler.z);
+
+        transform.rotation = Quaternion.Euler(euler);
+    }
+
+    private float RoundToNearest90(float angle)
+    {
+        return Mathf.Round(angle / 90.0f) * 90.0f;
+    }
+
+    public void HandleInput()
     {
         bool rightHeld = Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.RightAlt);
         bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
@@ -115,7 +130,7 @@ public class Movement : MonoBehaviour
         {
             ChangeGravity();
         }
-        else if (!rightHeld || !leftHeld)
+        else
         {
             MovePlayer();
         }
@@ -124,48 +139,150 @@ public class Movement : MonoBehaviour
     public void ChangeGravity()
     {
         if (gravityOnCooldown || localGravityZone) return;
-        // Determine which keymap to use based on player selection
+
         Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
 
-        // Check key presses and update grav direction
         foreach (var entry in currentKeyMap)
         {
-            if (Input.GetKey(entry.Key))
+            if (Input.GetKeyDown(entry.Key))
             {
                 gravityOnCooldown = true;
 
+                // Handle gravity direction flags
+                if (entry.Value == Vector3.up)
+                {
+                    upGravity = true;
+                    downGravity = false;
+                    leftGravity = false;
+                    rightGravity = false;
+                    Debug.Log("Gravity changed to Up");
+                }
+                else if (entry.Value == Vector3.down)
+                {
+                    downGravity = true;
+                    upGravity = false;
+                    leftGravity = false;
+                    rightGravity = false;
+                    Debug.Log("Gravity changed to Down");
+                }
+                else if (entry.Value == Vector3.left)
+                {
+                    leftGravity = true;
+                    rightGravity = false;
+                    upGravity = false;
+                    downGravity = false;
+                    Debug.Log("Gravity changed to Left");
+                }
+                else if (entry.Value == Vector3.right)
+                {
+                    rightGravity = true;
+                    leftGravity = false;
+                    upGravity = false;
+                    downGravity = false;
+                    Debug.Log("Gravity changed to Right");
+                }
+
                 gravityDirection = entry.Value;
-
-
                 RotatePlayer(PlayerManager.instance.playerOne);
                 RotatePlayer(PlayerManager.instance.playerTwo);
-
                 isGrounded = false;
-
-                // Cooldown UI
-                // cooldown.StartCooldown();
-                // textCooldown.gameObject.SetActive(true);
-
-                // Update gravity switch count
                 gravitySwitchCount += 1;
-
-                // Access child's GravitySounds script and use the PlayGravitySound method
-                // This is done to prevent the gravity sound from being cutoff from other sounds
                 GetComponentInChildren<GravitySounds>().PlayGravitySound();
+                UpdateKeyMappings(gravityDirection);
+                Debug.Log($"Gravity direction: {gravityDirection}");
                 break;
             }
         }
     }
 
+    private void UpdateKeyMappings(Vector3 newGravityDirection)
+    {
+        // Clear the existing key mappings
+        playerOneKeyMap.Clear();
+        playerTwoKeyMap.Clear();
+
+        if (newGravityDirection == Vector3.up)
+        {
+            up = KeyCode.W;
+            left = KeyCode.A;
+            right = KeyCode.D;
+            jumpKey = KeyCode.S;
+            playerOneKeyMap.Add(up, Vector3.up);
+            playerOneKeyMap.Add(jumpKey, -Vector3.up);
+            playerOneKeyMap.Add(left, -Vector3.right);
+            playerOneKeyMap.Add(right, Vector3.right);
+            Debug.Log($"Gravity direction: Up {Vector3.up}");
+        }
+        else if (newGravityDirection == Vector3.down)
+        {
+            down = KeyCode.S;
+            left = KeyCode.A;
+            right = KeyCode.D;
+            jumpKey = KeyCode.W;
+            playerOneKeyMap.Add(jumpKey, Vector3.up);
+            playerOneKeyMap.Add(down, -Vector3.up);
+            playerOneKeyMap.Add(left, -Vector3.right);
+            playerOneKeyMap.Add(right, Vector3.right);
+            Debug.Log($"Gravity direction: Down {Vector3.down}");
+        }
+        else if (newGravityDirection == Vector3.right)
+        {
+            up = KeyCode.W;
+            down = KeyCode.S;
+            right = KeyCode.D;
+            jumpKey = KeyCode.A;
+            playerOneKeyMap.Add(up, Vector3.up);
+            playerOneKeyMap.Add(down, -Vector3.up);
+            playerOneKeyMap.Add(jumpKey, -Vector3.right);
+            playerOneKeyMap.Add(right, Vector3.right);
+            Debug.Log($"Gravity direction: Right {Vector3.right}");
+        }
+        else if (newGravityDirection == Vector3.left)
+        {
+            up = KeyCode.W;
+            down = KeyCode.S;
+            left = KeyCode.A;
+            jumpKey = KeyCode.D;
+            playerOneKeyMap.Add(up, Vector3.up);
+            playerOneKeyMap.Add(down, -Vector3.up);
+            playerOneKeyMap.Add(left, -Vector3.right);
+            playerOneKeyMap.Add(jumpKey, Vector3.right);
+            Debug.Log($"Gravity direction: Left {Vector3.left}");
+        }
+
+        playerTwoKeyMap.Add(up, Vector3.up);
+        playerTwoKeyMap.Add(down, -Vector3.up);
+        playerTwoKeyMap.Add(left, -Vector3.right);
+        playerTwoKeyMap.Add(right, Vector3.right);
+    }
+
     private void UpdateGravity(Vector3 direction)
     {
-        Vector3 newGravity = direction * gravity * gravityScale;
+        // Calculate new gravity vector based on direction
+        Vector3 newGravity = Vector3.zero;
+
+        if (direction == Vector3.up)
+        {
+            newGravity = new Vector3(0, 9.81f, 0); // Gravity along negative Y-axis
+        }
+        else if (direction == Vector3.down)
+        {
+            newGravity = new Vector3(0, -9.81f, 0); // Gravity along positive Y-axis
+        }
+        else if (direction == Vector3.left)
+        {
+            newGravity = new Vector3(-9.81f, 0, 0); // Gravity along positive X-axis
+        }
+        else if (direction == Vector3.right)
+        {
+            newGravity = new Vector3(9.81f, 0, 0); // Gravity along negative X-axis
+        }
+
         Physics.gravity = newGravity;
     }
 
     private void RotatePlayer(GameObject player)
     {
-        // Rotate the player to match the new gravity direction
         Quaternion targetRotation = Quaternion.FromToRotation(player.transform.up, -gravityDirection) * player.transform.rotation;
         player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 1.0f);
     }
@@ -173,76 +290,112 @@ public class Movement : MonoBehaviour
     public void MovePlayer()
     {
         Vector3 movementDirection = Vector3.zero;
+        float effectiveSpeed = speed * (isGrounded ? (1 - groundDrag) : (1 - airDrag));
 
-        // More drag is applied when the player is in the air, less drag is applied when jumping or falling
-        float effectiveSpeed = speed * (isGrounded ? (1 - groundDrag) : (1 - airDrag)) * Time.deltaTime;
-
-        // Dictionary to map input keys to movement directions
-        var directionMappings = new Dictionary<KeyCode, Vector3>
+        // Check if jump key is pressed
+        if (Input.GetKeyDown(jumpKey))
         {
-            { up, Vector3.up },
-            { down, Vector3.down },
-            { left, Vector3.left },
-            { right, Vector3.right }
-        };
+            PerformJump();
+        }
 
-        foreach (var mapping in directionMappings)
+        // Adjust movement direction based on the current gravity direction
+        foreach (var mapping in playerOneKeyMap)
         {
-            if (Input.GetKey(mapping.Key))
+            // Adjust movement direction based on the current gravity direction
+            if (Input.GetKey(mapping.Key) && mapping.Key != jumpKey)
             {
-                // Check if the player is trying to jump
-                if (Physics.gravity.normalized == -mapping.Value && !localGravityZone)
+                if (upGravity)
                 {
-                    PerformJump();
+                    // For up gravity, A/D moves horizontally, W/S moves vertically
+                    if (mapping.Value == Vector3.left)
+                        movementDirection += Vector3.left;
+                    else if (mapping.Value == Vector3.right)
+                        movementDirection += Vector3.right;
+                    else if (mapping.Value == Vector3.up)
+                        movementDirection += Vector3.up;
+                    else if (mapping.Value == Vector3.down)
+                        movementDirection += Vector3.down;
                 }
-                else if (Physics.gravity.normalized != -mapping.Value && !localGravityZone)
+                else if (downGravity)
                 {
-                    // Add the movement direction to the player's current position
-                    movementDirection += mapping.Value * effectiveSpeed;
-                    if (isGrounded && !isJumping)
-                    {
-                        AudioClip clip = null;
-                        clip = WalkingSounds[Random.Range(0, WalkingSounds.Count)];
-                        Source.clip = clip;
-                        Source.volume = Random.Range(0.01f, 0.02f);
-                        Source.pitch = Random.Range(0.05f, 0.15f);
-                        Source.Play();
-                    }
+                    // For down gravity, A/D moves horizontally, W/S moves vertically (inverse)
+                    if (mapping.Value == Vector3.left)
+                        movementDirection += Vector3.right; // Move right for A
+                    else if (mapping.Value == Vector3.right)
+                        movementDirection += Vector3.left; // Move left for D
+                    else if (mapping.Value == Vector3.up)
+                        movementDirection += Vector3.down; // Move down for W
+                    else if (mapping.Value == Vector3.down)
+                        movementDirection += Vector3.up; // Move up for S
                 }
-                else if (localGravityZone && mapping.Value != Vector3.up)
+                else if (leftGravity)
                 {
-                    movementDirection += mapping.Value * effectiveSpeed;
+                    // For left gravity, W/S moves horizontally, A/D moves vertically
+                    if (mapping.Value == Vector3.up)
+                        movementDirection += Vector3.left; // Move left for W
+                    else if (mapping.Value == Vector3.down)
+                        movementDirection += Vector3.right; // Move right for S
+                    else if (mapping.Value == Vector3.left)
+                        movementDirection += Vector3.down;
+                    else if (mapping.Value == Vector3.right)
+                        movementDirection += Vector3.up;
                 }
-                else if (localGravityZone && mapping.Value == Vector3.up)
+                else if (rightGravity)
                 {
-                    PerformJump();
+                    // For right gravity, W/S moves horizontally, A/D moves vertically
+                    if (mapping.Value == Vector3.up)
+                        movementDirection += Vector3.right; // Move right for W
+                    else if (mapping.Value == Vector3.down)
+                        movementDirection += Vector3.left; // Move left for S
+                    else if (mapping.Value == Vector3.left)
+                        movementDirection += Vector3.up;
+                    else if (mapping.Value == Vector3.right)
+                        movementDirection += Vector3.down;
                 }
             }
         }
 
-        // Handle player movement
-        rb.MovePosition(transform.position + movementDirection);
+        // Normalize movement direction and apply speed
+        movementDirection.Normalize();
+        movementDirection *= effectiveSpeed;
+
+        // Apply movement to the rigidbody
+        rb.velocity = new Vector3(movementDirection.x, rb.velocity.y, movementDirection.z);
     }
+
+
+
 
     public void PerformJump()
     {
-        if (!isJumping && jumpCounter == 1) // Check to make sure the player isn't already jumping
+        if (isGrounded)
         {
-            jumpCounter = 0;
-            isJumping = true;
-            Vector3 jumpDirection = -Physics.gravity.normalized;
-            if (localGravityZone)
+            float jumpForce = Mathf.Sqrt(2 * jumpMultiplier * 9.81f); // Use Unity's default gravity value
+            if (upGravity == true)
             {
-                jumpDirection = Vector3.up;
+                Debug.Log($"up gravity!: {Vector3.down}");
+                rb.velocity += Vector3.down * jumpForce;
             }
-            // rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
-            rb.velocity = jumpDirection * jumpMultiplier;
-
-            // Stop the walking sound + play the jump sound
-            Source.clip = JumpSound;
-            Source.volume = (0.5f);
-            Source.pitch = Random.Range(0.9f, 1.1f);
-            Source.Play();
+            else if (rightGravity == true)
+            {
+                Debug.Log($"right gravity!: {Vector3.left}");
+                rb.velocity += Vector3.left * jumpForce;
+            }
+            else if (leftGravity == true)
+            {
+                Debug.Log($"left gravity!: {Vector3.right}");
+                rb.velocity += Vector3.right * jumpForce;
+            }
+            else // downGravity
+            {
+                Debug.Log($"down gravity!: {Vector3.up}");
+                rb.velocity += Vector3.up * jumpForce;
+            }
+            Source.PlayOneShot(JumpSound);
+        }
+        else
+        {
+            Debug.Log("Cannot jump, not grounded");
         }
     }
 
@@ -253,39 +406,17 @@ public class Movement : MonoBehaviour
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + transform.TransformDirection(Vector3.down) * 1f;
 
-        // Allow players to stand on top of each other and carry each other around, currently WIP
-        // if (Physics.Raycast(rayOrigin, transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) && hit.collider.CompareTag("Player"))
-        // {
-        //     // Temporarily attach the player the object until it moves off
-        //     transform.parent = hit.collider.transform;
-        //     Debug.Log("Player is on top of another player");
-        // }
-        // else
-        // {
-        //     transform.parent = RotatingObjects.transform;
-        // }
-
         Debug.DrawRay(rayOrigin, transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
         Debug.DrawRay(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
         Debug.DrawRay(rayOrigin - new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
 
         if (Physics.Raycast(rayOrigin, transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
-         Physics.Raycast(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
-         Physics.Raycast(rayOrigin - new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask))
+            Physics.Raycast(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
+            Physics.Raycast(rayOrigin - new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask))
         {
             gravityOnCooldown = false;
-            isJumping = false;
-            jumpCounter = 1;
             return true;
         }
         return false;
-    }
-
-    // Adjust the collider bounds to prevent the player from falling through the floor by adding a skin width
-    void AdjustColliderBounds()
-    {
-        Bounds bounds;
-        bounds = collider.bounds;
-        bounds.Expand(-2 * skinWidth);
     }
 }

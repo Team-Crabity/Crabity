@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
+
+//if youre using this file youre doomed
+
+
+
 public class SwitchGravity : MonoBehaviour
 {
     [Header ("Audio")]
@@ -21,6 +27,13 @@ public class SwitchGravity : MonoBehaviour
 
     [Header("Movement Script")]
     [SerializeField] private Movement movement;
+
+    [Header("GravityCheck")]
+    private bool normalGravity = true;
+    private bool upsideDownGravity = false;
+    private bool leftGravity = false;
+    private bool rightGravity = false;
+
 
     private Vector3 gravityDirection = Vector3.zero;
     public Vector3 newGravity { get; private set; }
@@ -90,16 +103,103 @@ public class SwitchGravity : MonoBehaviour
 
     }
 
+
+
+
     public void ChangeGravity()
     {
         if (gravityOnCooldown) return;
         // Determine which keymap to use based on player selection
         Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
-
+        
         // Check key presses and update grav direction
         foreach (var entry in currentKeyMap)
         {
-            if (Input.GetKeyDown(entry.Key))
+            if (Input.GetKeyDown(KeyCode.W)) //up
+            {
+                gravityOnCooldown = true;
+                // if (cooldown.IsCoolingDown) return;
+                upsideDownGravity = false;
+                gravityDirection = entry.Value;
+
+                RotatePlayer(PlayerManager.instance.playerOne);
+                RotatePlayer(PlayerManager.instance.playerTwo);
+
+                isGrounded = false;
+
+                //Cooldown UI
+                // cooldown.StartCooldown();
+                // textCooldown.gameObject.SetActive(true);
+
+                // Update gravity switch count
+                gravitySwitchCount += 1;
+
+                //Play Random Grav sound
+                AudioClip clip = null;
+                clip = GravitySounds[UnityEngine.Random.Range(0,GravitySounds.Count)];
+                Source.clip = clip;
+                Source.volume = (0.7f);
+                Source.Play();
+
+                break;
+            }
+            if (Input.GetKeyDown(KeyCode.A)) //left
+            {
+                gravityOnCooldown = true;
+                // if (cooldown.IsCoolingDown) return;
+                leftGravity = false;
+                gravityDirection = entry.Value;
+
+                RotatePlayer(PlayerManager.instance.playerOne);
+                RotatePlayer(PlayerManager.instance.playerTwo);
+
+                isGrounded = false;
+
+                //Cooldown UI
+                // cooldown.StartCooldown();
+                // textCooldown.gameObject.SetActive(true);
+
+                // Update gravity switch count
+                gravitySwitchCount += 1;
+
+                //Play Random Grav sound
+                AudioClip clip = null;
+                clip = GravitySounds[UnityEngine.Random.Range(0, GravitySounds.Count)];
+                Source.clip = clip;
+                Source.volume = (0.7f);
+                Source.Play();
+
+                break;
+            }
+            if (Input.GetKeyDown(KeyCode.S)) //down
+            {
+                gravityOnCooldown = true;
+                // if (cooldown.IsCoolingDown) return;
+                normalGravity = true;
+                gravityDirection = entry.Value;
+
+                RotatePlayer(PlayerManager.instance.playerOne);
+                RotatePlayer(PlayerManager.instance.playerTwo);
+
+                isGrounded = false;
+
+                //Cooldown UI
+                // cooldown.StartCooldown();
+                // textCooldown.gameObject.SetActive(true);
+
+                // Update gravity switch count
+                gravitySwitchCount += 1;
+
+                //Play Random Grav sound
+                AudioClip clip = null;
+                clip = GravitySounds[UnityEngine.Random.Range(0, GravitySounds.Count)];
+                Source.clip = clip;
+                Source.volume = (0.7f);
+                Source.Play();
+
+                break;
+            }
+            if (Input.GetKeyDown(KeyCode.D)) //right
             {
                 gravityOnCooldown = true;
                 // if (cooldown.IsCoolingDown) return;
@@ -120,7 +220,7 @@ public class SwitchGravity : MonoBehaviour
 
                 //Play Random Grav sound
                 AudioClip clip = null;
-                clip = GravitySounds[UnityEngine.Random.Range(0,GravitySounds.Count)];
+                clip = GravitySounds[UnityEngine.Random.Range(0, GravitySounds.Count)];
                 Source.clip = clip;
                 Source.volume = (0.7f);
                 Source.Play();

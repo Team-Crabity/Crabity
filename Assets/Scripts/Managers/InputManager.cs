@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
 
         if (rightHeld || leftHeld)
         {
-            switchGravity.ChangeGravity();
+            movement.ChangeGravity();
         }
         else if (!rightHeld || !leftHeld)
         {
