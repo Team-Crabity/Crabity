@@ -15,7 +15,6 @@ public class Movement : MonoBehaviour
     public float gravityScale = 5.0f; // Default gravity scale value
     public float gravity = 9.81f; // Default gravity value
     public bool gravityOnCooldown = false; // Check if gravity switch is on cooldown
-    public bool localGravityZone; // Check if player is in a local gravity zone
     public int gravitySwitchCount = 0; // Keep track of number of gravity switches
 
     [Header("RotatingObjects Parent")]
@@ -116,7 +115,7 @@ public class Movement : MonoBehaviour
         if (gravityCooldownImage != null)
         {
             // If rotating, change gravity CD UI to 1 for on cooldown and 0 for off cooldown
-            if (gravityOnCooldown || localGravityZone)
+            if (gravityOnCooldown)
             {
                 gravityCooldownImage.sprite = sprites[1];
             }
@@ -150,7 +149,7 @@ public class Movement : MonoBehaviour
 
     public void ChangeGravity()
     {
-        if (gravityOnCooldown || localGravityZone) return;
+        if (gravityOnCooldown) return;
         // Determine which keymap to use based on player selection
         Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
 
@@ -215,11 +214,11 @@ public class Movement : MonoBehaviour
             if (Input.GetKey(mapping.Key))
             {
                 // Check if the player is trying to jump
-                if (Physics.gravity.normalized == -mapping.Value && !localGravityZone)
+                if (Physics.gravity.normalized == -mapping.Value)
                 {
                     PerformJump();
                 }
-                else if (Physics.gravity.normalized != -mapping.Value && !localGravityZone)
+                else if (Physics.gravity.normalized != -mapping.Value)
                 {
                     // Add the movement direction to the player's current position
                     movementDirection += mapping.Value * effectiveSpeed;
@@ -233,11 +232,11 @@ public class Movement : MonoBehaviour
                         Source.Play();
                     }
                 }
-                else if (localGravityZone && mapping.Value != Vector3.up)
+                else if (mapping.Value != Vector3.up)
                 {
                     movementDirection += mapping.Value * effectiveSpeed;
                 }
-                else if (localGravityZone && mapping.Value == Vector3.up)
+                else if (mapping.Value == Vector3.up)
                 {
                     PerformJump();
                 }
@@ -263,10 +262,10 @@ public class Movement : MonoBehaviour
             jumpCounter = 0;
             isJumping = true;
             Vector3 jumpDirection = -Physics.gravity.normalized;
-            if (localGravityZone)
-            {
-                jumpDirection = Vector3.up;
-            }
+            // if (localGravityZone)
+            // {
+            //     jumpDirection = Vector3.up;
+            // }
             // rb.AddForce(jumpDirection * jumpMultiplier, ForceMode.Impulse);
             rb.velocity = jumpDirection * jumpMultiplier;
 
