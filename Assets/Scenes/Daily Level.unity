@@ -7264,7 +7264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6862745, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.6677432, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9765,6 +9765,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2036994915}
     m_Modifications:
+    - target: {fileID: 1382818299940610141, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1469065764334354919, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
       propertyPath: spawnPoint
       value: 
@@ -9772,6 +9776,10 @@ PrefabInstance:
     - target: {fileID: 2269423497504676556, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
       propertyPath: m_Name
       value: PlayerOne
+      objectReference: {fileID: 0}
+    - target: {fileID: 2663434887036199931, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3448526105333234706, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9821,10 +9829,21 @@ PrefabInstance:
       propertyPath: imageCooldown
       value: 
       objectReference: {fileID: 1999323328}
+    - target: {fileID: 5990255535418865346, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631247904047381935, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2269423497504676556, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1907568123}
   m_SourcePrefab: {fileID: 100100000, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
 --- !u!4 &1907568114 stripped
 Transform:
@@ -9836,6 +9855,38 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2269423497504676556, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
   m_PrefabInstance: {fileID: 1907568113}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &1907568121 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 2663434887036199931, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+  m_PrefabInstance: {fileID: 1907568113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1907568123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907568115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4528c2898c234cb67c2a3e398b2b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 15
+  groundDrag: 0.5
+  airDrag: 0.25
+  gravityOnCooldown: 0
+  localGravityZone: 0
+  gravitySwitchCount: 0
+  RotatingObjects: {fileID: 2036994913}
+  jumpCounter: 1
+  isJumping: 0
+  isGrounded: 0
+  jumpForce: 7.071068
+  collider: {fileID: 1907568121}
+  skinWidth: 0.02
+  JumpSound: {fileID: 8300000, guid: 621e397777d71144f8e1ba38c69c013f, type: 3}
+  WalkingSounds: []
 --- !u!1 &1933518606
 GameObject:
   m_ObjectHideFlags: 0
@@ -9881,6 +9932,8 @@ MonoBehaviour:
   xMax: 0.95
   yMin: 0
   yMax: 1
+  zMin: 0.1
+  zMax: 0.9
 --- !u!114 &1933518608
 MonoBehaviour:
   m_ObjectHideFlags: 0
