@@ -7,6 +7,8 @@ public class Movement : MonoBehaviour
     [Range(5f, 20f)] public float speed = 15.0f;
     [Range(0f, 1f)] public float groundDrag = 0.5f;
     [Range(0f, 0.5f)] public float airDrag = 0.25f;
+        public float acceleration = 30f;
+    public float deceleration = 30f;
 
     [Header("Gravity")]
     public bool gravityOnCooldown = false;
@@ -18,9 +20,9 @@ public class Movement : MonoBehaviour
 
     [Header("Jumping")]
     public int jumpCounter = 1;
-    public float jumpMultiplier = 1.0f;
     public bool isJumping;
     public bool isGrounded;
+    float jumpForce = Mathf.Sqrt(50f); // Use Unity's default gravity value
 
     [Header("Colliders")]
     public Collider collider;
@@ -96,8 +98,6 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        // Output current gravity direction
-        Debug.Log($"Current gravity direction: {gravityDirection}");
         RoundRotationToNearest90Degrees();
     }
 
@@ -122,9 +122,13 @@ public class Movement : MonoBehaviour
         bool rightHeld = Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.RightAlt);
         bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
 
-        if (rightHeld || leftHeld)
+        if (rightHeld || leftHeld && isGrounded)
         {
             ChangeGravity();
+        }
+        else if (Input.GetKeyDown(jumpKey))
+        {
+            PerformJump();
         }
         else
         {
@@ -151,7 +155,6 @@ public class Movement : MonoBehaviour
                     downGravity = false;
                     leftGravity = false;
                     rightGravity = false;
-                    Debug.Log("Gravity changed to Up");
                 }
                 else if (entry.Value == Vector3.down)
                 {
@@ -159,7 +162,6 @@ public class Movement : MonoBehaviour
                     upGravity = false;
                     leftGravity = false;
                     rightGravity = false;
-                    Debug.Log("Gravity changed to Down");
                 }
                 else if (entry.Value == Vector3.left)
                 {
@@ -167,7 +169,6 @@ public class Movement : MonoBehaviour
                     rightGravity = false;
                     upGravity = false;
                     downGravity = false;
-                    Debug.Log("Gravity changed to Left");
                 }
                 else if (entry.Value == Vector3.right)
                 {
@@ -175,7 +176,6 @@ public class Movement : MonoBehaviour
                     leftGravity = false;
                     upGravity = false;
                     downGravity = false;
-                    Debug.Log("Gravity changed to Right");
                 }
 
                 gravityDirection = entry.Value;
@@ -186,7 +186,6 @@ public class Movement : MonoBehaviour
                 GetComponentInChildren<GravitySounds>().PlayGravitySound();
                 UpdateGravity(gravityDirection);
                 UpdateKeyMappings(gravityDirection);
-                Debug.Log($"Gravity direction: {gravityDirection}");
                 break;
             }
         }
@@ -208,7 +207,6 @@ public class Movement : MonoBehaviour
             playerOneKeyMap.Add(jumpKey, -Vector3.up);
             playerOneKeyMap.Add(left, -Vector3.right);
             playerOneKeyMap.Add(right, Vector3.right);
-            Debug.Log($"Gravity direction: Up {Vector3.up}");
         }
         else if (newGravityDirection == Vector3.down)
         {
@@ -220,7 +218,6 @@ public class Movement : MonoBehaviour
             playerOneKeyMap.Add(down, -Vector3.up);
             playerOneKeyMap.Add(left, -Vector3.right);
             playerOneKeyMap.Add(right, Vector3.right);
-            Debug.Log($"Gravity direction: Down {Vector3.down}");
         }
         else if (newGravityDirection == Vector3.right)
         {
@@ -232,7 +229,6 @@ public class Movement : MonoBehaviour
             playerOneKeyMap.Add(down, -Vector3.up);
             playerOneKeyMap.Add(jumpKey, -Vector3.right);
             playerOneKeyMap.Add(right, Vector3.right);
-            Debug.Log($"Gravity direction: Right {Vector3.right}");
         }
         else if (newGravityDirection == Vector3.left)
         {
@@ -244,7 +240,6 @@ public class Movement : MonoBehaviour
             playerOneKeyMap.Add(down, -Vector3.up);
             playerOneKeyMap.Add(left, -Vector3.right);
             playerOneKeyMap.Add(jumpKey, Vector3.right);
-            Debug.Log($"Gravity direction: Left {Vector3.left}");
         }
 
         playerTwoKeyMap.Add(up, Vector3.up);
@@ -260,22 +255,18 @@ public class Movement : MonoBehaviour
 
         if (direction == Vector3.up)
         {
-            Debug.Log($"Gravity updated:  {Vector3.up}");
             newGravity = new Vector3(0, 9.81f, 0); // Gravity along negative Y-axis
         }
         else if (direction == Vector3.down)
         {
-            Debug.Log($"Gravity updated:  {Vector3.down}");
             newGravity = new Vector3(0, -9.81f, 0); // Gravity along positive Y-axis
         }
         else if (direction == Vector3.left)
         {
-            Debug.Log($"Gravity updated:  {Vector3.left}");
             newGravity = new Vector3(-9.81f, 0, 0); // Gravity along positive X-axis
         }
         else if (direction == Vector3.right)
         {
-            Debug.Log($"Gravity updated:  {Vector3.right}");
             newGravity = new Vector3(9.81f, 0, 0); // Gravity along negative X-axis
         }
 
@@ -291,12 +282,6 @@ public class Movement : MonoBehaviour
     {
         Vector3 movementDirection = Vector3.zero;
         float effectiveSpeed = speed * (isGrounded ? (1 - groundDrag) : (1 - airDrag));
-
-        // Check if jump key is pressed
-        if (Input.GetKeyDown(jumpKey))
-        {
-            PerformJump();
-        }
 
         // Adjust movement direction based on the current gravity direction
         foreach (var mapping in playerOneKeyMap)
@@ -343,25 +328,20 @@ public class Movement : MonoBehaviour
     {
         if (isGrounded)
         {
-            float jumpForce = Mathf.Sqrt(2 * jumpMultiplier * 9.81f); // Use Unity's default gravity value
             if (upGravity == true)
             {
-                Debug.Log($"up gravity!: {Vector3.down}");
                 rb.velocity += Vector3.down * jumpForce;
             }
             else if (rightGravity == true)
             {
-                Debug.Log($"right gravity!: {Vector3.left}");
                 rb.velocity += Vector3.left * jumpForce;
             }
             else if (leftGravity == true)
             {
-                Debug.Log($"left gravity!: {Vector3.right}");
                 rb.velocity += Vector3.right * jumpForce;
             }
             else // downGravity
             {
-                Debug.Log($"down gravity!: {Vector3.up}");
                 rb.velocity += Vector3.up * jumpForce;
             }
             Source.PlayOneShot(JumpSound);
@@ -378,10 +358,6 @@ public class Movement : MonoBehaviour
         layerMask = ~layerMask;
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + transform.TransformDirection(Vector3.down) * 1f;
-
-        Debug.DrawRay(rayOrigin, transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
-        Debug.DrawRay(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
-        Debug.DrawRay(rayOrigin - new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down) * 0.3f, Color.red);
 
         if (Physics.Raycast(rayOrigin, transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
             Physics.Raycast(rayOrigin + new Vector3(0.75f, 0, 0), transform.TransformDirection(Vector3.down), out hit, 0.3f, layerMask) ||
