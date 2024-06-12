@@ -96,6 +96,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        // Output current gravity direction
+        Debug.Log($"Current gravity direction: {gravityDirection}");
         RoundRotationToNearest90Degrees();
     }
 
@@ -120,12 +122,6 @@ public class Movement : MonoBehaviour
         bool rightHeld = Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.RightAlt);
         bool leftHeld = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.C);
 
-        if (gravityDirection != Vector3.zero)
-        {
-            UpdateGravity(gravityDirection);
-            gravityDirection = Vector3.zero;
-        }
-
         if (rightHeld || leftHeld)
         {
             ChangeGravity();
@@ -141,7 +137,7 @@ public class Movement : MonoBehaviour
         if (gravityOnCooldown || localGravityZone) return;
 
         Dictionary<KeyCode, Vector3> currentKeyMap = PlayerManager.instance.CompanionMode ? playerTwoKeyMap : playerOneKeyMap;
-
+        
         foreach (var entry in currentKeyMap)
         {
             if (Input.GetKeyDown(entry.Key))
@@ -188,6 +184,7 @@ public class Movement : MonoBehaviour
                 isGrounded = false;
                 gravitySwitchCount += 1;
                 GetComponentInChildren<GravitySounds>().PlayGravitySound();
+                UpdateGravity(gravityDirection);
                 UpdateKeyMappings(gravityDirection);
                 Debug.Log($"Gravity direction: {gravityDirection}");
                 break;
@@ -263,18 +260,22 @@ public class Movement : MonoBehaviour
 
         if (direction == Vector3.up)
         {
+            Debug.Log($"Gravity updated:  {Vector3.up}");
             newGravity = new Vector3(0, 9.81f, 0); // Gravity along negative Y-axis
         }
         else if (direction == Vector3.down)
         {
+            Debug.Log($"Gravity updated:  {Vector3.down}");
             newGravity = new Vector3(0, -9.81f, 0); // Gravity along positive Y-axis
         }
         else if (direction == Vector3.left)
         {
+            Debug.Log($"Gravity updated:  {Vector3.left}");
             newGravity = new Vector3(-9.81f, 0, 0); // Gravity along positive X-axis
         }
         else if (direction == Vector3.right)
         {
+            Debug.Log($"Gravity updated:  {Vector3.right}");
             newGravity = new Vector3(9.81f, 0, 0); // Gravity along negative X-axis
         }
 
@@ -286,7 +287,6 @@ public class Movement : MonoBehaviour
         Quaternion targetRotation = Quaternion.FromToRotation(player.transform.up, -gravityDirection) * player.transform.rotation;
         player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 1.0f);
     }
-
     public void MovePlayer()
     {
         Vector3 movementDirection = Vector3.zero;
@@ -301,56 +301,25 @@ public class Movement : MonoBehaviour
         // Adjust movement direction based on the current gravity direction
         foreach (var mapping in playerOneKeyMap)
         {
-            // Adjust movement direction based on the current gravity direction
             if (Input.GetKey(mapping.Key) && mapping.Key != jumpKey)
             {
-                if (upGravity)
+                // For up/down gravity, just add the mapped direction
+                if (upGravity || downGravity)
                 {
-                    // For up gravity, A/D moves horizontally, W/S moves vertically
-                    if (mapping.Value == Vector3.left)
-                        movementDirection += Vector3.left;
-                    else if (mapping.Value == Vector3.right)
-                        movementDirection += Vector3.right;
-                    else if (mapping.Value == Vector3.up)
-                        movementDirection += Vector3.up;
-                    else if (mapping.Value == Vector3.down)
-                        movementDirection += Vector3.down;
+                    movementDirection += mapping.Value;
                 }
-                else if (downGravity)
+                else if (leftGravity || rightGravity)
                 {
-                    // For down gravity, A/D moves horizontally, W/S moves vertically (inverse)
-                    if (mapping.Value == Vector3.left)
-                        movementDirection += Vector3.right; // Move right for A
-                    else if (mapping.Value == Vector3.right)
-                        movementDirection += Vector3.left; // Move left for D
-                    else if (mapping.Value == Vector3.up)
-                        movementDirection += Vector3.down; // Move down for W
-                    else if (mapping.Value == Vector3.down)
-                        movementDirection += Vector3.up; // Move up for S
-                }
-                else if (leftGravity)
-                {
-                    // For left gravity, W/S moves horizontally, A/D moves vertically
-                    if (mapping.Value == Vector3.up)
-                        movementDirection += Vector3.left; // Move left for W
-                    else if (mapping.Value == Vector3.down)
-                        movementDirection += Vector3.right; // Move right for S
-                    else if (mapping.Value == Vector3.left)
-                        movementDirection += Vector3.down;
-                    else if (mapping.Value == Vector3.right)
-                        movementDirection += Vector3.up;
-                }
-                else if (rightGravity)
-                {
-                    // For right gravity, W/S moves horizontally, A/D moves vertically
-                    if (mapping.Value == Vector3.up)
-                        movementDirection += Vector3.right; // Move right for W
-                    else if (mapping.Value == Vector3.down)
-                        movementDirection += Vector3.left; // Move left for S
-                    else if (mapping.Value == Vector3.left)
-                        movementDirection += Vector3.up;
-                    else if (mapping.Value == Vector3.right)
-                        movementDirection += Vector3.down;
+                    // For left/right gravity, adjust movement along x-axis or gravity direction
+                    if (mapping.Value == Vector3.left || mapping.Value == Vector3.right)
+                    {
+                        movementDirection += gravityDirection * mapping.Value.magnitude;
+
+                    }
+                    else
+                    {
+                        movementDirection += mapping.Value;
+                    }
                 }
             }
         }
@@ -359,12 +328,16 @@ public class Movement : MonoBehaviour
         movementDirection.Normalize();
         movementDirection *= effectiveSpeed;
 
-        // Apply movement to the rigidbody
-        rb.velocity = new Vector3(movementDirection.x, rb.velocity.y, movementDirection.z);
+        // Apply movement to the rigidbody based on gravity direction
+        if (upGravity || downGravity)
+        {
+            rb.velocity = new Vector3(movementDirection.x, rb.velocity.y, movementDirection.z);
+        }
+        else if (leftGravity || rightGravity)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, movementDirection.y, movementDirection.z);
+        }
     }
-
-
-
 
     public void PerformJump()
     {
