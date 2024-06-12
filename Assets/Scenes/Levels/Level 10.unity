@@ -61162,6 +61162,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 428906, guid: a5cd29a93d7ae2d488fa0376d0d08462, type: 3}
   m_PrefabInstance: {fileID: 1745080292}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1752663827
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 206100679581877730, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500458168284880990, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7343455688693406078, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_Name
+      value: Cooldown UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 107.861244
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 54.665737
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -49.05011
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904422182938183049, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195348433927666409, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+--- !u!1 &1752663828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3938928097221080715, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+  m_PrefabInstance: {fileID: 1752663827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1752663829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 206100679581877730, guid: aee7b4c894d60044d8212b2c95496f58, type: 3}
+  m_PrefabInstance: {fileID: 1752663827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1755608501
 GameObject:
   m_ObjectHideFlags: 0
@@ -67259,6 +67338,10 @@ PrefabInstance:
       propertyPath: imageCooldown
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8631247904047381935, guid: cc5accc9ca663ec49b810a72e1538eda, type: 3}
+      propertyPath: gravityCooldownUI
+      value: 
+      objectReference: {fileID: 1752663829}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -72359,6 +72442,10 @@ MonoBehaviour:
   reverseRotation: 0
   playerOneCamera: {fileID: 1843045382}
   playerTwoCamera: {fileID: 2114699170}
+  rotationCooldownUI: {fileID: 1752663828}
+  sprites:
+  - {fileID: 1445014220, guid: 9d6c9a94e2370e8438cdcabac0f4db9b, type: 3}
+  - {fileID: -279500453, guid: 9d6c9a94e2370e8438cdcabac0f4db9b, type: 3}
 --- !u!4 &2036994915
 Transform:
   m_ObjectHideFlags: 0
@@ -73027,6 +73114,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4176160362956618840, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
+      propertyPath: gravityCooldownUI
+      value: 
+      objectReference: {fileID: 1752663829}
     - target: {fileID: 4234509124564691466, guid: 346098f4534c86f45a67d9e1f79c0e85, type: 3}
       propertyPath: m_Name
       value: PlayerTwo
@@ -76878,3 +76969,4 @@ SceneRoots:
   - {fileID: 1555795635}
   - {fileID: 1220235845}
   - {fileID: 652023523}
+  - {fileID: 1752663827}

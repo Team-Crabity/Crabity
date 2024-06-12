@@ -137,16 +137,20 @@ MonoBehaviour:
   gravitySwitchCount: 0
   RotatingObjects: {fileID: 0}
   jumpCounter: 1
-  jumpMultiplier: 15
+  jumpMultiplier: 17
   isJumping: 0
   isGrounded: 0
-  collider: {fileID: 0}
+  collider: {fileID: 3470659437728897808}
   skinWidth: 0.02
   JumpSound: {fileID: 8300000, guid: 621e397777d71144f8e1ba38c69c013f, type: 3}
   WalkingSounds:
   - {fileID: 8300000, guid: 37f993e43cb5833419dcef8d0e4467f4, type: 3}
   - {fileID: 8300000, guid: 4b6632e1841535c4bb5440edfe7cc521, type: 3}
   - {fileID: 8300000, guid: 6754cc2110df3aa42931e92d4173bd9c, type: 3}
+  gravityCooldownUI: {fileID: 0}
+  sprites:
+  - {fileID: -1846082976, guid: aec7b33ccc70a0d43a9c40a065981779, type: 3}
+  - {fileID: -1935019809, guid: aec7b33ccc70a0d43a9c40a065981779, type: 3}
 --- !u!54 &7245866225335313194
 Rigidbody:
   m_ObjectHideFlags: 0

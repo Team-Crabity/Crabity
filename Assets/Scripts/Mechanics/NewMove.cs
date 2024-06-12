@@ -12,6 +12,7 @@ public class NewMove : MonoBehaviour
     public bool gravityOnCooldown = false;
     public bool localGravityZone;
     public int gravitySwitchCount = 0;
+    public float gravityScale = 5.0f;
 
     [Header("RotatingObjects Parent")]
     public GameObject RotatingObjects;
@@ -69,7 +70,7 @@ public class NewMove : MonoBehaviour
     {
         Source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, -9.81f, 0); // Default gravity
+        Physics.gravity = new Vector3(0, -9.81f * gravityScale, 0); // Default gravity
 
         if (PlayerManager.instance.IsPlayerOne(gameObject))
         {
@@ -290,19 +291,19 @@ public class NewMove : MonoBehaviour
 
         if (direction == Vector3.up)
         {
-            newGravity = new Vector3(0, 9.81f, 0);
+            newGravity = new Vector3(0, 9.81f * gravityScale, 0);
         }
         else if (direction == Vector3.down)
         {
-            newGravity = new Vector3(0, -9.81f, 0);
+            newGravity = new Vector3(0, -9.81f * gravityScale, 0);
         }
         else if (direction == Vector3.left)
         {
-            newGravity = new Vector3(-9.81f, 0, 0);
+            newGravity = new Vector3(-9.81f * gravityScale, 0, 0);
         }
         else if (direction == Vector3.right)
         {
-            newGravity = new Vector3(9.81f, 0, 0);
+            newGravity = new Vector3(9.81f * gravityScale, 0, 0);
         }
 
         Physics.gravity = newGravity;

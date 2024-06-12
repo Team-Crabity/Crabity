@@ -36,6 +36,11 @@ public class Movement : MonoBehaviour
     [SerializeField] private List<AudioClip> WalkingSounds;
     private AudioSource Source;
 
+    [Header("Gravity Cooldown UI")]
+    [SerializeField] private GameObject gravityCooldownUI;
+    private Image gravityCooldownImage;
+    public Sprite[] sprites;
+
     private Rigidbody rb;
     private Vector3 gravityDirection = Vector3.zero;
     private Vector3 jumpDirection = Vector3.zero;
@@ -63,12 +68,13 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        if (gravityCooldownUI != null)
+        {
+            gravityCooldownImage = gravityCooldownUI.GetComponent<Image>();
+        }
         Source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         Physics.gravity = new Vector3(0, -9.81f * gravityScale, 0);
-
-        // textCooldown.gameObject.SetActive(false);
-        // imageCooldown.fillAmount = 0.0f;
 
         // Default keybinds if player is not assigned
         up = KeyCode.W;
@@ -93,11 +99,32 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    void LateUpdate()
+    {
+        RoundRotationToNearest90Degrees();
+    }
+
+    void FixedUpdate()
     {
         isGrounded = IsGrounded();
         HandleInput();
         // if (!IsOwner) return;
+    }
+
+    void Update()
+    {
+        if (gravityCooldownImage != null)
+        {
+            // If rotating, change gravity CD UI to 1 for on cooldown and 0 for off cooldown
+            if (gravityOnCooldown || localGravityZone)
+            {
+                gravityCooldownImage.sprite = sprites[1];
+            }
+            else
+            {
+                gravityCooldownImage.sprite = sprites[0];
+            }
+        }
     }
 
     private void HandleInput()
@@ -142,16 +169,13 @@ public class Movement : MonoBehaviour
 
                 isGrounded = false;
 
-                // Cooldown UI
-                // cooldown.StartCooldown();
-                // textCooldown.gameObject.SetActive(true);
-
                 // Update gravity switch count
                 gravitySwitchCount += 1;
 
                 // Access child's GravitySounds script and use the PlayGravitySound method
                 // This is done to prevent the gravity sound from being cutoff from other sounds
                 GetComponentInChildren<GravitySounds>().PlayGravitySound();
+
                 break;
             }
         }
@@ -220,6 +244,14 @@ public class Movement : MonoBehaviour
             }
         }
 
+        // Check if the player is about to collide with an object, kill the movement if so
+        // QueryTriggerInteraction.Ignore is used to ignore triggers
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, movementDirection, out hit, 1f, ~0, QueryTriggerInteraction.Ignore))
+        {
+            movementDirection = Vector3.zero;
+        }
+
         // Handle player movement
         rb.MovePosition(transform.position + movementDirection);
     }
@@ -244,6 +276,22 @@ public class Movement : MonoBehaviour
             Source.pitch = Random.Range(0.9f, 1.1f);
             Source.Play();
         }
+    }
+
+    private void RoundRotationToNearest90Degrees()
+    {
+        Vector3 euler = transform.rotation.eulerAngles;
+
+        euler.x = RoundToNearest90(euler.x);
+        euler.y = RoundToNearest90(euler.y);
+        euler.z = RoundToNearest90(euler.z);
+
+        transform.rotation = Quaternion.Euler(euler);
+    }
+
+    private float RoundToNearest90(float angle)
+    {
+        return Mathf.Round(angle / 90.0f) * 90.0f;
     }
 
     public bool IsGrounded()
@@ -279,13 +327,5 @@ public class Movement : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    // Adjust the collider bounds to prevent the player from falling through the floor by adding a skin width
-    void AdjustColliderBounds()
-    {
-        Bounds bounds;
-        bounds = collider.bounds;
-        bounds.Expand(-2 * skinWidth);
     }
 }

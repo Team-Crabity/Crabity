@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RotateObject : MonoBehaviour
 {
@@ -9,18 +10,21 @@ public class RotateObject : MonoBehaviour
     [SerializeField] private List<AudioClip> RotationSounds;
     private AudioSource Source;
 
-
     [Header("Rotation")]
     public float turnTime = 0.33f;
-
 
     [Header("Reverse Rotation")]
     public bool reverseRotation = false;
 
-
     [Header("PlayerOne and PlayerTwo Cameras")]
     public Camera playerOneCamera;
     public Camera playerTwoCamera;
+
+    [Header("Rotation Cooldown UI")]
+    [SerializeField] private GameObject rotationCooldownUI;
+    private Image rotationCooldownImage;
+    public Sprite[] sprites;
+    
 
     private bool rotating = false;
     private Transform playerOneTransform;
@@ -32,6 +36,10 @@ public class RotateObject : MonoBehaviour
 
     void Start()
     {
+        if(rotationCooldownUI != null)
+        {
+            rotationCooldownImage = rotationCooldownUI.GetComponent<Image>();
+        }
         Source = GetComponent<AudioSource>();
 
         keyRotationMap = new Dictionary<KeyCode, Vector3>
@@ -49,6 +57,16 @@ public class RotateObject : MonoBehaviour
 
     void Update()
     {
+        // If rotating, change rotation CD UI to 1 for on cooldown and 0 for off cooldown
+        if(rotating)
+        {
+            rotationCooldownImage.sprite = sprites[1];
+        }
+        else
+        {
+            rotationCooldownImage.sprite = sprites[0];
+        }
+
         if(Input.GetKey(KeyCode.LeftShift))
         {
             foreach (KeyValuePair<KeyCode, Vector3> entry in keyRotationMap)

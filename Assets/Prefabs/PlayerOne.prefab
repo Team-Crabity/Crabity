@@ -282,7 +282,7 @@ MonoBehaviour:
   gravitySwitchCount: 0
   RotatingObjects: {fileID: 0}
   jumpCounter: 1
-  jumpMultiplier: 15
+  jumpMultiplier: 17
   isJumping: 0
   isGrounded: 0
   collider: {fileID: 2663434887036199931}
@@ -292,6 +292,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 37f993e43cb5833419dcef8d0e4467f4, type: 3}
   - {fileID: 8300000, guid: 4b6632e1841535c4bb5440edfe7cc521, type: 3}
   - {fileID: 8300000, guid: 6754cc2110df3aa42931e92d4173bd9c, type: 3}
+  gravityCooldownUI: {fileID: 0}
+  sprites:
+  - {fileID: -1846082976, guid: aec7b33ccc70a0d43a9c40a065981779, type: 3}
+  - {fileID: -1935019809, guid: aec7b33ccc70a0d43a9c40a065981779, type: 3}
 --- !u!54 &1382818299940610141
 Rigidbody:
   m_ObjectHideFlags: 0
