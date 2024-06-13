@@ -21,7 +21,12 @@ public class DailyLevelTimer : MonoBehaviour
     void Update()
     {
         DateTime currentTime = DateTime.UtcNow;
-        tMP_Text.text = "Resets in " + (24 - currentTime.Hour) + ":" + (60 - currentTime.Minute) + ":" + 
-        (60 - currentTime.Second) + " hrs";
+        int hoursLeft = (24 - currentTime.Hour);
+        int minutesLeft = (60 - currentTime.Minute);
+        int secondsLeft = (60 - currentTime.Second);
+        if (minutesLeft > 0 && secondsLeft > 0) {
+            hoursLeft -= 1;
+        }
+        tMP_Text.text = "Resets in " + hoursLeft + ":" + minutesLeft + ":" + secondsLeft + " hrs";
     }
 }
