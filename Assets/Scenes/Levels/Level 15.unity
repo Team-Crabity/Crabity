@@ -683,6 +683,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4076074460172807339, guid: e56dd7b90798e8349968432e5c3943e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1556,6 +1560,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6421529746248079310, guid: 09fef405e298055498c28e36a288bdf0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6756563169152606943, guid: 09fef405e298055498c28e36a288bdf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -187.03
@@ -2067,6 +2075,7 @@ Transform:
   - {fileID: 1226045877}
   - {fileID: 1252489415}
   - {fileID: 245488420}
+  - {fileID: 1438995547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &574319667
@@ -2562,7 +2571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allPlatesPressed: 0
   doors:
-  - {fileID: 0}
+  - {fileID: 1135655163}
 --- !u!4 &639048935
 Transform:
   m_ObjectHideFlags: 0
@@ -4584,6 +4593,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8906791644207845037, guid: 92085f178221e8f4b8043f5aa431b9a4, type: 3}
   m_PrefabInstance: {fileID: 267945855}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135655163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7446718561424374443, guid: 32c85015dd14bd54f83547e07a32e42d, type: 3}
+  m_PrefabInstance: {fileID: 687744257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1164991069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6104,13 +6118,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438995542}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -37.91, y: 0.2, z: -1.54}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: -318.24997, y: 13.650002, z: -1.2799997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1882585938}
-  m_LocalEulerAnglesHint: {x: 180, y: 90, z: 180}
+  m_Father: {fileID: 574319666}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 180}
 --- !u!4 &1442330947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 464552, guid: 64b3f36e835346747865afbf6cf62acf, type: 3}
@@ -7301,7 +7315,6 @@ Transform:
   - {fileID: 1517470602}
   - {fileID: 335755978}
   - {fileID: 1269478661}
-  - {fileID: 1438995547}
   - {fileID: 769949392}
   - {fileID: 327544908}
   m_Father: {fileID: 0}

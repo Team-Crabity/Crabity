@@ -54,7 +54,11 @@ public class Door : MonoBehaviour
         AnalyticsService.Instance.RecordEvent(perspectiveSwitchEvent);
         Debug.Log(RotateObject.numRotations);
         
-        // Go to next level
-        SceneManager.LoadScene(s.buildIndex + 1);
+        // Go to next level or main menu if game is complete
+        if (s.name.Equals("Level 15")) {
+            SceneManager.LoadScene("MainMenu3");
+        } else {
+            SceneManager.LoadScene(s.buildIndex + 1);
+        }
     }
 }
