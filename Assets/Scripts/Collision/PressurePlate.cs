@@ -31,6 +31,12 @@ public class PressurePlate : MonoBehaviour
                 renderer.materials[0] = baseColor;
             }
 
+            // Disable ArrowMapSprite in the children
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
             GameObject.FindObjectOfType<PressurePlateManager>().PlatePressed();
         }
     }

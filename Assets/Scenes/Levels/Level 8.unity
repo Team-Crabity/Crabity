@@ -3043,6 +3043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d110605cf5b9763418b68d162c29a86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundList: []
 --- !u!65 &345138606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3584,6 +3585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d110605cf5b9763418b68d162c29a86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundList: []
 --- !u!65 &386816802
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4419,143 +4421,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6450735986410774150, guid: 208bb77875823084cae564a2dd33f884, type: 3}
   m_PrefabInstance: {fileID: 498531743}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &499508242
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 499508243}
-  - component: {fileID: 499508246}
-  - component: {fileID: 499508245}
-  - component: {fileID: 499508244}
-  m_Layer: 0
-  m_Name: DoorCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &499508243
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499508242}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -11.28, y: -23.04, z: 10.08}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 574319666}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &499508244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499508242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
-  m_UseScreenCoordOverride: 0
-  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
-  m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
---- !u!81 &499508245
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499508242}
-  m_Enabled: 0
---- !u!20 &499508246
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499508242}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 30
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
 --- !u!1 &525333034
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,7 +4827,6 @@ Transform:
   - {fileID: 1239818422}
   - {fileID: 1307313813}
   - {fileID: 378818668}
-  - {fileID: 499508243}
   - {fileID: 395808507}
   - {fileID: 377528969}
   - {fileID: 1553881916}
@@ -6720,6 +6584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d110605cf5b9763418b68d162c29a86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundList: []
 --- !u!65 &771531535
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17008,6 +16873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d110605cf5b9763418b68d162c29a86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundList: []
 --- !u!65 &1745725562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17918,6 +17784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d110605cf5b9763418b68d162c29a86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoundList: []
 --- !u!65 &1809324479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19406,7 +19273,7 @@ Transform:
   m_GameObject: {fileID: 1924440719}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 66.3413, y: -15.720604, z: -9.347479}
+  m_LocalPosition: {x: 65.3413, y: -3.470602, z: -8.847477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19495,15 +19362,15 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 7.65
   far clip plane: 1000
-  field of view: 60
+  field of view: 30
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
