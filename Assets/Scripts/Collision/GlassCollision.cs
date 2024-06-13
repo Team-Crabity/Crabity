@@ -8,11 +8,19 @@ public class GlassCollision : MonoBehaviour
     private Rigidbody rb2;
     private AudioSource glassBreak;
 
+    private BoxCollider[] boxColliders;
+
     void Start()
     {
         rb1 = PlayerManager.instance.playerOne.GetComponent<Rigidbody>();
         rb2 = PlayerManager.instance.playerTwo.GetComponent<Rigidbody>();
         glassBreak = GetComponent<AudioSource>();
+
+        // Make sure all triggers are on
+        boxColliders = GetComponentsInChildren<BoxCollider>();
+        foreach (BoxCollider boxCollider in boxColliders) {
+            boxCollider.isTrigger = true;
+        }
     }
 
     void Update()
