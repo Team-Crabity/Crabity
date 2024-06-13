@@ -21,7 +21,7 @@ public class G_Dialogue : MonoBehaviour
     {
         lines = new string[]
         {
-            "Loading training module 2/3... done."
+            "Loading training module 2/3... done. [SPACE]"
 
         };
         textComponent.text = string.Empty;
@@ -60,15 +60,15 @@ public class G_Dialogue : MonoBehaviour
         {
             lines = new string[]
             {
-                "CRB 1: Utilize the gravity drive with " + singlePlayerGravityKey + " + WASD.",
+                "CRB 1: Utilize the gravity drive with " + singlePlayerGravityKey + " + WASD. [SPACE]",
             };
         }
         else //coop dialogue
         {
             lines = new string[]
             {
-                "CRB 1: Await further instructions.",
-                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " LEFT, RIGHT, UP, or DOWN arrow keys.",
+                "CRB 1: Await further instructions. [SPACE]",
+                "CRB 2: Utilize the gravity drive with " + companionGravityKey + " LEFT, RIGHT, UP, or DOWN arrow keys. [SPACE]",
             };
         }
 

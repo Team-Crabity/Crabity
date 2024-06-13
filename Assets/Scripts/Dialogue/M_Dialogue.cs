@@ -21,9 +21,9 @@ public class M_Dialogue : MonoBehaviour
     {
         lines = new string[]
         {
-            "Tip: advance this dialogue by using SPACE.",
-            "Access the pause menu by pressing ESCAPE.",
-            "Initiating contact...done.",
+            "Tip: advance this dialogue by using SPACE. [SPACE]",
+            "Access the pause menu by pressing ESCAPE. [SPACE]",
+            "Initiating contact...done. [SPACE]",
         };
         textComponent.text = string.Empty;
         StartDialogue();
@@ -61,20 +61,22 @@ public class M_Dialogue : MonoBehaviour
         {
             lines = new string[]
             {
-                "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Find and deactivate airlock seals to proceed further.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
+                "Greetings, CRB 1. Our records indicate this facility should be abandoned. Commence escape protocol. [SPACE]",
+                "Find and deactivate airlock seals to proceed further. [SPACE]",
+                "Preliminary scans reveal corrupt memory data: reinitializing training module... done. [SPACE]",
+                "CRB 1: Use the W, A, S and D keys to navigate the environment. [SPACE]",
+                "Use TAB to open up the map, and TAB again to close it [SPACE]"
             };
         }
         else //coop dialogue
         {
             lines = new string[]
             {
-                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol.",
-                "Preliminary scans reveal corrupt memory data: reinitializing training module... done.",
-                "CRB 1: Use the W, A, S and D keys to navigate the environment.",
-                "CRB 2: Use the LEFT, RIGHT, UP, and DOWN arrow keys to navigate the environment.",
+                "Greetings, CRB 1 and 2. Our records indicate this facility should be abandoned. Commence escape protocol. [SPACE]",
+                "Preliminary scans reveal corrupt memory data: reinitializing training module... done. [SPACE]",
+                "CRB 1: Use the W, A, S and D keys to navigate the environment. [SPACE]",
+                "CRB 2: Use the LEFT, RIGHT, UP, and DOWN arrow keys to navigate the environment. [SPACE]",
+                "Use TAB to open up the map, and TAB again to close it"
             };
         }
 
