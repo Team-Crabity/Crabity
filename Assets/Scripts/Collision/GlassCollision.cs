@@ -6,6 +6,7 @@ public class GlassCollision : MonoBehaviour
 {
     private Rigidbody rb1;
     private Rigidbody rb2;
+    [SerializeField] private List<AudioClip> SoundList;
     private AudioSource glassBreak;
 
     private BoxCollider[] boxColliders;
@@ -40,6 +41,7 @@ public class GlassCollision : MonoBehaviour
         (other.gameObject == PlayerManager.instance.playerTwo && rb2.velocity.magnitude > 20))
         {
             Debug.Log("Player collided with glass at high velocity");
+            glassBreak.clip = SoundList[Random.Range(0,SoundList.Count)];
             glassBreak.Play();
             foreach (BoxCollider boxCollider in boxColliders)
             {
