@@ -27,6 +27,9 @@ public class DailyLevelTimer : MonoBehaviour
         if (minutesLeft > 0 && secondsLeft > 0) {
             hoursLeft -= 1;
         }
+        if (minutesLeft == 60 && secondsLeft > 0) {
+            minutesLeft -= 1;
+        }
         tMP_Text.text = "Resets in " + hoursLeft + ":" + minutesLeft + ":" + secondsLeft + " hrs";
     }
 }
