@@ -6,7 +6,7 @@ public class TimeTracker : MonoBehaviour
 {
     public TextMeshProUGUI liveTimeText; // Reference to the TMP Text component for live updates
     public TextMeshProUGUI finalTimeText; // Reference to the TMP Text component for the final time
-    private float elapsedTime;
+    public float elapsedTime;
     private bool isTracking;
 
     void Start()
@@ -32,6 +32,10 @@ public class TimeTracker : MonoBehaviour
         {
             liveTimeText.text = formattedTime;
         }
+    }
+    public float GetFinalTime()
+    {
+        return elapsedTime; // Replace with your actual time variable.
     }
 
     public void StopTracking()

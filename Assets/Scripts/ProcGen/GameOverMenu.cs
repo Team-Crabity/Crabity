@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Steamworks;
 
 public class GameOverMenu : MonoBehaviour
 {
@@ -62,13 +63,26 @@ public class GameOverMenu : MonoBehaviour
         if (timeTracker != null)
         {
             timeTracker.StopTracking();
+            
+            // Upload the score to the Steam leaderboard
+            int finalScore = (int)(timeTracker.GetFinalTime() * 1000); // Convert to milliseconds
+            LeaderboardManager leaderboardManager = FindObjectOfType<LeaderboardManager>();
+            
+            if (leaderboardManager != null)
+            {
+                leaderboardManager.UploadScore(finalScore); // Upload to Steam leaderboard
+                leaderboardManager.GetLeaderboardEntries(); // Retrieve and display leaderboard entries
+            }
         }
 
         gameOverMenuUI.SetActive(true);
         Time.timeScale = 0f;
         menuActive = true;
     }
-
+    public float GetFinalTime()
+    {
+        return timeTracker.elapsedTime; // Replace with your actual time variable.
+    }
     private void HideGameOverMenu()
     {
         gameOverMenuUI.SetActive(false);
